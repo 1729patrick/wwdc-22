@@ -1,31 +1,14 @@
 //
-//  Home.swift
-//  WaterWave (iOS)
+//  View-HomeView.swift
+//  Save the animals
 //
-//  Created by Balaji on 12/02/22.
+//  Created by Patrick Battisti Forsthofer on 08/04/22.
 //
 
 import SwiftUI
 import Combine
 
-extension UIScreen{
-    static let screenWidth = UIScreen.main.bounds.size.width
-    static let screenHeight = UIScreen.main.bounds.size.height
-    static let screenSize = UIScreen.main.bounds.size
-}
-
-
-struct AnimalView: View {
-    @ObservedObject var animal: AnimalModel
- 
-    var body: some View {
-//        animal.path.stroke(style: StrokeStyle(lineWidth: 0.5))
-        animal.aircraft
-    }
-}
-
-
-struct Home: View {
+struct HomeView: View {
     @StateObject var viewModel = ViewModel()
     
     @State var progress: CGFloat = 0.5
@@ -43,20 +26,11 @@ struct Home: View {
                         endPoint: .bottom)
                     )
                     .overlay {
-                        ZStack {
-                            Button(action: {
-                                viewModel.addAnimal()
-                            }) {
-                                Text("Add animal")
-                            }
-                            .offset(y: -200)
-                        }
-                        
                         ForEach(viewModel.animals) { animal in
                             AnimalView(animal: animal)
                         }
-                        WaterDropsView()
                         
+                        WaterDropsView()
                     }
                     .frame(width: size.width, height: size.height)
                 
@@ -74,11 +48,6 @@ struct Home: View {
                     SandPlantsView(size: size)
                 }
                 .frame(width: size.width, height: 250)
-                
-                
-                
-                
-                
             }
             .onAppear {
                 withAnimation(.linear(duration: 5).repeatForever(autoreverses: false)){
@@ -88,11 +57,5 @@ struct Home: View {
         }
         .background(.black)
         .ignoresSafeArea()
-        
-        
     }
 }
-
-
-
-//https://stackoverflow.com/questions/60521118/how-to-move-a-view-shape-along-a-custom-path-with-swiftui

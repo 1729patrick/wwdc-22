@@ -1,5 +1,5 @@
 //
-//  File.swift
+//  View-SandWaveView.swift
 //  Save the animals
 //
 //  Created by Patrick Battisti Forsthofer on 08/04/22.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct OceanWaveView: Shape{
+struct SandWaveView: Shape{
     
     var progress: CGFloat
     // Wave Height
@@ -33,7 +33,7 @@ struct OceanWaveView: Shape{
                 
                 let x: CGFloat = value
                 let sine: CGFloat = sin(Angle(degrees: value + offset).radians)
-                let y: CGFloat = progressHeight + (height * sine) - (rect.height / 4)
+                let y: CGFloat = progressHeight + (height * sine)
                 
                 path.addLine(to: CGPoint(x: x, y: y))
             }
