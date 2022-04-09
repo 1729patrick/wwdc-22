@@ -8,11 +8,24 @@
 import SwiftUI
 
 class ViewModel: ObservableObject, Identifiable {
+    let maxAnimals = 10
     @Published var animals = [Animal]()
     var l2r = 0
     var r2l = 0
     
+    var animalsVisible: [Animal] {
+        animals.filter { $0.visible }
+    }
+    
+    var animalsSaved: [Animal] {
+        animals.filter { $0.saved }
+    }
+    
     func addAnimal() {
+        if animalsVisible.count >= maxAnimals {
+            return
+        }
+        
         var yRange: ClosedRange<Double> = UIScreen.screenHeight * 0.25...UIScreen.screenHeight
         
         let startLeft = Bool.random()
@@ -87,5 +100,11 @@ class ViewModel: ObservableObject, Identifiable {
                 timer.invalidate()
             }
         }
+    }
+    
+    func save(animal: Animal) {
+        animal.save()
+        
+        addAnimal()
     }
 }

@@ -9,14 +9,17 @@ import Combine
 import SwiftUI
 
 class Animal: Identifiable, ObservableObject {
-    var id = UUID()
+    private(set) var id = UUID()
     
-    var l2r: Bool
-    var alongTrackDistance = CGFloat.zero
-    var timer: Cancellable? = nil
-    let track: ParametricCurve
+    private(set) var l2r: Bool
+    private var alongTrackDistance = CGFloat.zero
+    private var timer: Cancellable? = nil
+    private let track: ParametricCurve
     let path: Path
     var onDestroy: (() -> Void)? = nil
+    
+    var saved: Bool = false
+    var visible: Bool = true
 
     func getPosition() -> CGPoint {
         let t = track.curveParameter(arcLength: alongTrackDistance)
@@ -53,12 +56,19 @@ class Animal: Identifiable, ObservableObject {
             .autoconnect()
             .sink(receiveValue: { (_) in
                 self.objectWillChange.send()
-                self.alongTrackDistance += self.track.totalArcLength / 500.0
+                self.alongTrackDistance += self.track.totalArcLength / 400.0
                 
                 if self.alongTrackDistance > self.track.totalArcLength {
                     self.timer?.cancel()
                     self.onDestroy?()
+                    self.visible = false
                 }
             })
+    }
+    
+    func save() {
+        self.objectWillChange.send()
+        saved = true
+        visible = false
     }
 }

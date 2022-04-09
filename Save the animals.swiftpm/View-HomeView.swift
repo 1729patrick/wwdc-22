@@ -14,6 +14,30 @@ struct HomeView: View {
     @State var progress: CGFloat = 0.5
     @State var startAnimation: CGFloat = 0
     
+//    to refactor
+    @State var albumScale: Double = 1
+    var albumPosition: CGPoint {
+        return CGPoint(x: UIScreen.screenWidth - 40, y: 30)
+    }
+    
+    func scaleWorld() {
+        withAnimation(.linear(duration: 0.3).delay(0.1)) {
+            albumScale = 1.3
+        }
+        withAnimation(.linear(duration: 0.3).delay(0.3)) {
+            albumScale = 1
+        }
+    }
+    
+    var savedAnimals: [Animal] {
+        viewModel.animals.filter { $0.saved == true }
+    }
+    
+    func saveAnimal(animal: Animal) {
+        viewModel.save(animal: animal)
+        scaleWorld()
+    }
+    
     var body: some View {
         GeometryReader { proxy in
             let size = proxy.size
@@ -27,7 +51,9 @@ struct HomeView: View {
                     )
                     .overlay {
                         ForEach(viewModel.animals) { animal in
-                            AnimalView(animal: animal)
+                                AnimalView(animal: animal) {
+                                    saveAnimal(animal: animal)
+                                }
                         }
                         
                         WaterDropsView()
@@ -48,6 +74,11 @@ struct HomeView: View {
                     SandPlantsView(size: size)
                 }
                 .frame(width: size.width, height: 250)
+                
+                Text("🌎")
+                    .font(.system(size: 50))
+                    .scaleEffect(albumScale)
+                    .position(albumPosition)
             }
             .onAppear {
                 withAnimation(.linear(duration: 5).repeatForever(autoreverses: false)){
@@ -56,6 +87,6 @@ struct HomeView: View {
             }
         }
         .background(.black)
-        .ignoresSafeArea()
+        .ignoresSafeArea(.container, edges: .bottom)
     }
 }
