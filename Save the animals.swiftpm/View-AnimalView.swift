@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct AnimalView: View {
+    @SceneStorage("showDetails") var showDetails: Bool?
     @ObservedObject var animal: Animal
     var namespace: Namespace.ID
     var onSave: () -> Void
@@ -45,7 +46,10 @@ struct AnimalView: View {
             .onTapGesture(perform: onSave)
             .animation(.linear(duration: 0.3), value: animal.saved)
             .onChange(of: animal.saved) { _ in
-                scale = 3
+                
+                if showDetails == true {
+                    scale = 3
+                }
                 
                 withAnimation(.linear(duration: 0.3)) {
                     scale = 0.2

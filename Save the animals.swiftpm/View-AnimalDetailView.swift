@@ -1,5 +1,5 @@
 //
-//  File.swift
+//  View-AnimalDetailView.swift
 //  Save the animals
 //
 //  Created by Patrick Battisti Forsthofer on 09/04/22.
@@ -12,72 +12,89 @@ struct AnimalDetailView: View {
     let namespace: Namespace.ID
     @Binding var showDetailPage: Bool
     @State var onClose: (() -> Void)?
+    @SceneStorage("showDetails") var showDetails: Bool = true
     
-    @State var showDetails = true
     @State var animateView: Bool = false
     @State var animateContent: Bool = false
     @State var scrollOffset: CGFloat = 0
     
-    var body: some View {
-        ScrollView(.vertical, showsIndicators: false) {
-            VStack {
-                VStack {
-                    Text("🐠")
-                        .font(.system(size: 70))
-                        .scaleEffect(animateView ? 3 : 1)
-                        .matchedGeometryEffect(id: animal.id, in: namespace)
-                }
-                .padding(.top)
-                .padding(.vertical, 80)
-                
-                VStack {
-                    Text(dummyText)
-                        .multilineTextAlignment(.leading)
-                        .lineSpacing(10)
-                        .padding(.bottom,20)
-                    
-                    Divider()
-                    
-                    Toggle("Always shows details to new species", isOn: $showDetails)
-                   
-                }
-                .padding()
-                .offset(y: scrollOffset > 0 ? scrollOffset : 0)
-                .opacity(animateContent ? 1 : 0)
-                .scaleEffect(animateView ? 1 : 0,anchor: .top)
-            }
-            .offset(y: scrollOffset > 0 ? -scrollOffset : 0)
-            .offset(offset: $scrollOffset)
-            
+    var image: some View {
+        VStack {
+            Text("🐠")
+                .font(.system(size: 70))
+                .scaleEffect(animateView ? 3 : 1)
+                .matchedGeometryEffect(id: animal.id, in: namespace)
         }
-        .background(.thinMaterial)
-        .coordinateSpace(name: "SCROLL")
-        .overlay(alignment: .topTrailing, content: {
-            Button {
-                withAnimation(.interactiveSpring(response: 0.6, dampingFraction: 0.7, blendDuration: 0.7)){
-                    animateView = false
-                    animateContent = false
-                    showDetailPage = false
-                    onClose?()
-                }
-            } label: {
+        .padding(.top)
+        .padding(.vertical, 80)
+    }
+    
+    var description: some View {
+        VStack {
+            Text(dummyText)
+                .multilineTextAlignment(.leading)
+                .lineSpacing(10)
+                .padding(.bottom,20)
+            
+            Divider()
+            
+            Toggle("Always shows details to new species", isOn: $showDetails)
+           
+        }
+        .padding()
+        .offset(y: scrollOffset > 0 ? scrollOffset : 0)
+        .opacity(animateContent ? 1 : 0)
+        .scaleEffect(animateView ? 1 : 0,anchor: .top)
+    }
+    
+    var close: some View {
+        Button(
+            action: dismiss,
+            label: {
                 Image(systemName: "xmark.circle.fill")
                     .font(.title)
                     .foregroundColor(.white.opacity(0.5))
             }
-            .padding()
-            .offset(y: -10)
-            .opacity(animateView ? 1 : 0)
-        })
-        .onAppear {
-            withAnimation(.interactiveSpring(response: 0.6, dampingFraction: 0.7, blendDuration: 0.7)){
-                animateView = true
+        )
+        .padding()
+        .offset(y: -10)
+        .opacity(animateView ? 1 : 0)
+    }
+    
+    var body: some View {
+        ScrollView(.vertical, showsIndicators: false) {
+            VStack {
+                image
+                description
             }
-            withAnimation(.interactiveSpring(response: 0.6, dampingFraction: 0.7, blendDuration: 0.7).delay(0.2)){
-                animateContent = true
-            }
+            .offset(y: scrollOffset > 0 ? -scrollOffset : 0)
+            .offset(offset: $scrollOffset)
         }
+        .background(.thinMaterial)
+        .coordinateSpace(name: "SCROLL")
+        .overlay(alignment: .topTrailing, content: {
+            close
+        })
+        .onAppear(perform: onAppear)
         .transition(.identity)
+    }
+    
+    func onAppear() {
+        withAnimation(.interactiveSpring(response: 0.6, dampingFraction: 0.7, blendDuration: 0.7)){
+            animateView = true
+        }
+        withAnimation(.interactiveSpring(response: 0.6, dampingFraction: 0.7, blendDuration: 0.7).delay(0.2)){
+            animateContent = true
+        }
+    }
+    
+    func dismiss() {
+        withAnimation(.interactiveSpring(response: 0.6, dampingFraction: 0.7, blendDuration: 0.7)){
+            animateView = false
+            animateContent = false
+            showDetailPage = false
+            onClose?()
+        }
     }
 }
 
