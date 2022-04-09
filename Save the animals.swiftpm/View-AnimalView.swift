@@ -9,20 +9,48 @@ import SwiftUI
 
 struct AnimalView: View {
     @ObservedObject var animal: Animal
-    let namespace: Namespace.ID
+    var namespace: Namespace.ID
     var onSave: () -> Void
-
+    
+    @State var scale: Double = 1
+    
+    var position: CGPoint {
+        if animal.saved {
+            return CGPoint(x: UIScreen.screenWidth - 40, y: 30)
+        }
+         
+        return animal.getPosition()
+    }
+    
+    var rotation: Angle {
+        if animal.saved {
+            return Angle(degrees: 0)
+        }
+        
+        return animal.getRotation()
+    }
+ 
     var body: some View {
 //        animal.path
 //            .stroke(style: StrokeStyle(lineWidth: 0.4))
         
         Text("🐠")
             .font(.system(size: 70))
+            .scaleEffect(scale)
             .rotation3DEffect(.degrees(180), axis: (x: 0, y: 1, z: 0))
             .rotation3DEffect(Angle.degrees(animal.l2r ? 0 : 180), axis: (x: 1, y: 0, z: 0))
-            .rotationEffect(animal.getRotation())
+            .rotationEffect(rotation)
             .matchedGeometryEffect(id: animal.id, in: namespace)
-            .position(animal.getPosition())
+            .position(position)
             .onTapGesture(perform: onSave)
+            .animation(.linear(duration: 0.3), value: animal.saved)
+            .onChange(of: animal.saved) { _ in
+                scale = 3
+                
+                withAnimation(.linear(duration: 0.3)) {
+                    scale = 0.2
+                }
+            }
+            
     }
 }
