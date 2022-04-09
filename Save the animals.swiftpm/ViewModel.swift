@@ -8,7 +8,7 @@
 import SwiftUI
 
 class ViewModel: ObservableObject, Identifiable {
-    let maxAnimals = 10
+    let maxAnimals = 5
     @Published var animals = [Animal]()
     var l2r = 0
     var r2l = 0
@@ -26,7 +26,7 @@ class ViewModel: ObservableObject, Identifiable {
             return
         }
         
-        var yRange: ClosedRange<Double> = UIScreen.screenHeight * 0.25...UIScreen.screenHeight
+        let yRange: ClosedRange<Double> = UIScreen.screenHeight * 0.25...UIScreen.screenHeight
         
         let startLeft = Bool.random()
         
@@ -55,8 +55,6 @@ class ViewModel: ObservableObject, Identifiable {
         
         let xRangeLeft2Right: ClosedRange<Double> = 0...midWidth
         let xRangeRight2Left: ClosedRange<Double> = midWidth...UIScreen.screenWidth
-        
-        yRange = UIScreen.screenHeight * 0.25...UIScreen.screenHeight * 0.9
         
         var control1: CGPoint {
             let y = Double.random(in: yRange)
@@ -89,22 +87,21 @@ class ViewModel: ObservableObject, Identifiable {
     }
     
     func setup() {
-        let initialAnimalsSize = 10
+        let initialAnimalsSize = 5
         
         self.addAnimal()
         
         Timer.scheduledTimer(withTimeInterval: 4, repeats: true) { timer in
-            self.addAnimal()
-            
             if self.animals.count >= initialAnimalsSize {
                 timer.invalidate()
+            } else {
+                self.addAnimal()
             }
         }
     }
     
     func save(animal: Animal) {
         animal.save()
-        
         addAnimal()
     }
 }

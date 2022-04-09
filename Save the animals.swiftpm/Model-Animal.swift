@@ -68,6 +68,8 @@ class Animal: Identifiable, ObservableObject {
     
     func save() {
         self.objectWillChange.send()
+        self.timer?.cancel()
+        
         saved = true
         visible = false
     }
