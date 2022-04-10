@@ -8,7 +8,7 @@
 import SwiftUI
 
 class ViewModel: ObservableObject, Identifiable {
-    let maxAnimals = 5
+    let maxAnimals = 6
     @Published var animals = [Animal]()
     var l2r = 0
     var r2l = 0
@@ -87,12 +87,10 @@ class ViewModel: ObservableObject, Identifiable {
     }
     
     func setup() {
-        let initialAnimalsSize = 5
-        
         self.addAnimal()
         
         Timer.scheduledTimer(withTimeInterval: 4, repeats: true) { timer in
-            if self.animals.count >= initialAnimalsSize {
+            if self.animalsVisible.count >= self.maxAnimals {
                 timer.invalidate()
             } else {
                 self.addAnimal()

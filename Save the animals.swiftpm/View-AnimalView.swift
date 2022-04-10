@@ -46,7 +46,6 @@ struct AnimalView: View {
             .onTapGesture(perform: onSave)
             .animation(.linear(duration: 0.3), value: animal.saved)
             .onChange(of: animal.saved) { _ in
-                
                 if showDetails == true {
                     scale = 3
                 }

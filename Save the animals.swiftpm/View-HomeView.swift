@@ -9,11 +9,8 @@ import SwiftUI
 import Combine
 
 struct HomeView: View {
-    @SceneStorage("showDetails") var showDetails: Bool?
+    @SceneStorage("showDetails") var showDetails: Bool = true
     @StateObject var viewModel = ViewModel()
-    
-    //  ocean and sand  wave
-    @State var progress: CGFloat = 0.5
     @State var startAnimation: CGFloat = 0
     
     //    animal details
@@ -33,7 +30,7 @@ struct HomeView: View {
             let size = proxy.size
             
             ZStack(alignment: .bottom) {
-                OceanWaveView(progress: progress, waveHeight: 0.01, offset: startAnimation)
+                OceanWaveView(progress: 0.75, waveHeight: 0.01, offset: startAnimation)
                     .fill(LinearGradient(
                         colors: [Color("Light Blue"), Color("Dark Blue")],
                         startPoint: .top,
@@ -43,7 +40,7 @@ struct HomeView: View {
                         VStack {
                             Spacer()
                             SandWaveView(
-                                progress: progress,
+                                progress: 0.5,
                                 waveHeight: 0.01,
                                 offset: startAnimation
                             )
@@ -93,7 +90,7 @@ struct HomeView: View {
             }
         }
         .sheet(isPresented: $showingAlbum) {
-            Text("AAAA")
+            AlbumView()
         }
     }
     

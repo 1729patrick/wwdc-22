@@ -48,21 +48,18 @@ struct AnimalDetailView: View {
     }
     
     var close: some View {
-        Button(
-            action: dismiss,
-            label: {
-                Image(systemName: "xmark.circle.fill")
-                    .font(.title)
-                    .foregroundColor(.white.opacity(0.5))
-            }
-        )
+        Button {
+            dismiss()
+        } label : {
+            CloseButton()
+        }
         .padding()
         .offset(y: -10)
         .opacity(animateView ? 1 : 0)
     }
     
     var body: some View {
-        ScrollView(.vertical, showsIndicators: false) {
+        ScrollView {
             VStack {
                 image
                 description

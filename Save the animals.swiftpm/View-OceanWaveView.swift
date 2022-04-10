@@ -33,7 +33,7 @@ struct OceanWaveView: Shape{
                 
                 let x: CGFloat = value
                 let sine: CGFloat = sin(Angle(degrees: value + offset).radians)
-                let y: CGFloat = progressHeight + (height * sine) - (rect.height / 4)
+                let y: CGFloat = progressHeight + (height * sine)
                 
                 path.addLine(to: CGPoint(x: x, y: y))
             }
