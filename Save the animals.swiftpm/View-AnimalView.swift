@@ -34,14 +34,14 @@ struct AnimalView: View {
     var body: some View {
 //        animal.path
 //            .stroke(style: StrokeStyle(lineWidth: 0.4))
-        
+//
         Text("🐠")
             .font(.system(size: 70))
             .scaleEffect(scale)
             .rotation3DEffect(.degrees(180), axis: (x: 0, y: 1, z: 0))
             .rotation3DEffect(Angle.degrees(animal.l2r ? 0 : 180), axis: (x: 1, y: 0, z: 0))
             .rotationEffect(rotation)
-            .matchedGeometryEffect(id: animal.id, in: namespace)
+            .matchedGeometryEffect(id: animal.id.uuidString, in: namespace)
             .position(position)
             .onTapGesture(perform: onSave)
             .animation(.linear(duration: 0.3), value: animal.saved)

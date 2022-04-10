@@ -90,7 +90,7 @@ struct HomeView: View {
             }
         }
         .sheet(isPresented: $showingAlbum) {
-            AlbumView()
+            AlbumView(animals: viewModel.animalsSaved)
         }
     }
     

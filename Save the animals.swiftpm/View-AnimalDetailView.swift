@@ -11,6 +11,8 @@ struct AnimalDetailView: View {
     var animal: Animal
     let namespace: Namespace.ID
     @Binding var showDetailPage: Bool
+    var id: String?
+    
     @State var onClose: (() -> Void)?
     @SceneStorage("showDetails") var showDetails: Bool = true
     
@@ -23,7 +25,7 @@ struct AnimalDetailView: View {
             Text("🐠")
                 .font(.system(size: 70))
                 .scaleEffect(animateView ? 3 : 1)
-                .matchedGeometryEffect(id: animal.id, in: namespace)
+                .matchedGeometryEffect(id: id ?? animal.id.uuidString, in: namespace)
         }
         .padding(.top)
         .padding(.vertical, 80)
@@ -39,7 +41,7 @@ struct AnimalDetailView: View {
             Divider()
             
             Toggle("Always shows details to new species", isOn: $showDetails)
-           
+            
         }
         .padding()
         .offset(y: scrollOffset > 0 ? scrollOffset : 0)
@@ -67,7 +69,7 @@ struct AnimalDetailView: View {
             .offset(y: scrollOffset > 0 ? -scrollOffset : 0)
             .offset(offset: $scrollOffset)
         }
-        .background(.thinMaterial)
+        .background(.thickMaterial)
         .coordinateSpace(name: "SCROLL")
         .overlay(alignment: .topTrailing, content: {
             close

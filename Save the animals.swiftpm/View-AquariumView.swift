@@ -8,6 +8,11 @@
 import SwiftUI
 
 struct AquariumView: View {
+    let animal: Animal
+    let currentAnimal: Animal?
+    var namespace: Namespace.ID
+    var showDetailPage: Bool
+    
     let colors = [
         "Red",
         "Gold",
@@ -33,36 +38,36 @@ struct AquariumView: View {
                 .frame(width: 55, height: 10)
             
             ZStack {
-                Capsule()
-                    .stroke(.clear)
-                    .frame(width: 102.5, height: 70)
-                    .overlay {
-                        OceanWaveView(
-                            progress: 0.75,
-                            waveHeight: 0.1,
-                            offset: startAnimation
-                        )
-                        .fill(LinearGradient(
-                            colors: [
-                                Color("Light Blue"),
-                                Color("Dark Blue")
-                            ],
-                            startPoint: .top,
-                            endPoint: .bottom)
-                        )
-                        .clipShape(Capsule())
-                        
-                        Text("🐠")
-                            .font(.system(size: 35))
-                            .rotationEffect(Angle(degrees: fishAnimation == 0 ? -15 : 15))
-                            .offset(x: 0, y: fishAnimation == 0 ? 15 : 5)
-                        
-                    }
+                OceanWaveView(
+                    progress: 0.75,
+                    waveHeight: 0.1,
+                    offset: startAnimation
+                )
+                .fill(
+                    LinearGradient(
+                        colors: [
+                            Color("Light Blue"),
+                            Color("Dark Blue")
+                        ],
+                        startPoint: .top,
+                        endPoint: .bottom)
+                    
+                )
+                .frame(width: 102, height: 70)
+                .clipShape(Capsule())
                 
                 Capsule()
                     .stroke(color, lineWidth: 3)
                     .frame(width: 100, height: 70)
+                
+                Text("🐠")
+                    .font(.system(size: 70))
+                    .scaleEffect(currentAnimal?.id == animal.id && showDetailPage ? 3 : 0.5)
+                    .matchedGeometryEffect(id: "album\(animal.id)", in: namespace)
+                    .rotationEffect(Angle(degrees: fishAnimation == 0 ? -15 : 15))
+                    .offset(x: 0, y: fishAnimation == 0 ? 15 : 5)
             }
+            .padding(.top, -7)
         }
         .onAppear(perform: onAppear)
     }
@@ -79,3 +84,4 @@ struct AquariumView: View {
         color = Color(colors.randomElement() ?? "Gold")
     }
 }
+

@@ -8,9 +8,14 @@
 import SwiftUI
 
 struct AlbumView: View {
-    @Environment(\.dismiss) var dismiss
     
-    let data = (1...100).map { "Item \($0)" }
+    @State var currentAnimal: Animal?
+    @State var showDetailPage: Bool = false
+    
+    @Namespace var animation
+    
+    let animals: [Animal]
+    @Environment(\.dismiss) var dismiss
     
     let columns = [
         GridItem(.adaptive(minimum: 120))
@@ -18,28 +23,55 @@ struct AlbumView: View {
     
     var body: some View {
         ZStack {
-        NavigationView {
-            ScrollView {
-                LazyVGrid(columns: columns, spacing: 20) {
-                    ForEach(data, id: \.self) { item in
-                        AquariumView()
+            NavigationView {
+                ScrollView {
+                    LazyVGrid(columns: columns, spacing: 20) {
+                        ForEach(animals) { animal in
+                            Button {
+                                selectAnimal(with: animal)
+                            } label: {
+                                AquariumView(
+                                    animal: animal,
+                                    currentAnimal: currentAnimal, namespace: animation,
+                                    showDetailPage: showDetailPage
+                                )
+                            }
+                        }
+                    }
+                    .padding(.horizontal)
+                    .padding(.top, 40)
+                }
+                .navigationTitle("My aquariums")
+                .toolbar {
+                    ToolbarItem(placement: .navigationBarTrailing) {
+                        Button {
+                            dismiss()
+                        } label: {
+                            CloseButton()
+                        }
                     }
                 }
-                .padding(.horizontal)
-                .padding(.top, 40)
             }
-            .navigationTitle("Animals saved")
-            .toolbar {
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    Button {
-                        dismiss()
-                    } label: {
-                        CloseButton()
-                    }
-                }
-            }
-        }
         }
         .overlay(content: SheedIndicator.init)
+        .overlay {
+            if let animal = currentAnimal, showDetailPage {
+                AnimalDetailView(
+                    animal: animal,
+                    namespace: animation,
+                    showDetailPage: $showDetailPage,
+                    id: "album\(animal.id)"
+                ) {
+                    
+                }
+            }
+        }
+    }
+    
+    func selectAnimal(with animal: Animal) {
+        withAnimation(. interactiveSpring(response: 0.6, dampingFraction: 0.7, blendDuration: 0.7)){
+            currentAnimal = animal
+            showDetailPage = true
+        }
     }
 }
