@@ -9,7 +9,7 @@ import SwiftUI
 import Combine
 
 struct HomeView: View {
-    @SceneStorage("showDetails") var showDetails: Bool = true
+    @AppStorage("showDetails") var showDetails: Bool?
     @StateObject var viewModel = ViewModel()
     @State var startAnimation: CGFloat = 0
     

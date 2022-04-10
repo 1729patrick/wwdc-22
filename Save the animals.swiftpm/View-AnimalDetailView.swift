@@ -14,7 +14,7 @@ struct AnimalDetailView: View {
     var id: String?
     
     @State var onClose: (() -> Void)?
-    @SceneStorage("showDetails") var showDetails: Bool = true
+    @AppStorage("showDetails") var showDetails: Bool = true
     
     @State var animateView: Bool = false
     @State var animateContent: Bool = false

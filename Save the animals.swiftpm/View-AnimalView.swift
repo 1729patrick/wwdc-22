@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct AnimalView: View {
-    @SceneStorage("showDetails") var showDetails: Bool?
+    @AppStorage("showDetails") var showDetails: Bool?
     @ObservedObject var animal: Animal
     var namespace: Namespace.ID
     var onSave: () -> Void

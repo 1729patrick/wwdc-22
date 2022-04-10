@@ -41,7 +41,7 @@ struct AlbumView: View {
                     .padding(.horizontal)
                     .padding(.top, 40)
                 }
-                .navigationTitle("My aquariums")
+                .navigationBarTitle("My aquariums")
                 .toolbar {
                     ToolbarItem(placement: .navigationBarTrailing) {
                         Button {
