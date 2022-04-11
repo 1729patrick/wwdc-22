@@ -25,6 +25,17 @@ struct HomeView: View {
         return CGPoint(x: UIScreen.screenWidth - 40, y: 30)
     }
     
+    var fake = Animal(
+        from: .init(x: 0, y: UIScreen.screenHeight / 2 - 100),
+        to: .init(x: 100, y: UIScreen.screenHeight / 2),
+        control1: .init(x: 50, y: UIScreen.screenHeight / 2),
+        control2: .init(x: 50, y: UIScreen.screenHeight / 2),
+        l2r: true,
+        onDestroy: { }
+    )
+    
+    @State var spotlight = 1
+    
     var body: some View {
         GeometryReader { proxy in
             let size = proxy.size
@@ -55,26 +66,49 @@ struct HomeView: View {
                             .frame(width: size.width, height: 250)
                         }
                         
+                        
+                        AnimalView(
+                            animal: fake,
+                            namespace: animation,
+                            spotlight: spotlight
+                        ) { }
+                        
                         ForEach(viewModel.animals) { animal in
-                            AnimalView(animal: animal, namespace: animation) {
+                            AnimalView(
+                                animal: animal,
+                                namespace: animation
+                            ) {
                                 selectAnimal(with: animal)
                             }
                         }
+                        
                         WaterDropsView()
                     }
                     .frame(width: size.width, height: size.height)
+                
+                Button {
+                    
+                } label: {
+                    Text("🍔")
+                        .font(.system(size: 50))
+                        .spotlight(enabled: spotlight == 4, title: "Batata")
+                }
+                .buttonStyle(ScaledButtonStyle())
+                .position(x: UIScreen.screenWidth - 120, y: 30)
                 
                 Button {
                     showingAlbum = true
                 } label: {
                     Text("🌎")
                         .font(.system(size: 50))
+                        .spotlight(enabled: spotlight == 3, title: "Batata")
                 }
                 .buttonStyle(ScaledButtonStyle())
                 .scaleEffect(albumScale)
                 .position(albumPosition)
             }
             .onAppear(perform: onAppear)
+            .allowsHitTesting(spotlight > 4)
         }
         .background(.black)
         .ignoresSafeArea(.container, edges: .bottom)
@@ -83,14 +117,26 @@ struct HomeView: View {
                 AnimalDetailView(
                     animal: animal,
                     namespace: animation,
-                    showDetailPage: $showDetailPage
-                ) {
-                    saveAnimal(animal: animal)
-                }
+                    showDetailPage: $showDetailPage,
+                    onClose: {
+                        saveAnimal(animal: animal)
+                        
+                        if spotlight == 2 {
+                            spotlight += 1
+                        }
+                    }
+                )
             }
         }
         .sheet(isPresented: $showingAlbum) {
-            AlbumView(animals: viewModel.animalsSaved)
+            AlbumView(animals: viewModel.animalsVisible)
+        }
+        .onTapGesture {
+            spotlight += 1
+            
+            if spotlight == 2 {
+                selectAnimal(with: fake)
+            }
         }
     }
     

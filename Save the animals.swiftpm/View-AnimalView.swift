@@ -11,6 +11,7 @@ struct AnimalView: View {
     @AppStorage("showDetails") var showDetails: Bool?
     @ObservedObject var animal: Animal
     var namespace: Namespace.ID
+    var spotlight: Int?
     var onSave: () -> Void
     
     @State var scale: Double = 1
@@ -38,6 +39,7 @@ struct AnimalView: View {
         Text("🐠")
             .font(.system(size: 70))
             .scaleEffect(scale)
+            .spotlight(enabled: spotlight == 1 && animal.visible == false, title: "Batata")
             .rotation3DEffect(.degrees(180), axis: (x: 0, y: 1, z: 0))
             .rotation3DEffect(Angle.degrees(animal.l2r ? 0 : 180), axis: (x: 1, y: 0, z: 0))
             .rotationEffect(rotation)

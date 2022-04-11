@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct AlbumView: View {
-    
     @State var currentAnimal: Animal?
     @State var showDetailPage: Bool = false
     
@@ -61,9 +60,7 @@ struct AlbumView: View {
                     namespace: animation,
                     showDetailPage: $showDetailPage,
                     id: "album\(animal.id)"
-                ) {
-                    
-                }
+                )
             }
         }
     }

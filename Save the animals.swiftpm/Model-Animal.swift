@@ -20,7 +20,21 @@ class Animal: Identifiable, ObservableObject {
     
     var saved: Bool = false
     var visible: Bool = true
-
+ 
+    init(from: CGPoint, to: CGPoint, control1: CGPoint, control2: CGPoint, l2r: Bool, onDestroy: (() -> Void)? = nil) {
+        track = Bezier3(from: from, to: to, control1: control1, control2: control2)
+        
+        path = Path({ (path) in
+            path.move(to: from)
+            path.addCurve(to: to, control1: control1, control2: control2)
+        })
+        
+        self.l2r = l2r
+        self.onDestroy = onDestroy
+        
+        startSwimming()
+    }
+    
     func getPosition() -> CGPoint {
         let t = track.curveParameter(arcLength: alongTrackDistance)
         let p = track.point(t: t)
@@ -36,27 +50,13 @@ class Animal: Identifiable, ObservableObject {
         return h
     }
     
-    init(from: CGPoint, to: CGPoint, control1: CGPoint, control2: CGPoint, l2r: Bool, onDestroy: (() -> Void)? = nil) {
-        track = Bezier3(from: from, to: to, control1: control1, control2: control2)
-        
-        path = Path({ (path) in
-            path.move(to: from)
-            path.addCurve(to: to, control1: control1, control2: control2)
-        })
-        
-        self.l2r = l2r
-        self.onDestroy = onDestroy
-        
-        startSwimming()
-    }
-    
     func startSwimming() {
         timer = Timer
             .publish(every: 0.01, on: RunLoop.main, in: RunLoop.Mode.default)
             .autoconnect()
             .sink(receiveValue: { (_) in
                 self.objectWillChange.send()
-                self.alongTrackDistance += self.track.totalArcLength / 400.0
+                self.alongTrackDistance += self.track.totalArcLength / 60.0
                 
                 if self.alongTrackDistance > self.track.totalArcLength {
                     self.timer?.cancel()
