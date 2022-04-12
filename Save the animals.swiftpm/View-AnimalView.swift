@@ -37,8 +37,10 @@ struct AnimalView: View {
 //            .stroke(style: StrokeStyle(lineWidth: 0.4))
 //
         Image(animal.image)
+//            .renderingMode(.template)
             .resizable()
             .scaledToFit()
+//            .colorMultiply(.red)
             .frame(width: 75 * animal.scale, height: 75 * animal.scale)
             .scaleEffect(scale)
             .spotlight(enabled: spotlight == 1 && animal.visible == false, title: "Batata")

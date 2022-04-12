@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct AquariumView: View {
-    let animal: Animal
+    let animalType: AnimalType
     let currentAnimal: Animal?
     var namespace: Namespace.ID
     var showDetailPage: Bool
@@ -25,13 +25,14 @@ struct AquariumView: View {
         "Gray"
     ]
     
-    @State var color: Color = .blue
+    @State var color: Color = Color("Dark Gray")
     
     //  ocean and sand  wave
     @State var startAnimation: CGFloat = 0
     @State var fishAnimation: CGFloat = 0
     
     var body: some View {
+        ZStack {
         VStack(spacing: 0) {
             Capsule()
                 .stroke(color, lineWidth: 3)
@@ -53,22 +54,40 @@ struct AquariumView: View {
                         endPoint: .bottom)
                     
                 )
+                .overlay {
+                    Image(animalType.image)
+                        .renderingMode(.template)
+                        .resizable()
+                        .scaledToFit()
+                        .colorMultiply(.black)
+                        .frame(
+                            width: 40 * max(1, animalType.scale * 0.7),
+                            height: 40 * max(1, animalType.scale * 0.7)
+                        )
+                    
+                    //
+                    //                    .scaleEffect(currentAnimal?.id == animal.id && showDetailPage ? 3 : 0.5)
+                    //                    .matchedGeometryEffect(id: "album\(animal.id)", in: namespace)
+                    //                    .rotationEffect(Angle(degrees: fishAnimation == 0 ? -15 : 15))
+                    //                    .offset(x: 0, y: fishAnimation == 0 ? 15 : 5)
+                    
+                }
                 .frame(width: 102, height: 70)
                 .clipShape(Capsule())
+                
                 
                 Capsule()
                     .stroke(color, lineWidth: 3)
                     .frame(width: 100, height: 70)
-                
-                Text("🐠")
-                    .font(.system(size: 70))
-                    .scaleEffect(currentAnimal?.id == animal.id && showDetailPage ? 3 : 0.5)
-                    .matchedGeometryEffect(id: "album\(animal.id)", in: namespace)
-                    .rotationEffect(Angle(degrees: fishAnimation == 0 ? -15 : 15))
-                    .offset(x: 0, y: fishAnimation == 0 ? 15 : 5)
             }
-            .padding(.top, -7)
         }
+        .opacity(0.1)
+         
+            Image(systemName: "lock.fill")
+                .font(.largeTitle)
+                .foregroundColor(.red)
+        }
+        
         .onAppear(perform: onAppear)
     }
     
@@ -81,7 +100,7 @@ struct AquariumView: View {
             fishAnimation = 1
         }
         
-        color = Color(colors.randomElement() ?? "Gold")
+//        color = Color(colors.randomElement() ?? "Gold")
     }
 }
 

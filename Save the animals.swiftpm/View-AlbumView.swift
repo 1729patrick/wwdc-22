@@ -25,12 +25,12 @@ struct AlbumView: View {
             NavigationView {
                 ScrollView {
                     LazyVGrid(columns: columns, spacing: 20) {
-                        ForEach(animals) { animal in
+                        ForEach(AnimalType.data) { animalType in
                             Button {
-                                selectAnimal(with: animal)
+//                                selectAnimal(with: animal)
                             } label: {
                                 AquariumView(
-                                    animal: animal,
+                                    animalType: animalType,
                                     currentAnimal: currentAnimal, namespace: animation,
                                     showDetailPage: showDetailPage
                                 )

@@ -136,7 +136,7 @@ struct HomeView: View {
             }
         }
         .sheet(isPresented: $showingAlbum) {
-            AlbumView(animals: viewModel.animalsVisible)
+            AlbumView(animals: [])
         }
         .onTapGesture {
             spotlight += 1
