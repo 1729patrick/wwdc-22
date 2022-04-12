@@ -25,7 +25,10 @@ struct AnimalDetailView: View {
             Image(animal.image)
                 .resizable()
                 .scaledToFit()
-                .frame(width: 125, height: 200)
+                .frame(
+                    width: (UIScreen.screenWidth * 0.9) / 3,
+                    height: 100
+                )
                 .scaleEffect(animateView ? 3 : 1)
                 .matchedGeometryEffect(id: id ?? animal.id.uuidString, in: namespace)
         }

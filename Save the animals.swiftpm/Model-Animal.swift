@@ -16,12 +16,13 @@ class Animal: Identifiable, ObservableObject {
     private let track: ParametricCurve
     let path: Path
     private(set) var image: String
+    private(set) var scale: Double
     var onDestroy: (() -> Void)? = nil
     
     var saved: Bool = false
     var visible: Bool = true
  
-    init(from: CGPoint, to: CGPoint, control1: CGPoint, control2: CGPoint, l2r: Bool, speed: Double? = nil, image: String, onDestroy: (() -> Void)? = nil) {
+    init(from: CGPoint, to: CGPoint, control1: CGPoint, control2: CGPoint, l2r: Bool, speed: Double? = nil, image: String,  scale: Double? = 1, onDestroy: (() -> Void)? = nil) {
         track = Bezier3(from: from, to: to, control1: control1, control2: control2)
         
         path = Path({ (path) in
@@ -32,6 +33,7 @@ class Animal: Identifiable, ObservableObject {
         self.l2r = l2r
         self.onDestroy = onDestroy
         self.image = image
+        self.scale = scale ?? 1
         
         startSwimming(speed: speed ?? 500)
     }

@@ -7,8 +7,56 @@
 
 import SwiftUI
 
+struct AnimalType {
+    let image: String
+    let speed: Double
+    let scale: Double
+    
+    static var data: [AnimalType] {
+        [
+            AnimalType(image: "Mustelus schmitti", speed: 900, scale: 2),
+            AnimalType(image: "Atlantirivulus nudiventris", speed: 600, scale: 1),
+            
+            AnimalType(image: "Pristis pectinata", speed: 900, scale: 1.5),
+            AnimalType(image: "Polyprion americanus", speed: 600, scale: 1),
+            
+            AnimalType(image: "Chelonia mydas", speed: 4000, scale: 1.25),
+            AnimalType(image: "Epinephelus itajara", speed: 600, scale: 1),
+            
+            AnimalType(image: "Balaenoptera musculus", speed: 3000, scale: 3),
+            AnimalType(image: "Spintherobolus papilliferus", speed: 600, scale: 1),
+            
+            AnimalType(image: "Galeorhinus galeus", speed: 900, scale: 2),
+            AnimalType(image: "Austrolebias cinereus", speed: 600, scale: 1),
+            
+            AnimalType(image: "Carcharhinus galapagensis", speed: 900, scale: 2),
+            AnimalType(image: "Hypsolebias auratus", speed: 600, scale: 1),
+            
+            AnimalType(image: "Carcharhinus isodon", speed: 900, scale: 2),
+            AnimalType(image: "Leporinus guttatus", speed: 600, scale: 1),
+            
+            AnimalType(image: "Pontoporia blainvillei", speed: 900, scale: 1.5),
+            AnimalType(image: "Austrolebias jaegari",  speed: 600, scale: 1),
+
+            AnimalType(image: "Characidium vestigipinne", speed: 600, scale: 1),
+            AnimalType(image: "Myliobatis ridens", speed: 1500, scale: 1.25),
+            
+            AnimalType(image: "Prochilodus britskii", speed: 600, scale: 1),
+            AnimalType(image: "Sphyrna lewini", speed: 900, scale: 2),
+            
+            AnimalType(image: "Schroederichthys bivius", speed: 600, scale: 1),
+//            AnimalType(image: "Cetorhinus maximus", speed: 900, scale: 2),
+            //            AnimalType(image: "Baryancistrus longipinnis", speed: 600, scale: 1),
+                    
+            
+            AnimalType(image: "Brycon vermelha", speed: 600, scale: 1),
+            AnimalType(image: "Odontesthes bicudo", speed: 600, scale: 1)
+            ]
+    }
+}
+
 class ViewModel: ObservableObject, Identifiable {
-    let maxAnimals = 6
+   let maxAnimals = 12
     @Published var animals = [Animal]()
     var l2r = 0
     var r2l = 0
@@ -19,6 +67,14 @@ class ViewModel: ObservableObject, Identifiable {
     
     var animalsSaved: [Animal] {
         animals.filter { $0.saved }
+    }
+    
+    var nextTypeIndex: Int {
+        if animals.count < AnimalType.data.count {
+            return animals.count
+        }
+        
+        return animals.count % AnimalType.data.count
     }
     
     func addAnimal() {
@@ -70,40 +126,7 @@ class ViewModel: ObservableObject, Identifiable {
             return .init(x: x, y: y)
         }
         
-        struct AnimalType {
-            let image: String
-            let speed: Double
-        }
-        
-        let animalTypes = [
-            AnimalType(image: "Atlantirivulus nudiventris", speed: 600),
-            AnimalType(image: "Carcharhinus galapagensis", speed: 650),
-            AnimalType(image: "Galeorhinus galeus", speed: 650),
-            AnimalType(image: "Polyprion americanus", speed: 500),
-            AnimalType(image: "Spintherobolus papilliferus", speed: 500),
-            AnimalType(image: "Austrolebias cinereus", speed: 500),
-            AnimalType(image: "Carcharhinus isodon", speed: 650),
-            AnimalType(image: "Hypsolebias auratus", speed: 500),
-            AnimalType(image: "Pontoporia blainvillei", speed: 700),
-            AnimalType(image: "Cetorhinus maximus", speed: 650),
-            AnimalType(image: "Leporinus guttatus", speed: 500),
-            AnimalType(image: "Pristis pectinata", speed: 700),
-            AnimalType(image: "Balaenoptera musculus", speed: 1500),
-            AnimalType(image: "Austrolebias jaegari",  speed: 500),
-            AnimalType(image: "Characidium vestigipinne", speed: 500),
-            AnimalType(image: "Mustelus schmitti", speed: 650),
-            AnimalType(image: "Prochilodus britskii", speed: 500),
-            AnimalType(image: "Baryancistrus longipinnis", speed: 650),
-            AnimalType(image: "Chelonia mydas", speed: 1700),
-            AnimalType(image: "Myliobatis ridens", speed: 1500),
-            AnimalType(image: "Schroederichthys bivius", speed: 550),
-            AnimalType(image: "Epinephelus itajara", speed: 500),
-            AnimalType(image: "Brycon vermelha", speed: 500),
-            AnimalType(image: "Odontesthes bicudo", speed: 500),
-            AnimalType(image: "Sphyrna lewini", speed: 650)
-        ]
-        
-        let animalType = animalTypes.randomElement()!
+        let animalType = AnimalType.data[nextTypeIndex]
         
         let animal = Animal(
             from: from,
@@ -111,8 +134,9 @@ class ViewModel: ObservableObject, Identifiable {
             control1: control1,
             control2: control2,
             l2r: startLeft,
-            speed: animalType.speed * 1.2,
+            speed: animalType.speed,
             image: animalType.image,
+            scale: animalType.scale,
             onDestroy: addAnimal
         )
         
@@ -126,7 +150,7 @@ class ViewModel: ObservableObject, Identifiable {
     func setup() {
         self.addAnimal()
         
-        Timer.scheduledTimer(withTimeInterval: 4, repeats: true) { timer in
+        Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { timer in
             if self.animalsVisible.count >= self.maxAnimals {
                 timer.invalidate()
             } else {
