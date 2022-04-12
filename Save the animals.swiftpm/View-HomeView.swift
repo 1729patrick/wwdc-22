@@ -68,6 +68,7 @@ struct HomeView: View {
                             .frame(width: size.width, height: 250)
                         }
                         
+                        WaterDropsView()
                         
 //                        AnimalView(
 //                            animal: fake,
@@ -75,7 +76,7 @@ struct HomeView: View {
 //                            spotlight: spotlight
 //                        ) { }
 //
-                        ForEach(viewModel.animals) { animal in
+                        ForEach(viewModel.animalsVisible) { animal in
                             AnimalView(
                                 animal: animal,
                                 namespace: animation
@@ -84,7 +85,7 @@ struct HomeView: View {
                             }
                         }
                         
-                        WaterDropsView()
+                        
                     }
                     .frame(width: size.width, height: size.height)
                 

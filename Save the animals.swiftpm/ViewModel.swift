@@ -36,8 +36,8 @@ class ViewModel: ObservableObject, Identifiable {
             r2l += 1
         }
         
-        let minWidth: Double = -50
-        let maxWidth: Double = UIScreen.screenWidth + CGFloat(50)
+        let minWidth: Double = -100
+        let maxWidth: Double = UIScreen.screenWidth + CGFloat(100)
         
         var from: CGPoint {
             let y = Double.random(in: yRange)
@@ -70,7 +70,40 @@ class ViewModel: ObservableObject, Identifiable {
             return .init(x: x, y: y)
         }
         
-        let images = ["Condylactis gigantea", "Coscinasterias tenuispina", "Lytechinus variegatus", "Millepora laboreli", "Spelaeogammarus sanctus"]
+        struct AnimalType {
+            let image: String
+            let speed: Double
+        }
+        
+        let animalTypes = [
+            AnimalType(image: "Atlantirivulus nudiventris", speed: 600),
+            AnimalType(image: "Carcharhinus galapagensis", speed: 650),
+            AnimalType(image: "Galeorhinus galeus", speed: 650),
+            AnimalType(image: "Polyprion americanus", speed: 500),
+            AnimalType(image: "Spintherobolus papilliferus", speed: 500),
+            AnimalType(image: "Austrolebias cinereus", speed: 500),
+            AnimalType(image: "Carcharhinus isodon", speed: 650),
+            AnimalType(image: "Hypsolebias auratus", speed: 500),
+            AnimalType(image: "Pontoporia blainvillei", speed: 700),
+            AnimalType(image: "Cetorhinus maximus", speed: 650),
+            AnimalType(image: "Leporinus guttatus", speed: 500),
+            AnimalType(image: "Pristis pectinata", speed: 700),
+            AnimalType(image: "Balaenoptera musculus", speed: 1500),
+            AnimalType(image: "Austrolebias jaegari",  speed: 500),
+            AnimalType(image: "Characidium vestigipinne", speed: 500),
+            AnimalType(image: "Mustelus schmitti", speed: 650),
+            AnimalType(image: "Prochilodus britskii", speed: 500),
+            AnimalType(image: "Baryancistrus longipinnis", speed: 650),
+            AnimalType(image: "Chelonia mydas", speed: 1700),
+            AnimalType(image: "Myliobatis ridens", speed: 1500),
+            AnimalType(image: "Schroederichthys bivius", speed: 550),
+            AnimalType(image: "Epinephelus itajara", speed: 500),
+            AnimalType(image: "Brycon vermelha", speed: 500),
+            AnimalType(image: "Odontesthes bicudo", speed: 500),
+            AnimalType(image: "Sphyrna lewini", speed: 650)
+        ]
+        
+        let animalType = animalTypes.randomElement()!
         
         let animal = Animal(
             from: from,
@@ -78,7 +111,8 @@ class ViewModel: ObservableObject, Identifiable {
             control1: control1,
             control2: control2,
             l2r: startLeft,
-            image: images.randomElement()!,
+            speed: animalType.speed * 1.2,
+            image: animalType.image,
             onDestroy: addAnimal
         )
         

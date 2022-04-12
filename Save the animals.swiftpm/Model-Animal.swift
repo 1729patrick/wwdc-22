@@ -33,7 +33,7 @@ class Animal: Identifiable, ObservableObject {
         self.onDestroy = onDestroy
         self.image = image
         
-        startSwimming(speed: speed ?? 400)
+        startSwimming(speed: speed ?? 500)
     }
     
     func getPosition() -> CGPoint {

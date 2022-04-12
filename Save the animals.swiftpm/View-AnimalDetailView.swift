@@ -24,7 +24,8 @@ struct AnimalDetailView: View {
         VStack {
             Image(animal.image)
                 .resizable()
-                .frame(width: 70, height: 70)
+                .scaledToFit()
+                .frame(width: 125, height: 200)
                 .scaleEffect(animateView ? 3 : 1)
                 .matchedGeometryEffect(id: id ?? animal.id.uuidString, in: namespace)
         }

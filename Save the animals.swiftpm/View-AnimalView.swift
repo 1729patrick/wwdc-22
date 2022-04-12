@@ -38,7 +38,8 @@ struct AnimalView: View {
 //
         Image(animal.image)
             .resizable()
-            .frame(width: 70, height: 70)
+            .scaledToFit()
+            .frame(width: 125, height: 200)
             .scaleEffect(scale)
             .spotlight(enabled: spotlight == 1 && animal.visible == false, title: "Batata")
             .rotation3DEffect(.degrees(180), axis: (x: 0, y: 1, z: 0))
