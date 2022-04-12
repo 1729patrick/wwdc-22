@@ -45,8 +45,8 @@ struct AnimalType {
             AnimalType(image: "Sphyrna lewini", speed: 900, scale: 2),
             
             AnimalType(image: "Schroederichthys bivius", speed: 600, scale: 1),
-//            AnimalType(image: "Cetorhinus maximus", speed: 900, scale: 2),
-            //            AnimalType(image: "Baryancistrus longipinnis", speed: 600, scale: 1),
+            AnimalType(image: "Cetorhinus maximus", speed: 900, scale: 2),
+            AnimalType(image: "Baryancistrus longipinnis", speed: 600, scale: 1),
                     
             
             AnimalType(image: "Brycon vermelha", speed: 600, scale: 1),
