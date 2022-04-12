@@ -70,12 +70,15 @@ class ViewModel: ObservableObject, Identifiable {
             return .init(x: x, y: y)
         }
         
+        let images = ["Condylactis gigantea", "Coscinasterias tenuispina", "Lytechinus variegatus", "Millepora laboreli", "Spelaeogammarus sanctus"]
+        
         let animal = Animal(
             from: from,
             to: to,
             control1: control1,
             control2: control2,
             l2r: startLeft,
+            image: images.randomElement()!,
             onDestroy: addAnimal
         )
         

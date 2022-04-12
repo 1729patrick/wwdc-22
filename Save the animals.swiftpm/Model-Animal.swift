@@ -10,18 +10,18 @@ import SwiftUI
 
 class Animal: Identifiable, ObservableObject {
     private(set) var id = UUID()
-    
     private(set) var l2r: Bool
     private var alongTrackDistance = CGFloat.zero
     private var timer: Cancellable? = nil
     private let track: ParametricCurve
     let path: Path
+    private(set) var image: String
     var onDestroy: (() -> Void)? = nil
     
     var saved: Bool = false
     var visible: Bool = true
  
-    init(from: CGPoint, to: CGPoint, control1: CGPoint, control2: CGPoint, l2r: Bool, onDestroy: (() -> Void)? = nil) {
+    init(from: CGPoint, to: CGPoint, control1: CGPoint, control2: CGPoint, l2r: Bool, speed: Double? = nil, image: String, onDestroy: (() -> Void)? = nil) {
         track = Bezier3(from: from, to: to, control1: control1, control2: control2)
         
         path = Path({ (path) in
@@ -31,8 +31,9 @@ class Animal: Identifiable, ObservableObject {
         
         self.l2r = l2r
         self.onDestroy = onDestroy
+        self.image = image
         
-        startSwimming()
+        startSwimming(speed: speed ?? 400)
     }
     
     func getPosition() -> CGPoint {
@@ -50,13 +51,13 @@ class Animal: Identifiable, ObservableObject {
         return h
     }
     
-    func startSwimming() {
+    func startSwimming(speed: Double) {
         timer = Timer
             .publish(every: 0.01, on: RunLoop.main, in: RunLoop.Mode.default)
             .autoconnect()
             .sink(receiveValue: { (_) in
                 self.objectWillChange.send()
-                self.alongTrackDistance += self.track.totalArcLength / 60.0
+                self.alongTrackDistance += self.track.totalArcLength / speed
                 
                 if self.alongTrackDistance > self.track.totalArcLength {
                     self.timer?.cancel()

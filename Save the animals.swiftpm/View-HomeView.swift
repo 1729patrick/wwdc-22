@@ -31,10 +31,12 @@ struct HomeView: View {
         control1: .init(x: 50, y: UIScreen.screenHeight / 2),
         control2: .init(x: 50, y: UIScreen.screenHeight / 2),
         l2r: true,
+        speed: 50,
+        image: "Spelaeogammarus sanctus",
         onDestroy: { }
     )
     
-    @State var spotlight = 1
+    @State var spotlight = 10
     
     var body: some View {
         GeometryReader { proxy in
@@ -67,12 +69,12 @@ struct HomeView: View {
                         }
                         
                         
-                        AnimalView(
-                            animal: fake,
-                            namespace: animation,
-                            spotlight: spotlight
-                        ) { }
-                        
+//                        AnimalView(
+//                            animal: fake,
+//                            namespace: animation,
+//                            spotlight: spotlight
+//                        ) { }
+//
                         ForEach(viewModel.animals) { animal in
                             AnimalView(
                                 animal: animal,
@@ -89,8 +91,9 @@ struct HomeView: View {
                 Button {
                     
                 } label: {
-                    Text("🍔")
-                        .font(.system(size: 50))
+                    Image("aquarium")
+                        .resizable()
+                        .frame(width: 50, height: 50)
                         .spotlight(enabled: spotlight == 4, title: "Batata")
                 }
                 .buttonStyle(ScaledButtonStyle())
@@ -99,8 +102,9 @@ struct HomeView: View {
                 Button {
                     showingAlbum = true
                 } label: {
-                    Text("🌎")
-                        .font(.system(size: 50))
+                    Image("aquarium")
+                        .resizable()
+                        .frame(width: 50, height: 50)
                         .spotlight(enabled: spotlight == 3, title: "Batata")
                 }
                 .buttonStyle(ScaledButtonStyle())

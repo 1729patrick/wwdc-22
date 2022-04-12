@@ -36,8 +36,9 @@ struct AnimalView: View {
 //        animal.path
 //            .stroke(style: StrokeStyle(lineWidth: 0.4))
 //
-        Text("🐠")
-            .font(.system(size: 70))
+        Image(animal.image)
+            .resizable()
+            .frame(width: 70, height: 70)
             .scaleEffect(scale)
             .spotlight(enabled: spotlight == 1 && animal.visible == false, title: "Batata")
             .rotation3DEffect(.degrees(180), axis: (x: 0, y: 1, z: 0))
