@@ -70,12 +70,12 @@ struct HomeView: View {
                         
                         WaterDropsView()
                         
-//                        AnimalView(
-//                            animal: fake,
-//                            namespace: animation,
-//                            spotlight: spotlight
-//                        ) { }
-//
+                        //                        AnimalView(
+                        //                            animal: fake,
+                        //                            namespace: animation,
+                        //                            spotlight: spotlight
+                        //                        ) { }
+                        //
                         ForEach(viewModel.animalsVisible) { animal in
                             AnimalView(
                                 animal: animal,
@@ -92,8 +92,9 @@ struct HomeView: View {
                 Button {
                     
                 } label: {
-                    Image("aquarium")
+                    Image("Feed")
                         .resizable()
+                        .scaledToFit()
                         .frame(width: 50, height: 50)
                         .spotlight(enabled: spotlight == 4, title: "Batata")
                 }
@@ -103,10 +104,11 @@ struct HomeView: View {
                 Button {
                     showingAlbum = true
                 } label: {
-                    Image("aquarium")
-                        .resizable()
-                        .frame(width: 50, height: 50)
-                        .spotlight(enabled: spotlight == 3, title: "Batata")
+                    Image("Aquarium")
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 50, height: 50)
+                    .spotlight(enabled: spotlight == 3, title: "Batata")
                 }
                 .buttonStyle(ScaledButtonStyle())
                 .scaleEffect(albumScale)
