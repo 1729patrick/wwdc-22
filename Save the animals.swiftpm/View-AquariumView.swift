@@ -26,15 +26,13 @@ struct AquariumView: View {
         "Gray"
     ]
     
-    @State var color: Color = Color("Light Blue")
+    @State var color: Color = Color("Gray")
     
     //  ocean and sand  wave
     @State var startAnimation: CGFloat = 0
     @State var fishAnimation: CGFloat = 0
     
     var disabled: Bool {
-        print("savedCount", savedCount)
-        
         return !(savedCount > 0)
     }
     
@@ -127,8 +125,8 @@ struct AquariumView: View {
                     .shadow(radius: 10)
             }
         }
-        .padding(.top)
         .onAppear(perform: onAppear)
+        .padding(.top)
     }
     
     func onAppear() {

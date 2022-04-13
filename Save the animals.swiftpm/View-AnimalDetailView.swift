@@ -66,17 +66,19 @@ struct AnimalDetailView: View {
     
     var description: some View {
         VStack {
-            Text(dummyText)
-                .multilineTextAlignment(.leading)
-                .lineSpacing(10)
-                .padding(.bottom,20)
+         
+        Text(dummyText)
+            .font(.body)
+            .fontWeight(.medium)
+            .shadow(color: .black, radius: 1)
+            .multilineTextAlignment(.leading)
+            .lineSpacing(10)
             
-            Divider()
+//            Divider()
             
-            Toggle("Always shows details to new species", isOn: $alwaysShowDetails)
+//            Toggle("Always shows details to new species", isOn: $alwaysShowDetails)
             
         }
-        .padding()
         .offset(y: scrollOffset > 0 ? scrollOffset : 0)
         .opacity(animateContent ? 1 : 0)
         .scaleEffect(animateView ? 1 : 0, anchor: .top)
@@ -100,10 +102,12 @@ struct AnimalDetailView: View {
             VStack {
                 image
                 description
+                    .padding()
             }
             .offset(y: scrollOffset > 0 ? -scrollOffset : 0)
             .offset(offset: $scrollOffset)
         }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(.thickMaterial)
         .coordinateSpace(name: "SCROLL")
         .overlay(alignment: .topTrailing, content: {
@@ -136,5 +140,5 @@ struct AnimalDetailView: View {
 
 
 
-var dummyText = "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like)."
+var dummyText = "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. "
 

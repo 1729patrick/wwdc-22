@@ -36,10 +36,15 @@ struct AlbumView: View {
         .opacity(animateView ? 1 : 0)
     }
     
+    
     var body: some View {
         VStack {
             HStack {
                 Text("My aquarium")
+                    .font(.system(size: 32))
+                    .fontWeight(.heavy)
+                    .shadow(color: .black, radius: 1)
+                
                 Spacer()
                 close
             }
