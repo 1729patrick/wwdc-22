@@ -54,19 +54,21 @@ struct AlbumView: View {
     
     
     var body: some View {
-        VStack {
+        VStack(spacing: 0) {
             HStack(alignment: .center) {
                 Text("My aquarium")
                     .font(.system(size: 32))
                     .fontWeight(.heavy)
                     .shadow(color: .black, radius: 1)
+                    .scaleEffect(animateView ? 1 : 0, anchor: .leading)
                 
                 Spacer()
                 
                 feed
                 close
             }
-            .padding([.top, .horizontal])
+            .padding()
+            Divider()
             
             ScrollView(.vertical, showsIndicators: false) {
                 LazyVGrid(columns: columns) {

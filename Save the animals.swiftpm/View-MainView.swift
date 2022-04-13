@@ -13,6 +13,8 @@ struct MainView: View {
     
     @State var startAnimation: CGFloat = 0
     
+    @State private var animateView: Bool = false
+    
     //    animal details
     @State var showDetailPage: Bool = false
     @State var currentAnimal: Animal?
@@ -62,6 +64,7 @@ struct MainView: View {
         }
         .buttonStyle(ScaledButtonStyle())
         .scaleEffect(albumScale)
+        .scaleEffect(animateView ? 1 : 0)
     }
     
     var body: some View {
@@ -132,6 +135,7 @@ struct MainView: View {
                     size: 75 * animal.type.scale,
                     onClose: {
                         saveAnimal(animal: animal)
+                        currentAnimal = nil
                         
                         if spotlight == 2 {
                             spotlight += 1
@@ -139,15 +143,19 @@ struct MainView: View {
                     }
                 )
             }
-
+            
         }
         
-      
+        
     }
     
     func onAppear() {
         withAnimation(.linear(duration: 5).repeatForever(autoreverses: false)){
             startAnimation = UIScreen.screenWidth - 70
+        }
+        
+        withAnimation(.interactiveSpring(response: 0.6, dampingFraction: 0.7, blendDuration: 0.7)){
+            animateView = true
         }
     }
     

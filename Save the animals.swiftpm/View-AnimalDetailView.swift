@@ -66,18 +66,12 @@ struct AnimalDetailView: View {
     
     var description: some View {
         VStack {
-         
-        Text(dummyText)
-            .font(.body)
-            .fontWeight(.medium)
-            .shadow(color: .black, radius: 1)
-            .multilineTextAlignment(.leading)
-            .lineSpacing(10)
-            
-//            Divider()
-            
-//            Toggle("Always shows details to new species", isOn: $alwaysShowDetails)
-            
+            Text(animal.type.description)
+                .font(.body)
+                .fontWeight(.medium)
+                .shadow(color: .black, radius: 1)
+                .multilineTextAlignment(.leading)
+                .lineSpacing(10)
         }
         .offset(y: scrollOffset > 0 ? scrollOffset : 0)
         .opacity(animateContent ? 1 : 0)
@@ -95,27 +89,40 @@ struct AnimalDetailView: View {
                 .frame(width: 50, height: 50)
         }
         .scaleEffect(animateView ? 1 : 0)
-        .padding()
     }
     
     var body: some View {
-        ScrollView(.vertical, showsIndicators: false) {
-            VStack {
-                image
-                description
-                    .padding()
+        VStack(spacing: 0) {
+            HStack(alignment: .center) {
+                Text(animal.type.id)
+                    .font(.system(size: 32))
+                    .fontWeight(.heavy)
+                    .shadow(color: .black, radius: 1)
+                    .lineLimit(1)
+                    .scaleEffect(animateView ? 1 : 0, anchor: .leading)
+                
+                Spacer()
+                
+                close
             }
-            .offset(y: scrollOffset > 0 ? -scrollOffset : 0)
-            .offset(offset: $scrollOffset)
+            .padding()
+            Divider()
+            
+            ScrollView(.vertical, showsIndicators: false) {
+                VStack {
+                    image
+                    description
+                        .padding()
+                }
+                .offset(y: scrollOffset > 0 ? -scrollOffset : 0)
+                .offset(offset: $scrollOffset)
+            }
+            .coordinateSpace(name: "SCROLL")
+            .onAppear(perform: onAppear)
+            .transition(.identity)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(.thickMaterial)
-        .coordinateSpace(name: "SCROLL")
-        .overlay(alignment: .topTrailing, content: {
-            close
-        })
-        .onAppear(perform: onAppear)
-        .transition(.identity)
     }
     
     func onAppear() {
@@ -129,17 +136,10 @@ struct AnimalDetailView: View {
     
     func dismiss() {
         withAnimation(.interactiveSpring(response: 0.6, dampingFraction: 0.7, blendDuration: 0.7)){
+            showDetailPage = false
             animateView = false
             animateContent = false
-            showDetailPage = false
             onClose?()
         }
     }
 }
-
-
-
-
-
-var dummyText = "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. "
-
