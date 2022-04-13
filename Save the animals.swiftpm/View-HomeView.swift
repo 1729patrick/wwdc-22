@@ -21,9 +21,6 @@ struct HomeView: View {
     
     //    album icon
     @State var albumScale: Double = 1
-    var albumPosition: CGPoint {
-        return CGPoint(x: UIScreen.screenWidth - 40, y: 30)
-    }
     
     //    var fake = Animal(
     //        from: .init(x: 0, y: UIScreen.screenHeight / 2 - 100),
@@ -62,7 +59,7 @@ struct HomeView: View {
                 .spotlight(enabled: spotlight == 4, title: "Batata")
         }
         .buttonStyle(ScaledButtonStyle())
-        .position(x: UIScreen.screenWidth - 120, y: 30)
+        .padding(.horizontal)
     }
     
     var album: some View {
@@ -77,11 +74,10 @@ struct HomeView: View {
         }
         .buttonStyle(ScaledButtonStyle())
         .scaleEffect(albumScale)
-        .position(albumPosition)
     }
     
     var body: some View {
-        ZStack {
+        ZStack(alignment: .top) {
             GeometryReader { proxy in
                 let size = proxy.size
                 
@@ -106,38 +102,12 @@ struct HomeView: View {
                             
                         }
                         .frame(width: size.width, height: size.height)
-                    
-                    feed
-                    album
-                    
                 }
                 .onAppear(perform: onAppear)
                 .allowsHitTesting(spotlight > 4)
             }
             .background(.black)
             .ignoresSafeArea(.container, edges: .bottom)
-            .overlay {
-                if let animal = currentAnimal, showDetailPage {
-                    AnimalDetailView(
-                        animal: animal,
-                        namespace: animation,
-                        showDetailPage: $showDetailPage,
-                        alwaysShowDetails: $viewModel.alwaysShowDetails,
-                        id: animal.id.uuidString,
-                        size: 75 * animal.type.scale,
-                        onClose: {
-                            saveAnimal(animal: animal)
-                            
-                            if spotlight == 2 {
-                                spotlight += 1
-                            }
-                        }
-                    )
-                }
-            }
-            //        .sheet(isPresented: $showingAlbum) {
-            //            AlbumView(animals: [])
-            //        }
             .onTapGesture {
                 spotlight += 1
                 
@@ -146,6 +116,14 @@ struct HomeView: View {
                 }
             }
             
+            HStack {
+                Spacer()
+                
+                feed
+                album
+            }
+            .padding()
+            
             if showingAlbum {
                 AlbumView(
                     showingAlbum: $showingAlbum,
@@ -153,7 +131,28 @@ struct HomeView: View {
                     animalsSaved: viewModel.animalsSaved
                 )
             }
+            
+            if let animal = currentAnimal, showDetailPage {
+                AnimalDetailView(
+                    animal: animal,
+                    namespace: animation,
+                    showDetailPage: $showDetailPage,
+                    alwaysShowDetails: $viewModel.alwaysShowDetails,
+                    id: animal.id.uuidString,
+                    size: 75 * animal.type.scale,
+                    onClose: {
+                        saveAnimal(animal: animal)
+                        
+                        if spotlight == 2 {
+                            spotlight += 1
+                        }
+                    }
+                )
+            }
+
         }
+        
+      
     }
     
     func onAppear() {
@@ -199,10 +198,10 @@ struct HomeView: View {
     }
     
     func scaleAlbum() {
-        withAnimation(.linear(duration: 0.3).delay(0.5)) {
+        withAnimation(.linear(duration: 0.3).delay(0.4)) {
             albumScale = 1.3
         }
-        withAnimation(.linear(duration: 0.3).delay(0.8)) {
+        withAnimation(.linear(duration: 0.3).delay(0.7)) {
             albumScale = 1
         }
     }

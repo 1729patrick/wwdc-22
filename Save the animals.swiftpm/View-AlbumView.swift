@@ -28,7 +28,10 @@ struct AlbumView: View {
         Button {
             dismiss()
         } label : {
-            CloseButton()
+            Image("Close")
+                .resizable()
+                .scaledToFit()
+                .frame(width: 50, height: 50)
         }
         .opacity(animateView ? 1 : 0)
     }
@@ -40,7 +43,7 @@ struct AlbumView: View {
                 Spacer()
                 close
             }
-            .padding(20)
+            .padding()
             
             ScrollView {
                 LazyVGrid(columns: columns, spacing: 20) {

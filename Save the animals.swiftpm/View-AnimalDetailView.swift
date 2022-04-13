@@ -86,10 +86,13 @@ struct AnimalDetailView: View {
         Button {
             dismiss()
         } label : {
-            CloseButton()
+            Image("Close")
+                .resizable()
+                .scaledToFit()
+                .frame(width: 50, height: 50)
         }
-        .padding()
         .opacity(animateView ? 1 : 0)
+        .padding()
     }
     
     var body: some View {

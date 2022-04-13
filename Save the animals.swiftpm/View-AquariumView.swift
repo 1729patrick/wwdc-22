@@ -26,7 +26,7 @@ struct AquariumView: View {
         "Gray"
     ]
     
-    @State var color: Color = Color("Dark Gray")
+    @State var color: Color = Color("Light Blue")
     
     //  ocean and sand  wave
     @State var startAnimation: CGFloat = 0
@@ -127,6 +127,7 @@ struct AquariumView: View {
                     .shadow(radius: 10)
             }
         }
+        .padding(.top)
         .onAppear(perform: onAppear)
     }
     
