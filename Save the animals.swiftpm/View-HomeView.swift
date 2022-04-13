@@ -48,20 +48,6 @@ struct HomeView: View {
         }
     }
     
-    var feed: some View {
-        Button {
-            
-        } label: {
-            Image("Feed")
-                .resizable()
-                .scaledToFit()
-                .frame(width: 50, height: 50)
-                .spotlight(enabled: spotlight == 4, title: "Batata")
-        }
-        .buttonStyle(ScaledButtonStyle())
-        .padding(.horizontal)
-    }
-    
     var album: some View {
         return Button {
             showingAlbum = true
@@ -119,7 +105,6 @@ struct HomeView: View {
             HStack {
                 Spacer()
                 
-                feed
                 album
             }
             .padding()
@@ -198,10 +183,10 @@ struct HomeView: View {
     }
     
     func scaleAlbum() {
-        withAnimation(.linear(duration: 0.3).delay(0.4)) {
+        withAnimation(.linear(duration: 0.2).delay(0.3)) {
             albumScale = 1.3
         }
-        withAnimation(.linear(duration: 0.3).delay(0.7)) {
+        withAnimation(.linear(duration: 0.15).delay(0.6)) {
             albumScale = 1
         }
     }

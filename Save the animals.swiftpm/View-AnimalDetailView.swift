@@ -93,12 +93,12 @@ struct AnimalDetailView: View {
                 .scaledToFit()
                 .frame(width: 50, height: 50)
         }
-        .opacity(animateView ? 1 : 0)
+        .scaleEffect(animateView ? 1 : 0)
         .padding()
     }
     
     var body: some View {
-        ScrollView {
+        ScrollView(.vertical, showsIndicators: false) {
             VStack {
                 image
                 description

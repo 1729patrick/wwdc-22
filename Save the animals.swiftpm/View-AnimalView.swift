@@ -21,7 +21,7 @@ struct AnimalView: View {
     
     var position: CGPoint {
         if animal.saved {
-            return CGPoint(x: UIScreen.screenWidth - 40, y: 30)
+            return CGPoint(x: UIScreen.screenWidth - 40, y: 50)
         }
          
         return animal.getPosition()
@@ -65,13 +65,13 @@ struct AnimalView: View {
             .matchedGeometryEffect(id: animal.id.uuidString, in: namespace)
             .position(position)
             .onTapGesture(perform: onSave)
-            .animation(.linear(duration: 0.5), value: animal.saved)
+            .animation(.linear(duration: 0.4), value: animal.saved)
             .onChange(of: animal.saved) { _ in
                 if alwaysShowDetails == true {
                     scale = (UIScreen.screenWidth * 0.85) / width
                 }
                 
-                withAnimation(.linear(duration: 0.5)) {
+                withAnimation(.linear(duration: 0.3)) {
                     scale = 0.2
                 }
             }

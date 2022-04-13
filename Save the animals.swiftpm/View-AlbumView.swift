@@ -24,6 +24,21 @@ struct AlbumView: View {
         GridItem(.adaptive(minimum: 120))
     ]
     
+    var feed: some View {
+        Button {
+            
+        } label: {
+            Image("Feed")
+                .resizable()
+                .scaledToFit()
+                .frame(width: 50, height: 50)
+//                .spotlight(enabled: spotlight == 4, title: "Batata")
+        }
+        .buttonStyle(ScaledButtonStyle())
+        .padding(.horizontal)
+        .scaleEffect(animateView ? 1 : 0)
+    }
+    
     var close: some View {
         Button {
             dismiss()
@@ -33,25 +48,29 @@ struct AlbumView: View {
                 .scaledToFit()
                 .frame(width: 50, height: 50)
         }
-        .opacity(animateView ? 1 : 0)
+        .scaleEffect(animateView ? 1 : 0)
     }
     
     
     var body: some View {
         VStack {
-            HStack {
+            HStack(alignment: .center) {
                 Text("My aquarium")
                     .font(.system(size: 32))
                     .fontWeight(.heavy)
                     .shadow(color: .black, radius: 1)
                 
                 Spacer()
+                
+                feed
                 close
             }
-            .padding()
+            .padding([.top, .horizontal])
+            .padding(.bottom, -1)
             
-            ScrollView {
-                LazyVGrid(columns: columns, spacing: 20) {
+            
+            ScrollView(.vertical, showsIndicators: false) {
+                LazyVGrid(columns: columns) {
                     ForEach(AnimalType.data) { animalType in
                         Button {
                             selectAnimal(with: animalType)
@@ -65,10 +84,11 @@ struct AlbumView: View {
                             )
                         }
                         .disabled(animalsSaved[animalType] == nil)
-                        .zIndex(showDetailPage && animalType == currentAnimalType ? 2 : 1)
+//                        .zIndex(showDetailPage && animalType == currentAnimalType ? 2 : 1)
+                        .scaleEffect(animateView ? 1 : 0, anchor: .center)
                     }
                 }
-                .scaleEffect(animateView ? 1 : 0, anchor: .top)
+//                .opacity(animateView ? 1 : 0)
             }
         }
         .overlay {
