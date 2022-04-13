@@ -8,7 +8,10 @@
 import Foundation
 
 struct AnimalType: Identifiable {
-    let id = UUID()
+    var id: String {
+        image
+    }
+    
     let image: String
     let speed: Double
     let scale: Double

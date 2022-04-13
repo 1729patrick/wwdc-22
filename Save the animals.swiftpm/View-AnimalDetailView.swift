@@ -20,16 +20,28 @@ struct AnimalDetailView: View {
     @State var animateContent: Bool = false
     @State var scrollOffset: CGFloat = 0
     
+    var rotation: Angle {
+        
+        if animateView {
+            let alpha: Double = animal.getRotation().degrees < 0 ? -1 : 1
+            
+            return Angle(degrees: animal.l2r ? 0 : (180 * alpha))
+        }
+    
+        return animal.getRotation()
+    }
+    
     var image: some View {
         VStack {
             Image(animal.image)
                 .resizable()
                 .scaledToFit()
-                .frame(
-                    width: (UIScreen.screenWidth * 0.9) / 3,
-                    height: 100
-                )
-                .scaleEffect(animateView ? 3 : 1)
+                .frame(width: 75 * animal.scale, height: animateView ? 75 : 75 * animal.scale)
+                .scaleEffect(
+                    animateView ? (UIScreen.screenWidth * 0.85) / (75 * animal.scale) : 1 )
+                .rotation3DEffect(.degrees(180), axis: (x: 0, y: 1, z: 0))
+                .rotation3DEffect(Angle.degrees(animal.l2r ? 0 : 180), axis: (x: 1, y: 0, z: 0))
+                .rotationEffect(rotation)
                 .matchedGeometryEffect(id: id ?? animal.id.uuidString, in: namespace)
         }
         .padding(.top)
