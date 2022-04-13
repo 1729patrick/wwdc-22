@@ -1,8 +1,14 @@
+import AVFoundation
 import SwiftUI
 
 struct ContentView: View {
     var body: some View {
-        HomeView()
+        MainView()
             .preferredColorScheme(.dark)
+            .onAppear {
+                SoundManager.shared.play(sound: BackgroundSound())
+            }
     }
 }
+
+

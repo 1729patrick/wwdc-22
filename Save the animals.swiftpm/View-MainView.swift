@@ -1,5 +1,5 @@
 //
-//  View-HomeView.swift
+//  View-MainView.swift
 //  Save the animals
 //
 //  Created by Patrick Battisti Forsthofer on 08/04/22.
@@ -8,7 +8,7 @@
 import SwiftUI
 import Combine
 
-struct HomeView: View {
+struct MainView: View {
     @StateObject var viewModel = ViewModel()
     
     @State var startAnimation: CGFloat = 0
@@ -43,13 +43,15 @@ struct HomeView: View {
                 selected: showDetailPage && currentAnimal == animal,
                 namespace: animation
             ) {
+                SoundManager.shared.play(sound: FishSound())
                 selectAnimal(with: animal)
             }
         }
     }
     
     var album: some View {
-        return Button {
+        Button {
+            SoundManager.shared.play(sound: ButtonSound())
             showingAlbum = true
         } label: {
             Image("Aquarium")
@@ -91,6 +93,9 @@ struct HomeView: View {
                 }
                 .onAppear(perform: onAppear)
                 .allowsHitTesting(spotlight > 4)
+                .onTapGesture {
+                    SoundManager.shared.play(sound: WrongSound())
+                }
             }
             .background(.black)
             .ignoresSafeArea(.container, edges: .bottom)

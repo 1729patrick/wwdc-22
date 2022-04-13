@@ -86,6 +86,7 @@ struct AnimalDetailView: View {
     
     var close: some View {
         Button {
+            SoundManager.shared.play(sound: ButtonSound())
             dismiss()
         } label : {
             Image("Close")

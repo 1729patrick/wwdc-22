@@ -26,7 +26,7 @@ struct AlbumView: View {
     
     var feed: some View {
         Button {
-            
+            SoundManager.shared.play(sound: ButtonSound())
         } label: {
             Image("Feed")
                 .resizable()
@@ -41,6 +41,7 @@ struct AlbumView: View {
     
     var close: some View {
         Button {
+            SoundManager.shared.play(sound: ButtonSound())
             dismiss()
         } label : {
             Image("Close")
@@ -66,14 +67,20 @@ struct AlbumView: View {
                 close
             }
             .padding([.top, .horizontal])
-            .padding(.bottom, -1)
-            
             
             ScrollView(.vertical, showsIndicators: false) {
                 LazyVGrid(columns: columns) {
                     ForEach(AnimalType.data) { animalType in
                         Button {
+                            guard animalsSaved[animalType] != nil else {
+                                SoundManager.shared.play(sound: WrongSound())
+                                return
+                            }
+                            
                             selectAnimal(with: animalType)
+                            SoundManager.shared.play(sound: ButtonSound())
+                            
+                            
                         } label: {
                             AquariumView(
                                 animalType: animalType,
@@ -83,7 +90,6 @@ struct AlbumView: View {
                                 savedCount: animalsSaved[animalType] ?? 0
                             )
                         }
-                        .disabled(animalsSaved[animalType] == nil)
 //                        .zIndex(showDetailPage && animalType == currentAnimalType ? 2 : 1)
                         .scaleEffect(animateView ? 1 : 0, anchor: .center)
                     }
