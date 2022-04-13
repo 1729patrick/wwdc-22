@@ -43,6 +43,10 @@ struct AquariumView: View {
             return Angle(degrees: 0)
         }
         
+        if showDetailPage && animalType == currentAnimalType {
+            return Angle(degrees: 0)
+        }
+        
         return Angle(degrees: fishAnimation == 0 ? -15 : 15)
     }
     
@@ -54,6 +58,18 @@ struct AquariumView: View {
         return fishAnimation == 0 ? 15 : 5
     }
     
+    var size: Double {
+        40 * max(1, animalType.scale * 0.7)
+    }
+    
+    var scale : Double {
+        if showDetailPage && animalType == currentAnimalType {
+            return (UIScreen.screenWidth * 0.85) / size
+        }
+        
+        return 1
+    }
+
     var body: some View {
         ZStack {
             VStack(spacing: 0) {
@@ -77,32 +93,32 @@ struct AquariumView: View {
                             endPoint: .bottom)
                         
                     )
-                    .overlay {
-                        Image(animalType.image)
-                            .resizable()
-                            .scaledToFit()
-                            .if(disabled) { image in
-                                image.colorMultiply(.black)
-                            }
-                            .frame(
-                                width: 40 * max(1, animalType.scale * 0.7),
-                                height: 40 * max(1, animalType.scale * 0.7)
-                            )
-                            .matchedGeometryEffect(id: "album\(animalType.id)", in: namespace)
-                            .rotationEffect(rotation)
-                            .offset(x: 0, y: y)
-                        
-                    }
                     .frame(width: 102, height: 70)
                     .clipShape(Capsule())
-                    
                     
                     Capsule()
                         .stroke(color, lineWidth: 3)
                         .frame(width: 100, height: 70)
+                    
                 }
             }
             .opacity(disabled ? 0.15 : 1)
+        }
+        .overlay {
+            Image(animalType.image)
+                .resizable()
+                .scaledToFit()
+                .if(disabled) { image in
+                    image.colorMultiply(.black)
+                }
+                .frame(
+                    width: size,
+                    height: size
+                )
+                .scaleEffect(scale)
+                .matchedGeometryEffect(id: "album\(animalType.id)", in: namespace)
+                .rotationEffect(rotation)
+                .offset(x: 0, y: y)
             
             if disabled {
                 Image(systemName: "lock.fill")
@@ -111,12 +127,11 @@ struct AquariumView: View {
                     .shadow(radius: 10)
             }
         }
-        
         .onAppear(perform: onAppear)
     }
     
     func onAppear() {
-        withAnimation(.linear(duration: disabled ? 120 : 8).repeatForever(autoreverses: false)){
+        withAnimation(.linear(duration: 8).repeatForever(autoreverses: false)){
             startAnimation = UIScreen.screenWidth - 70
         }
         

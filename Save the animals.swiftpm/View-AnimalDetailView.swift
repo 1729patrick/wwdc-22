@@ -58,7 +58,7 @@ struct AnimalDetailView: View {
                 .rotation3DEffect(.degrees(180), axis: (x: 0, y: 1, z: 0))
                 .rotation3DEffect(Angle.degrees(animal.l2r ? 0 : 180), axis: (x: 1, y: 0, z: 0))
                 .rotationEffect(rotation)
-                .matchedGeometryEffect(id: id ?? animal.id.uuidString, in: namespace)
+                .matchedGeometryEffect(id: id, in: namespace)
         }
         .padding(.top)
         .padding(.vertical, 80)

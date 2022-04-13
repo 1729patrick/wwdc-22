@@ -57,6 +57,7 @@ struct AlbumView: View {
                             )
                         }
                         .disabled(animalsSaved[animalType] == nil)
+                        .zIndex(showDetailPage && animalType == currentAnimalType ? 2 : 1)
                     }
                 }
                 .scaleEffect(animateView ? 1 : 0, anchor: .top)
@@ -78,9 +79,7 @@ struct AlbumView: View {
                     alwaysShowDetails: $alwaysShowDetails,
                     id: "album\(animalType.id)",
                     size: 40 * max(1, animalType.scale * 0.7)
-                ) {
-                    
-                }
+                )
             }
         }
         .onAppear(perform: onAppear)
@@ -88,7 +87,6 @@ struct AlbumView: View {
     }
     
     func onAppear() {
-        print("onAppear")
         withAnimation(.interactiveSpring(response: 0.6, dampingFraction: 0.7, blendDuration: 0.7)){
             animateView = true
         }
