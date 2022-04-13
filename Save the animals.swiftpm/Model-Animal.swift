@@ -8,7 +8,11 @@
 import Combine
 import SwiftUI
 
-class Animal: Identifiable, ObservableObject {
+class Animal: Identifiable, ObservableObject, Equatable {
+    static func == (lhs: Animal, rhs: Animal) -> Bool {
+        lhs.id == rhs.id
+    }
+    
     private(set) var id = UUID()
     
     private(set) var l2r: Bool

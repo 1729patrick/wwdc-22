@@ -43,6 +43,7 @@ struct HomeView: View {
             AnimalView(
                 animal: animal,
                 alwaysShowDetails: viewModel.alwaysShowDetails,
+                selected: showDetailPage && currentAnimal == animal,
                 namespace: animation
             ) {
                 selectAnimal(with: animal)

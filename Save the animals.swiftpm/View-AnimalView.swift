@@ -11,6 +11,8 @@ struct AnimalView: View {
     @ObservedObject var animal: Animal
     
     var alwaysShowDetails: Bool
+    var selected: Bool
+    
     var namespace: Namespace.ID
     var spotlight: Int?
     var onSave: () -> Void
@@ -24,14 +26,27 @@ struct AnimalView: View {
          
         return animal.getPosition()
     }
+    
     var rotation: Angle {
-        if animal.saved {
+        if animal.saved || selected {
             let alpha: Double = animal.getRotation().degrees < 0 ? -1 : 1
             
             return Angle(degrees: animal.l2r ? 0 : (180 * alpha))
         }
         
         return animal.getRotation()
+    }
+    
+    var width: Double {
+        75 * animal.type.scale
+    }
+    
+    var height: Double {
+        if selected {
+            return 75
+        }
+        
+        return 75 * animal.type.scale
     }
     
     var body: some View {
@@ -41,7 +56,7 @@ struct AnimalView: View {
         Image(animal.type.image)
             .resizable()
             .scaledToFit()
-            .frame(width: 75 * animal.type.scale, height: 75 * animal.type.scale)
+            .frame(width: width, height: height)
             .scaleEffect(scale)
             .spotlight(enabled: spotlight == 1 && animal.visible == false, title: "Batata")
             .rotation3DEffect(.degrees(180), axis: (x: 0, y: 1, z: 0))
@@ -53,7 +68,7 @@ struct AnimalView: View {
             .animation(.linear(duration: 0.5), value: animal.saved)
             .onChange(of: animal.saved) { _ in
                 if alwaysShowDetails == true {
-                    scale = 3
+                    scale = (UIScreen.screenWidth * 0.85) / width
                 }
                 
                 withAnimation(.linear(duration: 0.5)) {
