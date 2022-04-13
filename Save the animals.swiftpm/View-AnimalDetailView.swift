@@ -11,34 +11,50 @@ struct AnimalDetailView: View {
     var animal: Animal
     let namespace: Namespace.ID
     @Binding var showDetailPage: Bool
-    var id: String?
+    @Binding var alwaysShowDetails: Bool
+    var id: String
+    var size: Double
     
     @State var onClose: (() -> Void)?
-    @AppStorage("showDetails") var showDetails: Bool = true
     
-    @State var animateView: Bool = false
-    @State var animateContent: Bool = false
-    @State var scrollOffset: CGFloat = 0
+    @State private var animateView: Bool = false
+    @State private var animateContent: Bool = false
+    @State private var scrollOffset: CGFloat = 0
+    
     
     var rotation: Angle {
-        
         if animateView {
             let alpha: Double = animal.getRotation().degrees < 0 ? -1 : 1
             
             return Angle(degrees: animal.l2r ? 0 : (180 * alpha))
         }
-    
+        
         return animal.getRotation()
+    }
+    
+    var width: Double {
+        size
+    }
+    
+    var height: Double {
+        if animateView {
+            return 75
+        }
+        
+        return size
+    }
+    
+    var scale : Double {
+        animateView ? (UIScreen.screenWidth * 0.85) / width : 1
     }
     
     var image: some View {
         VStack {
-            Image(animal.image)
+            Image(animal.type.image)
                 .resizable()
                 .scaledToFit()
-                .frame(width: 75 * animal.scale, height: animateView ? 75 : 75 * animal.scale)
-                .scaleEffect(
-                    animateView ? (UIScreen.screenWidth * 0.85) / (75 * animal.scale) : 1 )
+                .frame(width: width, height: height)
+                .scaleEffect(scale)
                 .rotation3DEffect(.degrees(180), axis: (x: 0, y: 1, z: 0))
                 .rotation3DEffect(Angle.degrees(animal.l2r ? 0 : 180), axis: (x: 1, y: 0, z: 0))
                 .rotationEffect(rotation)
@@ -57,13 +73,13 @@ struct AnimalDetailView: View {
             
             Divider()
             
-            Toggle("Always shows details to new species", isOn: $showDetails)
+            Toggle("Always shows details to new species", isOn: $alwaysShowDetails)
             
         }
         .padding()
         .offset(y: scrollOffset > 0 ? scrollOffset : 0)
         .opacity(animateContent ? 1 : 0)
-        .scaleEffect(animateView ? 1 : 0,anchor: .top)
+        .scaleEffect(animateView ? 1 : 0, anchor: .top)
     }
     
     var close: some View {
@@ -73,7 +89,6 @@ struct AnimalDetailView: View {
             CloseButton()
         }
         .padding()
-        .offset(y: -10)
         .opacity(animateView ? 1 : 0)
     }
     

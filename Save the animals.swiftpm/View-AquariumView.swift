@@ -9,9 +9,10 @@ import SwiftUI
 
 struct AquariumView: View {
     let animalType: AnimalType
-    let currentAnimal: Animal?
+    let currentAnimalType: AnimalType?
     var namespace: Namespace.ID
     var showDetailPage: Bool
+    let savedCount: Int
     
     let colors = [
         "Red",
@@ -31,76 +32,98 @@ struct AquariumView: View {
     @State var startAnimation: CGFloat = 0
     @State var fishAnimation: CGFloat = 0
     
+    var disabled: Bool {
+        print("savedCount", savedCount)
+        
+        return !(savedCount > 0)
+    }
+    
+    var rotation: Angle {
+        if disabled {
+            return Angle(degrees: 0)
+        }
+        
+        return Angle(degrees: fishAnimation == 0 ? -15 : 15)
+    }
+    
+    var y: Double {
+        if disabled {
+            return 0
+        }
+        
+        return fishAnimation == 0 ? 15 : 5
+    }
+    
     var body: some View {
         ZStack {
-        VStack(spacing: 0) {
-            Capsule()
-                .stroke(color, lineWidth: 3)
-                .frame(width: 55, height: 10)
-            
-            ZStack {
-                OceanWaveView(
-                    progress: 0.75,
-                    waveHeight: 0.1,
-                    offset: startAnimation
-                )
-                .fill(
-                    LinearGradient(
-                        colors: [
-                            Color("Light Blue"),
-                            Color("Dark Blue")
-                        ],
-                        startPoint: .top,
-                        endPoint: .bottom)
-                    
-                )
-                .overlay {
-                    Image(animalType.image)
-                        .renderingMode(.template)
-                        .resizable()
-                        .scaledToFit()
-                        .colorMultiply(.black)
-                        .frame(
-                            width: 40 * max(1, animalType.scale * 0.7),
-                            height: 40 * max(1, animalType.scale * 0.7)
-                        )
-                    
-                    //
-                    //                    .scaleEffect(currentAnimal?.id == animal.id && showDetailPage ? 3 : 0.5)
-                    //                    .matchedGeometryEffect(id: "album\(animal.id)", in: namespace)
-                    //                    .rotationEffect(Angle(degrees: fishAnimation == 0 ? -15 : 15))
-                    //                    .offset(x: 0, y: fishAnimation == 0 ? 15 : 5)
-                    
-                }
-                .frame(width: 102, height: 70)
-                .clipShape(Capsule())
-                
-                
+            VStack(spacing: 0) {
                 Capsule()
                     .stroke(color, lineWidth: 3)
-                    .frame(width: 100, height: 70)
+                    .frame(width: 55, height: 10)
+                
+                ZStack {
+                    OceanWaveView(
+                        progress: 0.75,
+                        waveHeight: 0.1,
+                        offset: startAnimation
+                    )
+                    .fill(
+                        LinearGradient(
+                            colors: [
+                                Color("Light Blue"),
+                                Color("Dark Blue")
+                            ],
+                            startPoint: .top,
+                            endPoint: .bottom)
+                        
+                    )
+                    .overlay {
+                        Image(animalType.image)
+                            .resizable()
+                            .scaledToFit()
+                            .if(disabled) { image in
+                                image.colorMultiply(.black)
+                            }
+                            .frame(
+                                width: 40 * max(1, animalType.scale * 0.7),
+                                height: 40 * max(1, animalType.scale * 0.7)
+                            )
+                            .matchedGeometryEffect(id: "album\(animalType.id)", in: namespace)
+                            .rotationEffect(rotation)
+                            .offset(x: 0, y: y)
+                        
+                    }
+                    .frame(width: 102, height: 70)
+                    .clipShape(Capsule())
+                    
+                    
+                    Capsule()
+                        .stroke(color, lineWidth: 3)
+                        .frame(width: 100, height: 70)
+                }
             }
-        }
-        .opacity(0.1)
-         
-            Image(systemName: "lock.fill")
-                .font(.largeTitle)
-                .foregroundColor(.red)
+            .opacity(disabled ? 0.15 : 1)
+            
+            if disabled {
+                Image(systemName: "lock.fill")
+                    .font(.largeTitle)
+                    .foregroundColor(Color("Light Blue"))
+                    .shadow(radius: 10)
+            }
         }
         
         .onAppear(perform: onAppear)
     }
     
     func onAppear() {
-        withAnimation(.linear(duration: 5).repeatForever(autoreverses: false)){
+        withAnimation(.linear(duration: disabled ? 120 : 8).repeatForever(autoreverses: false)){
             startAnimation = UIScreen.screenWidth - 70
         }
         
-        withAnimation(.linear(duration: 2.5).repeatForever(autoreverses: true)){
+        withAnimation(.linear(duration: 4).repeatForever(autoreverses: true)){
             fishAnimation = 1
         }
         
-//        color = Color(colors.randomElement() ?? "Gold")
+        //        color = Color(colors.randomElement() ?? "Gold")
     }
 }
-

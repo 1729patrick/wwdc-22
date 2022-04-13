@@ -8,8 +8,9 @@
 import SwiftUI
 
 struct AnimalView: View {
-    @AppStorage("showDetails") var showDetails: Bool?
     @ObservedObject var animal: Animal
+    
+    var alwaysShowDetails: Bool
     var namespace: Namespace.ID
     var spotlight: Int?
     var onSave: () -> Void
@@ -23,25 +24,24 @@ struct AnimalView: View {
          
         return animal.getPosition()
     }
-    
     var rotation: Angle {
         if animal.saved {
-            return Angle(degrees: 0)
+            let alpha: Double = animal.getRotation().degrees < 0 ? -1 : 1
+            
+            return Angle(degrees: animal.l2r ? 0 : (180 * alpha))
         }
         
         return animal.getRotation()
     }
- 
+    
     var body: some View {
 //        animal.path
 //            .stroke(style: StrokeStyle(lineWidth: 0.4))
 //
-        Image(animal.image)
-//            .renderingMode(.template)
+        Image(animal.type.image)
             .resizable()
             .scaledToFit()
-//            .colorMultiply(.red)
-            .frame(width: 75 * animal.scale, height: 75 * animal.scale)
+            .frame(width: 75 * animal.type.scale, height: 75 * animal.type.scale)
             .scaleEffect(scale)
             .spotlight(enabled: spotlight == 1 && animal.visible == false, title: "Batata")
             .rotation3DEffect(.degrees(180), axis: (x: 0, y: 1, z: 0))
@@ -50,13 +50,13 @@ struct AnimalView: View {
             .matchedGeometryEffect(id: animal.id.uuidString, in: namespace)
             .position(position)
             .onTapGesture(perform: onSave)
-            .animation(.linear(duration: 0.3), value: animal.saved)
+            .animation(.linear(duration: 0.5), value: animal.saved)
             .onChange(of: animal.saved) { _ in
-                if showDetails == true {
+                if alwaysShowDetails == true {
                     scale = 3
                 }
                 
-                withAnimation(.linear(duration: 0.3)) {
+                withAnimation(.linear(duration: 0.5)) {
                     scale = 0.2
                 }
             }

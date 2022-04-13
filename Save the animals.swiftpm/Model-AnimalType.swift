@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct AnimalType: Identifiable {
+struct AnimalType: Identifiable, Hashable, Decodable, Encodable {
     var id: String {
         image
     }

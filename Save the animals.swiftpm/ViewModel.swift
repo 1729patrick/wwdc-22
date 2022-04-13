@@ -8,17 +8,16 @@
 import SwiftUI
 
 class ViewModel: ObservableObject, Identifiable {
-   let maxAnimals = 12
+    let maxAnimals = 12
+    
     @Published var animals = [Animal]()
-    var l2r = 0
-    var r2l = 0
+    @Published var animalsSaved = [AnimalType:Int]()
+    
+    @AppStorage("alwaysShowDetails") var alwaysShowDetails: Bool = true
+    @AppStorage("animalsSaved") var saved: Data = Data()
     
     var animalsVisible: [Animal] {
         animals.filter { $0.visible }
-    }
-    
-    var animalsSaved: [Animal] {
-        animals.filter { $0.saved }
     }
     
     var nextTypeIndex: Int {
@@ -29,6 +28,23 @@ class ViewModel: ObservableObject, Identifiable {
         return animals.count % AnimalType.data.count
     }
     
+    
+    init() {
+        setup()
+        decodeSavedAnimals()
+    }
+    
+    func decodeSavedAnimals() {
+        guard let animalsSaved = try? JSONDecoder().decode([AnimalType:Int].self, from: saved) else { return }
+        
+        self.animalsSaved = animalsSaved
+    }
+    
+    func encodeSavedAnimals() {
+        guard let saved = try? JSONEncoder().encode(animalsSaved) else { return }
+        self.saved = saved
+    }
+    
     func addAnimal() {
         if animalsVisible.count >= maxAnimals {
             return
@@ -37,13 +53,6 @@ class ViewModel: ObservableObject, Identifiable {
         let yRange: ClosedRange<Double> = UIScreen.screenHeight * 0.25...UIScreen.screenHeight
         
         let startLeft = Bool.random()
-        
-        if startLeft {
-            l2r += 1
-        } else {
-            r2l += 1
-        }
-        
         let minWidth: Double = -100
         let maxWidth: Double = UIScreen.screenWidth + CGFloat(100)
         
@@ -86,17 +95,11 @@ class ViewModel: ObservableObject, Identifiable {
             control1: control1,
             control2: control2,
             l2r: startLeft,
-            speed: animalType.speed,
-            image: animalType.image,
-            scale: animalType.scale,
+            type: animalType,
             onDestroy: addAnimal
         )
         
         animals.append(animal)
-    }
-    
-    init() {
-        setup()
     }
     
     func setup() {
@@ -114,5 +117,14 @@ class ViewModel: ObservableObject, Identifiable {
     func save(animal: Animal) {
         animal.save()
         addAnimal()
+        
+        incrementSavedCount(type: animal.type)
+    }
+    
+    func incrementSavedCount(type: AnimalType) {
+        let savedCount = animalsSaved[type] ?? 0
+        animalsSaved[type] = savedCount + 1
+        
+        encodeSavedAnimals()
     }
 }
