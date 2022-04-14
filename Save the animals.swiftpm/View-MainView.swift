@@ -21,6 +21,8 @@ struct MainView: View {
     @State var showingAlbum: Bool = false
     @Namespace var animation
     
+    @State var oilSpill: Bool = false
+    
     //    album icon
     @State var albumScale: Double = 1
     
@@ -67,32 +69,67 @@ struct MainView: View {
         .scaleEffect(animateView ? 1 : 0)
     }
     
+    var header: some View {
+        HStack {
+            Spacer()
+            
+            Button {
+                withAnimation {
+                    oilSpill.toggle()
+                }
+            } label: {
+                Text("Oil")
+            }
+            album
+        }
+        .padding(.horizontal)
+    }
+    
     var body: some View {
         ZStack(alignment: .top) {
             GeometryReader { proxy in
                 let size = proxy.size
                 
                 ZStack(alignment: .bottom) {
-                    OceanWaveView(progress: 0.75, waveHeight: 0.01, offset: startAnimation)
-                        .fill(LinearGradient(
-                            colors: [Color("Light Blue"), Color("Dark Blue")],
-                            startPoint: .top,
-                            endPoint: .bottom)
-                        )
-                        .overlay {
-                            getSand(size: size)
-                            WaterDropsView()
-                            
-                            //                        AnimalView(
-                            //                            animal: fake,
-                            //                            namespace: animation,
-                            //                            spotlight: spotlight
-                            //                        ) { }
-                            //
-                            animals
-                            
-                        }
-                        .frame(width: size.width, height: size.height)
+                    ZStack(alignment: .bottom) {
+                        Image("Background")
+                            .resizable()
+                            .scaledToFill()
+
+                            .frame(width: UIScreen.screenWidth, height: UIScreen.screenHeight, alignment: .top)
+                                        .ignoresSafeArea()
+                        
+                        OceanWaveView(progress: 0.7, waveHeight: 0.01, offset: startAnimation)
+                            .fill(
+                                LinearGradient(
+                                    colors: [
+                                        Color("Light Blue").opacity(0.65),
+                                        Color("Dark Blue").opacity(0.9),
+                                    ],
+                                    startPoint: .top,
+                                    endPoint: .bottom)
+                            )
+                            .opacity(oilSpill ? 0.1 : 1)
+                        
+                        OceanWaveView(progress: 0.7, waveHeight: 0.01, offset: startAnimation)
+                            .fill(
+                                LinearGradient(
+                                    colors: [
+                                        Color("Gray").opacity(0.65),
+                                        .black.opacity(0.9),
+                                    ],
+                                    startPoint: .top,
+                                    endPoint: .bottom)
+                            )
+                            .opacity(oilSpill ? 1 : 0)
+                    }
+                    .frame(width: size.width, height: size.height)
+                    .overlay {
+                        getSand(size: size)
+                        WaterDropsView()
+                        
+                        animals
+                    }
                 }
                 .onAppear(perform: onAppear)
                 .allowsHitTesting(spotlight > 4)
@@ -100,7 +137,6 @@ struct MainView: View {
                     SoundManager.shared.play(sound: WrongSound())
                 }
             }
-            .background(.black)
             .ignoresSafeArea(.container, edges: .bottom)
             .onTapGesture {
                 spotlight += 1
@@ -110,12 +146,7 @@ struct MainView: View {
                 }
             }
             
-            HStack {
-                Spacer()
-                
-                album
-            }
-            .padding()
+            header
             
             if showingAlbum {
                 AlbumView(
@@ -166,7 +197,7 @@ struct MainView: View {
             Spacer()
             SandWaveView(
                 progress: 0.5,
-                waveHeight: 0.01,
+                waveHeight: 0.015,
                 offset: startAnimation
             )
             .fill(LinearGradient(

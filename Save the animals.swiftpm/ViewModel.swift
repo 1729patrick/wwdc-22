@@ -53,7 +53,7 @@ class ViewModel: ObservableObject, Identifiable {
             return
         }
         
-        let yRange: ClosedRange<Double> = UIScreen.screenHeight * 0.25...UIScreen.screenHeight
+        let yRange: ClosedRange<Double> = UIScreen.screenHeight * 0.3...UIScreen.screenHeight
         
         let startLeft = Bool.random()
         let minWidth: Double = -100
