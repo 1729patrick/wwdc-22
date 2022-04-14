@@ -121,6 +121,8 @@ struct MainView: View {
                 AlbumView(
                     showingAlbum: $showingAlbum,
                     alwaysShowDetails: $viewModel.alwaysShowDetails,
+                    timeToFeedAgain: viewModel.timeToFeedAgain,
+                    feed: viewModel.feed,
                     animalsSaved: viewModel.animalsSaved
                 )
             }

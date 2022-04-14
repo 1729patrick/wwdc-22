@@ -186,6 +186,7 @@ struct AquariumView: View {
         .onAppear(perform: onAppear)
         .onChange(of: feed, perform: onFeedChange)
         .padding(.top)
+        .padding(.top)
     }
     
     func onAppear() {

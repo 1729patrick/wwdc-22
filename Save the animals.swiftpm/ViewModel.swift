@@ -16,6 +16,8 @@ class ViewModel: ObservableObject, Identifiable {
     @AppStorage("alwaysShowDetails") var alwaysShowDetails: Bool = true
     @AppStorage("animalsSaved") var saved: Data = Data()
     
+    @AppStorage("timeToFeedAgain") var timeToFeedAgain: Int = .zero
+    
     var animalsVisible: [Animal] {
         animals.filter { $0.visible }
     }
@@ -32,6 +34,7 @@ class ViewModel: ObservableObject, Identifiable {
     init() {
         setup()
         decodeSavedAnimals()
+        executeFeedTimer()
     }
     
     func decodeSavedAnimals() {
@@ -104,6 +107,8 @@ class ViewModel: ObservableObject, Identifiable {
     
     func setup() {
         self.addAnimal()
+        self.addAnimal()
+        self.addAnimal()
         
         Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { timer in
             if self.animalsVisible.count >= self.maxAnimals {
@@ -126,5 +131,21 @@ class ViewModel: ObservableObject, Identifiable {
         animalsSaved[type] = savedCount + 1
         
         encodeSavedAnimals()
+    }
+    
+    private func executeFeedTimer() {
+        guard timeToFeedAgain > 0 else {
+            return
+        }
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+            self.timeToFeedAgain -= 1
+            self.executeFeedTimer()
+        }
+    }
+    
+    func feed() {
+        timeToFeedAgain = 59
+        executeFeedTimer()
     }
 }

@@ -12,22 +12,38 @@ struct AlbumView: View {
     @Binding var alwaysShowDetails: Bool
     
     @State var animateView: Bool = false
-    @State var feed: Bool = false
+    @State var feeding: Bool = false
     
     @State var currentAnimalType: AnimalType?
     @State var showDetailPage: Bool = false
     
+    var timeToFeedAgain: Int
+    var feed: () -> Void
+    
     @Namespace var animation
     
     var animalsSaved: [AnimalType: Int]
-    
+
+
     let columns = [
         GridItem(.adaptive(minimum: 120))
     ]
     
+    var feedDisabled: Bool {
+        timeToFeedAgain > 0
+    }
+    
+    var timeLeftToFeed: String {
+        if timeToFeedAgain < 10 {
+            return "0\(timeToFeedAgain)"
+        }
+        
+        return "\(timeToFeedAgain)"
+    }
+    
     var feedButton: some View {
         Button {
-            startFeed()
+            executeFeed()
         } label: {
             Image("Feed")
                 .resizable()
@@ -36,9 +52,26 @@ struct AlbumView: View {
                 .rotation3DEffect(Angle(degrees: 180), axis: (x: 0, y: 1, z: 0))
             //                .spotlight(enabled: spotlight == 4, title: "Batata")
         }
-        .buttonStyle(ScaledButtonStyle())
         .padding(.horizontal)
+        .opacity(feedDisabled ? 0.4 : 1)
+        .overlay(alignment: .bottomLeading) {
+            if timeToFeedAgain != .zero {
+                HStack {
+                    Text(timeLeftToFeed)
+                        .font(.caption2)
+                        .fontWeight(.bold)
+                        .padding(.horizontal, 4)
+                        .padding(.vertical, 2)
+                        .background(.red)
+                        .clipShape(Capsule())
+                }
+                .padding(.leading)
+                    
+            }
+        }
+        .buttonStyle(ScaledButtonStyle())
         .scaleEffect(animateView ? 1 : 0)
+        .disabled(feedDisabled)
     }
     
     var closeButton: some View {
@@ -93,14 +126,12 @@ struct AlbumView: View {
                                 namespace: animation,
                                 showDetailPage: showDetailPage,
                                 savedCount: animalsSaved[animalType] ?? 0,
-                                feed: $feed
+                                feed: $feeding
                             )
                         }
-                        //                        .zIndex(showDetailPage && animalType == currentAnimalType ? 2 : 1)
                         .scaleEffect(animateView ? 1 : 0, anchor: .center)
                     }
                 }
-                //                .opacity(animateView ? 1 : 0)
             }
         }
         .overlay {
@@ -132,14 +163,16 @@ struct AlbumView: View {
         }
     }
     
-    func startFeed() {
-        guard feed == false else {
+    func executeFeed() {
+        guard feeding == false else {
             return
         }
         
         withAnimation(.easeIn(duration: 0.15)){
-            feed = true
+            feeding = true
         }
+
+        feed()
         
         SoundManager.shared.play(sound: ButtonSound())
         
