@@ -29,8 +29,7 @@ struct SandWaveView: Shape{
             let progressHeight: CGFloat = (1 - progress) * rect.height
             let height = waveHeight * rect.height
             
-            for value in stride(from: 0, to: rect.width, by: 2){
-                
+            for value in stride(from: 0, through: rect.width, by: 2){
                 let x: CGFloat = value
                 let sine: CGFloat = sin(Angle(degrees: value + offset).radians)
                 let y: CGFloat = progressHeight + (height * sine)

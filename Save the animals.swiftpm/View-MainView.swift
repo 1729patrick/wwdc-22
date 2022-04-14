@@ -26,17 +26,6 @@ struct MainView: View {
     //    album icon
     @State var albumScale: Double = 1
     
-    //    var fake = Animal(
-    //        from: .init(x: 0, y: UIScreen.screenHeight / 2 - 100),
-    //        to: .init(x: 100, y: UIScreen.screenHeight / 2),
-    //        control1: .init(x: 50, y: UIScreen.screenHeight / 2),
-    //        control2: .init(x: 50, y: UIScreen.screenHeight / 2),
-    //        l2r: true,
-    //        speed: 50,
-    //        image: "Spelaeogammarus sanctus",
-    //        onDestroy: { }
-    //    )
-    
     @State var spotlight = 10
     
     var animals: some View {
@@ -92,69 +81,58 @@ struct MainView: View {
             GeometryReader { proxy in
                 let size = proxy.size
                 
+                
                 ZStack(alignment: .bottom) {
-                    ZStack(alignment: .bottom) {
-                        Image("Background")
-                            .resizable()
-                            .scaledToFill()
+                    Image("Background")
+                        .resizable()
+                        .scaledToFill()
+                        .ignoresSafeArea()
+                        .frame(
+                            width: size.width,
+                            height: size.height,
+                            alignment: .top
+                        )
+                        .overlay {
+                            LinearGradient(
+                                colors: [
+                                    .black.opacity(0.3),
+                                    .black.opacity(0),
+                                    .black.opacity(0),
+                                ],
+                                startPoint: .top,
+                                endPoint: .bottom
+                            )
                             .ignoresSafeArea()
-                            .frame(
-                                width: UIScreen.screenWidth,
-                                height: UIScreen.screenHeight,
-                                alignment: .top)
-                            .overlay {
-                                LinearGradient(
-                                    colors: [
-                                        .black.opacity(0.3),
-                                        .black.opacity(0),
-                                        .black.opacity(0),
-                                    ],
-                                    startPoint: .top,
-                                    endPoint: .bottom
-                                )
-                                .ignoresSafeArea()
-                            }
-                        
-                        
-                        OceanWaveView(progress: 0.7, waveHeight: 0.01, offset: startAnimation)
-                            .fill(
-                                LinearGradient(
-                                    colors: oilSpill ?
+                        }
+                    
+                    
+                    OceanWaveView(progress: 0.7, waveHeight: 0.01, offset: startAnimation)
+                        .fill(
+                            LinearGradient(
+                                colors: oilSpill ?
+                                [
+                                    .black.opacity(0.7),
+                                    .black.opacity(0.8),
+                                ]
+                                :
                                     [
-                                        .black.opacity(0.65),
-                                        .black.opacity(0.8),
-                                    ] :
-                                    [
-                                        Color("Light Blue").opacity(0.65),
+                                        Color("Light Blue").opacity(0.7),
                                         Color("Dark Blue").opacity(0.8),
                                     ],
-                                    startPoint: .top,
-                                    endPoint: .bottom)
-                            )
-                    }
-                    .frame(width: size.width, height: size.height)
-                    .overlay {
-                        getSand(size: size)
-                        WaterDropsView()
-                        
-                        animals
-                    }
+                                startPoint: .top,
+                                endPoint: .bottom)
+                        )
+                        .frame(width: size.width, height: size.height)
+                        .overlay {
+                            getSand(size: size)
+                            WaterDropsView()
+                            
+                            animals
+                        }
                 }
-                .padding(.leading, 4)
                 .onAppear(perform: onAppear)
-                .allowsHitTesting(spotlight > 4)
-                .onTapGesture {
-                    SoundManager.shared.play(sound: WrongSound())
-                }
             }
             .ignoresSafeArea(.container, edges: .bottom)
-            .onTapGesture {
-                spotlight += 1
-                
-                if spotlight == 2 {
-                    //                    selectAnimal(with: fake)
-                }
-            }
             
             header
             
@@ -187,6 +165,9 @@ struct MainView: View {
                 )
             }
             
+        }
+        .onTapGesture {
+            SoundManager.shared.play(sound: WrongSound())
         }
     }
     
