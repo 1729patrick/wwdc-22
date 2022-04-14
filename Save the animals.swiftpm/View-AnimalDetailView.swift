@@ -47,6 +47,36 @@ struct AnimalDetailView: View {
     var scale : Double {
         animateView ? (UIScreen.screenWidth * 0.85) / width : 1
     }
+  
+    var close: some View {
+        Button {
+            SoundManager.shared.play(sound: ButtonSound())
+            dismiss()
+        } label : {
+            Image("Close")
+                .resizable()
+                .scaledToFit()
+                .frame(width: 50, height: 50)
+        }
+        .scaleEffect(animateView ? 1 : 0)
+        .buttonStyle(ScaledButtonStyle())
+    }
+    
+    var header: some View {
+        HStack(alignment: .center) {
+            Text(animal.type.id)
+                .font(.system(size: 32))
+                .fontWeight(.heavy)
+                .shadow(color: .black, radius: 1)
+                .lineLimit(1)
+                .scaleEffect(animateView ? 1 : 0, anchor: .leading)
+            
+            Spacer()
+            
+            close
+        }
+        .padding()
+    }
     
     var image: some View {
         VStack {
@@ -78,34 +108,9 @@ struct AnimalDetailView: View {
         .scaleEffect(animateView ? 1 : 0, anchor: .top)
     }
     
-    var close: some View {
-        Button {
-            SoundManager.shared.play(sound: ButtonSound())
-            dismiss()
-        } label : {
-            Image("Close")
-                .resizable()
-                .scaledToFit()
-                .frame(width: 50, height: 50)
-        }
-        .scaleEffect(animateView ? 1 : 0)
-    }
-    
     var body: some View {
         VStack(spacing: 0) {
-            HStack(alignment: .center) {
-                Text(animal.type.id)
-                    .font(.system(size: 32))
-                    .fontWeight(.heavy)
-                    .shadow(color: .black, radius: 1)
-                    .lineLimit(1)
-                    .scaleEffect(animateView ? 1 : 0, anchor: .leading)
-                
-                Spacer()
-                
-                close
-            }
-            .padding()
+            header
             Divider()
             
             ScrollView(.vertical, showsIndicators: false) {
@@ -118,9 +123,9 @@ struct AnimalDetailView: View {
                 .offset(offset: $scrollOffset)
             }
             .coordinateSpace(name: "SCROLL")
-            .onAppear(perform: onAppear)
-            .transition(.identity)
         }
+        .onAppear(perform: onAppear)
+        .transition(.identity)
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(.thickMaterial)
     }

@@ -55,3 +55,11 @@ struct WrongSound: Sound {
         0.4
     }
 }
+
+struct FeedSound: Sound {
+    func getFileName() -> String { "feed" }
+    func getFileExtension() -> String { "wav" }
+    func getVolume() -> Float {
+        0.6
+    }
+}

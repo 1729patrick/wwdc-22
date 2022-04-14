@@ -12,6 +12,7 @@ struct AlbumView: View {
     @Binding var alwaysShowDetails: Bool
     
     @State var animateView: Bool = false
+    @State var feed: Bool = false
     
     @State var currentAnimalType: AnimalType?
     @State var showDetailPage: Bool = false
@@ -24,22 +25,23 @@ struct AlbumView: View {
         GridItem(.adaptive(minimum: 120))
     ]
     
-    var feed: some View {
+    var feedButton: some View {
         Button {
-            SoundManager.shared.play(sound: ButtonSound())
+            startFeed()
         } label: {
             Image("Feed")
                 .resizable()
                 .scaledToFit()
                 .frame(width: 50, height: 50)
-//                .spotlight(enabled: spotlight == 4, title: "Batata")
+                .rotation3DEffect(Angle(degrees: 180), axis: (x: 0, y: 1, z: 0))
+            //                .spotlight(enabled: spotlight == 4, title: "Batata")
         }
         .buttonStyle(ScaledButtonStyle())
         .padding(.horizontal)
         .scaleEffect(animateView ? 1 : 0)
     }
     
-    var close: some View {
+    var closeButton: some View {
         Button {
             SoundManager.shared.play(sound: ButtonSound())
             dismiss()
@@ -50,6 +52,7 @@ struct AlbumView: View {
                 .frame(width: 50, height: 50)
         }
         .scaleEffect(animateView ? 1 : 0)
+        .buttonStyle(ScaledButtonStyle())
     }
     
     
@@ -64,8 +67,8 @@ struct AlbumView: View {
                 
                 Spacer()
                 
-                feed
-                close
+                feedButton
+                closeButton
             }
             .padding()
             Divider()
@@ -89,14 +92,15 @@ struct AlbumView: View {
                                 currentAnimalType: currentAnimalType,
                                 namespace: animation,
                                 showDetailPage: showDetailPage,
-                                savedCount: animalsSaved[animalType] ?? 0
+                                savedCount: animalsSaved[animalType] ?? 0,
+                                feed: $feed
                             )
                         }
-//                        .zIndex(showDetailPage && animalType == currentAnimalType ? 2 : 1)
+                        //                        .zIndex(showDetailPage && animalType == currentAnimalType ? 2 : 1)
                         .scaleEffect(animateView ? 1 : 0, anchor: .center)
                     }
                 }
-//                .opacity(animateView ? 1 : 0)
+                //                .opacity(animateView ? 1 : 0)
             }
         }
         .overlay {
@@ -125,6 +129,30 @@ struct AlbumView: View {
     func onAppear() {
         withAnimation(.interactiveSpring(response: 0.6, dampingFraction: 0.7, blendDuration: 0.7)){
             animateView = true
+        }
+    }
+    
+    func startFeed() {
+        guard feed == false else {
+            return
+        }
+        
+        withAnimation(.easeIn(duration: 0.15)){
+            feed = true
+        }
+        
+        SoundManager.shared.play(sound: ButtonSound())
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) {
+            SoundManager.shared.play(sound: FeedSound())
+            
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1.6) {
+                SoundManager.shared.play(sound: FeedSound())
+                
+                DispatchQueue.main.asyncAfter(deadline: .now() + 1.6) {
+                    SoundManager.shared.play(sound: FeedSound())
+                }
+            }
         }
     }
     
