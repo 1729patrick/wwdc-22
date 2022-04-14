@@ -67,7 +67,7 @@ struct AnimalDetailView: View {
             Text(animal.type.id)
                 .font(.system(size: 32))
                 .fontWeight(.heavy)
-                .shadow(color: .black, radius: 1)
+                .shadow(radius: 1)
                 .lineLimit(1)
                 .scaleEffect(animateView ? 1 : 0, anchor: .leading)
             
@@ -99,7 +99,7 @@ struct AnimalDetailView: View {
             Text(animal.type.description)
                 .font(.body)
                 .fontWeight(.medium)
-                .shadow(color: .black, radius: 1)
+                .shadow(radius: 1)
                 .multilineTextAlignment(.leading)
                 .lineSpacing(10)
         }
@@ -127,7 +127,7 @@ struct AnimalDetailView: View {
         .onAppear(perform: onAppear)
         .transition(.identity)
         .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .background(.thickMaterial)
+        .background(.regularMaterial)
     }
     
     func onAppear() {

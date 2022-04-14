@@ -79,6 +79,8 @@ struct MainView: View {
                 }
             } label: {
                 Text("Oil")
+                    .padding()
+                    .background(.red)
             }
             album
         }
@@ -95,33 +97,40 @@ struct MainView: View {
                         Image("Background")
                             .resizable()
                             .scaledToFill()
-
-                            .frame(width: UIScreen.screenWidth, height: UIScreen.screenHeight, alignment: .top)
-                                        .ignoresSafeArea()
+                            .ignoresSafeArea()
+                            .frame(
+                                width: UIScreen.screenWidth,
+                                height: UIScreen.screenHeight,
+                                alignment: .top)
+                            .overlay {
+                                LinearGradient(
+                                    colors: [
+                                        .black.opacity(0.3),
+                                        .black.opacity(0),
+                                        .black.opacity(0),
+                                    ],
+                                    startPoint: .top,
+                                    endPoint: .bottom
+                                )
+                                .ignoresSafeArea()
+                            }
+                        
                         
                         OceanWaveView(progress: 0.7, waveHeight: 0.01, offset: startAnimation)
                             .fill(
                                 LinearGradient(
-                                    colors: [
+                                    colors: oilSpill ?
+                                    [
+                                        .black.opacity(0.65),
+                                        .black.opacity(0.8),
+                                    ] :
+                                    [
                                         Color("Light Blue").opacity(0.65),
-                                        Color("Dark Blue").opacity(0.9),
+                                        Color("Dark Blue").opacity(0.8),
                                     ],
                                     startPoint: .top,
                                     endPoint: .bottom)
                             )
-                            .opacity(oilSpill ? 0.1 : 1)
-                        
-                        OceanWaveView(progress: 0.7, waveHeight: 0.01, offset: startAnimation)
-                            .fill(
-                                LinearGradient(
-                                    colors: [
-                                        Color("Gray").opacity(0.65),
-                                        .black.opacity(0.9),
-                                    ],
-                                    startPoint: .top,
-                                    endPoint: .bottom)
-                            )
-                            .opacity(oilSpill ? 1 : 0)
                     }
                     .frame(width: size.width, height: size.height)
                     .overlay {
@@ -131,6 +140,7 @@ struct MainView: View {
                         animals
                     }
                 }
+                .padding(.leading, 4)
                 .onAppear(perform: onAppear)
                 .allowsHitTesting(spotlight > 4)
                 .onTapGesture {
@@ -178,8 +188,6 @@ struct MainView: View {
             }
             
         }
-        
-        
     }
     
     func onAppear() {

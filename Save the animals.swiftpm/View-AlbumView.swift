@@ -95,7 +95,7 @@ struct AlbumView: View {
                 Text("My aquarium")
                     .font(.system(size: 32))
                     .fontWeight(.heavy)
-                    .shadow(color: .black, radius: 1)
+                    .shadow(radius: 1)
                     .scaleEffect(animateView ? 1 : 0, anchor: .leading)
                 
                 Spacer()
@@ -154,7 +154,7 @@ struct AlbumView: View {
             }
         }
         .onAppear(perform: onAppear)
-        .background(.thickMaterial)
+        .background(.regularMaterial)
     }
     
     func onAppear() {
