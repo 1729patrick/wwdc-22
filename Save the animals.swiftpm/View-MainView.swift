@@ -28,6 +28,8 @@ struct MainView: View {
     
     @State var spotlight = 10
     
+    @State var showInstructions: Bool = true
+    
     var animals: some View {
         ForEach(viewModel.animals) { animal in
             AnimalView(
@@ -129,8 +131,11 @@ struct MainView: View {
                             
                             animals
                         }
+                    
+                        .onTapGesture {
+                            SoundManager.shared.play(sound: WrongSound())
+                        }
                 }
-                .onAppear(perform: onAppear)
             }
             .ignoresSafeArea(.container, edges: .bottom)
             
@@ -165,10 +170,12 @@ struct MainView: View {
                 )
             }
             
+            if showInstructions {
+                InstructionView(showInstructions: $showInstructions)
+            }
+            
         }
-        .onTapGesture {
-            SoundManager.shared.play(sound: WrongSound())
-        }
+        .onAppear(perform: onAppear)
     }
     
     func onAppear() {
