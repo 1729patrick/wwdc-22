@@ -35,10 +35,8 @@ extension ParametricCurve {
         }
         switch result {
         case .success(let arcLength, _/*, let e*/):
-            //print(arcLength, e)
             return t < .zero ? -CGFloat(arcLength) : CGFloat(arcLength)
         case .failure(let error):
-            print("integration error:", error.errorDescription)
             return CGFloat.nan
         }
     }

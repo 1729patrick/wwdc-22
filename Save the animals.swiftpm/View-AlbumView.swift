@@ -71,7 +71,7 @@ struct AlbumView: View {
         }
         .buttonStyle(ScaledButtonStyle())
         .scaleEffect(animateView ? 1 : 0)
-        .disabled(feedDisabled)
+
     }
     
     var closeButton: some View {
@@ -164,7 +164,8 @@ struct AlbumView: View {
     }
     
     func executeFeed() {
-        guard feeding == false else {
+        guard feeding == false && !(timeToFeedAgain > 0) else {
+            SoundManager.shared.play(sound: WrongSound())
             return
         }
         
@@ -177,12 +178,15 @@ struct AlbumView: View {
         SoundManager.shared.play(sound: ButtonSound())
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) {
+            guard showingAlbum else { return }
             SoundManager.shared.play(sound: FeedSound())
             
             DispatchQueue.main.asyncAfter(deadline: .now() + 1.6) {
+                guard showingAlbum else { return }
                 SoundManager.shared.play(sound: FeedSound())
                 
                 DispatchQueue.main.asyncAfter(deadline: .now() + 1.6) {
+                    guard showingAlbum else { return }
                     SoundManager.shared.play(sound: FeedSound())
                 }
             }

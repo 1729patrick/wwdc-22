@@ -77,8 +77,8 @@ struct InstructionView: View {
                 .disabled(page == pages.count - 1)
                 
                 Button {
-                    showInstructions = false
                     SoundManager.shared.play(sound: ButtonSound())
+                    showInstructions = false
                 } label : {
                     Image("Start")
                         .resizable()
