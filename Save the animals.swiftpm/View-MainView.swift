@@ -19,6 +19,7 @@ struct MainView: View {
     @State var showDetailPage: Bool = false
     @State var currentAnimal: Animal?
     @State var showingAlbum: Bool = false
+    
     @Namespace var animation
     
     @State var oilSpill: Bool = false
@@ -28,9 +29,10 @@ struct MainView: View {
     //    album icon
     @State var albumScale: Double = 1
     
-    @State var spotlight = 10
+    @AppStorage("showInstructions") var showInstructions: Bool = true
     
-    @State var showInstructions: Bool = true
+    @State var showLevelInstructions: Bool = false
+    @State var oilLeakTimer: Int = 20
     
     var animals: some View {
         ForEach(viewModel.animals) { animal in
@@ -55,27 +57,124 @@ struct MainView: View {
                 .resizable()
                 .scaledToFit()
                 .frame(width: 50, height: 50)
-                .spotlight(enabled: spotlight == 3, title: "Batata")
         }
         .buttonStyle(ScaledButtonStyle())
         .scaleEffect(albumScale)
         .scaleEffect(animateView ? 1 : 0)
     }
     
+    
+    var levelButton: some View {
+        ZStack {
+            Image("Button")
+                .resizable()
+                .scaledToFit()
+                .frame(width: 50, height: 50)
+            
+            
+            VStack(spacing: 0) {
+                Text("\(viewModel.level)")
+                    .font(.system(size: 22))
+                    .fontWeight(.heavy)
+                    .shadow(radius: 1)
+                    .foregroundColor(.white)
+                
+                Text("LEVEL")
+                    .font(.system(size: 8))
+                    .fontWeight(.heavy)
+                    .shadow(radius: 1)
+                    .foregroundColor(.white)
+                    .padding(.top, -2)
+            }
+        }
+    }
+    
+    var level1: some View {
+        HStack {
+            levelButton
+            
+            VStack(alignment: .leading) {
+                Text("Save the animals")
+                    .font(.system(size: 20))
+                    .fontWeight(.heavy)
+                    .shadow(radius: 1)
+                
+                Text("\(viewModel.animalsSavedCount)/3")
+                    .font(.system(size: 20))
+                    .fontWeight(.heavy)
+                    .shadow(radius: 1)
+            }
+        }
+    }
+    
+    
+    var level2: some View {
+        HStack {
+            levelButton
+            
+            VStack(alignment: .leading) {
+                Text("Run against the oil spill")
+                    .font(.system(size: 20))
+                    .fontWeight(.heavy)
+                    .shadow(radius: 1)
+                
+                Text("\(oilLeakTimer < 10 ? "0\(oilLeakTimer)" : "\(oilLeakTimer)")s")
+                    .font(.system(size: 20))
+                    .fontWeight(.heavy)
+                    .shadow(radius: 1)
+            }
+        }
+    }
+    
+    var level3: some View {
+        HStack {
+            levelButton
+            
+            VStack(alignment: .leading) {
+                Text("Feed your fish")
+                    .font(.system(size: 20))
+                    .fontWeight(.heavy)
+                    .shadow(radius: 1)
+                
+                Text("0/1")
+                    .font(.system(size: 20))
+                    .fontWeight(.heavy)
+                    .shadow(radius: 1)
+            }
+        }
+    }
+    
+    var level4: some View {
+        HStack {
+            levelButton
+            
+            VStack(alignment: .leading) {
+                Text("Save all species")
+                    .font(.system(size: 20))
+                    .fontWeight(.heavy)
+                    .shadow(radius: 1)
+                
+                Text("\(viewModel.speciesSavedCount)/\(AnimalType.data.count)")
+                    .font(.system(size: 20))
+                    .fontWeight(.heavy)
+                    .shadow(radius: 1)
+            }
+        }
+    }
+    
     var header: some View {
         HStack {
-            Spacer()
-            
-            Button {
-                showOilSpillInstructions = true
-                oilSpill.toggle()
-                SoundManager.shared.pause(sound: BackgroundSound())
-                SoundManager.shared.play(sound: OilSpillSound())
-            } label: {
-                Text("Oil")
-                    .padding()
-                    .background(.red)
+            if viewModel.level == 1 {
+                level1
+            } else if viewModel.level == 2 {
+                level2
+            } else if viewModel.level == 3 {
+                level3
+            } else if viewModel.level == 4 {
+                level4
             }
+            
+            Spacer()
             album
         }
         .padding(.horizontal)
@@ -165,37 +264,42 @@ struct MainView: View {
                     onClose: {
                         saveAnimal(animal: animal)
                         currentAnimal = nil
-                        
-                        if spotlight == 2 {
-                            spotlight += 1
-                        }
                     }
                 )
             }
             
             if showInstructions {
-                InstructionView(showInstructions: $showInstructions)
+                InstructionView() {
+                    showInstructions = false
+                    viewModel.nextLevel()
+                }
             }
             
-            if showOilSpillInstructions {
-                OilInstructionView(showInstructions: $showOilSpillInstructions) {
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 10) {
-                        showOilResult = true
+            if showLevelInstructions {
+                LevelInstructionView(level: viewModel.level, animalsSavedCount: viewModel.animalsSavedCount) {
+                    showLevelInstructions = false
+                    
+                    if viewModel.level == 2 {
+                        startLevel2()
                     }
+                    
                 }
             }
-            
-            if showOilResult {
-                OilResultView() {
-                    showOilResult = false
-                    SoundManager.shared.pause(sound: OilSpillSound())
-                    SoundManager.shared.resume(sound: BackgroundSound())
-                    oilSpill.toggle()
-                }
-            }
-            
         }
         .onAppear(perform: onAppear)
+        .onChange(of: viewModel.level) { level in
+            if level == 2 {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                    showLevelInstructions = true
+                }
+            } else if level == 3 {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                    showLevelInstructions = true
+                }
+            } else {
+                showLevelInstructions = true
+            }
+        }
     }
     
     func onAppear() {
@@ -206,6 +310,35 @@ struct MainView: View {
         withAnimation(.interactiveSpring(response: 0.6, dampingFraction: 0.7, blendDuration: 0.7)){
             animateView = true
         }
+        
+        if viewModel.level == 2 {
+            startLevel2()
+        }
+    }
+    
+    func executeOilLeakTimer() {
+        guard oilLeakTimer > 0 else {
+            viewModel.nextLevel()
+            return
+        }
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+            oilLeakTimer -= 1
+            executeOilLeakTimer()
+        }
+    }
+    
+    func startLevel1() {
+        showLevelInstructions = true
+    }
+    
+    func startLevel2() {
+        oilSpill.toggle()
+        SoundManager.shared.pause(sound: BackgroundSound())
+        SoundManager.shared.play(sound: OilSpillSound())
+        
+        oilLeakTimer = 20
+        executeOilLeakTimer()
     }
     
     func getSand(size: CGSize) -> some View {

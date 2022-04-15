@@ -18,6 +18,18 @@ class ViewModel: ObservableObject, Identifiable {
     
     @AppStorage("timeToFeedAgain") var timeToFeedAgain: Int = .zero
     
+    @AppStorage("level") var level: Int = 0
+    
+    var animalsSavedCount: Int {
+       return animalsSaved.values.reduce(into: 0) { totalCount, typeCount in
+            totalCount += typeCount
+        }
+    }
+    
+    var speciesSavedCount: Int {
+        return animalsSaved.keys.count
+    }
+    
     var animalsVisible: [Animal] {
         animals.filter { $0.visible }
     }
@@ -124,6 +136,10 @@ class ViewModel: ObservableObject, Identifiable {
         addAnimal()
         
         incrementSavedCount(type: animal.type)
+        
+        if animalsSavedCount == 3 {
+            nextLevel()
+        }
     }
     
     func incrementSavedCount(type: AnimalType) {
@@ -147,5 +163,10 @@ class ViewModel: ObservableObject, Identifiable {
     func feed() {
         timeToFeedAgain = 59
         executeFeedTimer()
+        nextLevel()
+    }
+    
+    func nextLevel() {
+        level += 1
     }
 }

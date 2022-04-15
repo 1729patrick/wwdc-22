@@ -8,15 +8,15 @@
 import SwiftUI
 
 struct InstructionView: View {
-    @Binding var showInstructions: Bool
-    @State var page: Int = 0
-    @State var animateView: Bool = false
+    var onStart: () -> Void
+    
+    @State private var page: Int = 0
+    @State private var animateView: Bool = false
     
     var pages = [
-        "1 The smalltooth sawfish (Pristis pectinata) is a species of sawfish in the family Pristidae. It is found in shallow tropical and subtropical waters in coastal and estuarine parts of the Atlantic.",
-        "2 The smalltooth sawfish (Pristis pectinata) is a species of sawfish in the family Pristidae. It is found in shallow tropical and subtropical waters in coastal and estuarine parts of the Atlantic.",
-        "3 The smalltooth sawfish (Pristis pectinata) is a species of sawfish in the family Pristidae. It is found in shallow tropical and subtropical waters in coastal and estuarine parts of the Atlantic.",
-        "4 The smalltooth sawfish (Pristis pectinata) is a species of sawfish in the family Pristidae. It is found in shallow tropical and subtropical waters in coastal and estuarine parts of the Atlantic.",
+        "Welcome to save the animals. They say that in the wild the strongest animals survive, but today even the strongest are suffering from our attitudes.",
+        "We can all collaborate for the preservation of biodiversity both in Brazil and in the world. Being aware of the preservation of the environment is a duty of every human being.",
+        "In this game you will be responsible for saving the marine animals that are in danger of extinction in Brazil.",
     ]
     
     var body: some View {
@@ -43,6 +43,7 @@ struct InstructionView: View {
                             .font(.system(size: 32))
                             .fontWeight(.heavy)
                             .shadow(radius: 1)
+                            .lineSpacing(10)
                             .multilineTextAlignment(.center)
                             .scaleEffect($0 == page ? 1 : 0)
                             .opacity($0 == page ? 1 : 0)
@@ -78,7 +79,7 @@ struct InstructionView: View {
                 
                 Button {
                     SoundManager.shared.play(sound: ButtonSound())
-                    showInstructions = false
+                    onStart()
                 } label : {
                     Image("Start")
                         .resizable()
@@ -94,6 +95,7 @@ struct InstructionView: View {
         }
         .padding(.bottom, 100)
         .padding(.horizontal)
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(.regularMaterial)
         .onAppear(perform: onAppear)
     }

@@ -50,7 +50,6 @@ struct AlbumView: View {
                 .scaledToFit()
                 .frame(width: 50, height: 50)
                 .rotation3DEffect(Angle(degrees: 180), axis: (x: 0, y: 1, z: 0))
-            //                .spotlight(enabled: spotlight == 4, title: "Batata")
         }
         .padding(.horizontal)
         .opacity(feedDisabled ? 0.4 : 1)

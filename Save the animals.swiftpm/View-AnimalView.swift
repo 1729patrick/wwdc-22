@@ -14,7 +14,6 @@ struct AnimalView: View {
     var selected: Bool
     
     var namespace: Namespace.ID
-    var spotlight: Int?
     var onSave: () -> Void
     
     @State var scale: Double = 1
@@ -58,7 +57,6 @@ struct AnimalView: View {
             .scaledToFit()
             .frame(width: width, height: height)
             .scaleEffect(scale)
-            .spotlight(enabled: spotlight == 1 && animal.visible == false, title: "Batata")
             .rotation3DEffect(.degrees(180), axis: (x: 0, y: 1, z: 0))
             .rotation3DEffect(Angle.degrees(animal.l2r ? 0 : 180), axis: (x: 1, y: 0, z: 0))
             .rotationEffect(rotation)
