@@ -146,7 +146,7 @@ struct AnimalType: Identifiable, Hashable, Decodable, Encodable {
             AnimalType(image: "Prochilodus britskii",
                        speed: 600,
                        scale: 1,
-                       description: "rochilodus is a genus of freshwater fish from the family Prochilodontidae. This family include two other genera, Ichthyoelephas and Semaprochilodus, which have been included in Prochilodus instead. The greatest species richness of Prochilodus is in river basins in eastern, southeastern and southern Brazil, but there are also species in the river basins of the Amazon, Guianas, Colombia, Venezuela, Paraguay and northeastern Argentina. The largest species in the genus reach about 80 centimetres (2.6 ft) in length, but most species barely reach half that size.",
+                       description: "Prochilodus is a genus of freshwater fish from the family Prochilodontidae. This family include two other genera, Ichthyoelephas and Semaprochilodus, which have been included in Prochilodus instead. The greatest species richness of Prochilodus is in river basins in eastern, southeastern and southern Brazil, but there are also species in the river basins of the Amazon, Guianas, Colombia, Venezuela, Paraguay and northeastern Argentina. The largest species in the genus reach about 80 centimetres (2.6 ft) in length, but most species barely reach half that size.",
                        conservationStatus: "EN"
                       ),
             AnimalType(image: "Sphyrna lewini",

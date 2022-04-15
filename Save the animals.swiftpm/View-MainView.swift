@@ -22,6 +22,8 @@ struct MainView: View {
     @Namespace var animation
     
     @State var oilSpill: Bool = false
+    @State var showOilSpillInstructions: Bool = false
+    @State var showOilResult: Bool = false
     
     //    album icon
     @State var albumScale: Double = 1
@@ -65,9 +67,10 @@ struct MainView: View {
             Spacer()
             
             Button {
-                withAnimation {
-                    oilSpill.toggle()
-                }
+                showOilSpillInstructions = true
+                oilSpill.toggle()
+                SoundManager.shared.pause(sound: BackgroundSound())
+                SoundManager.shared.play(sound: OilSpillSound())
             } label: {
                 Text("Oil")
                     .padding()
@@ -172,6 +175,23 @@ struct MainView: View {
             
             if showInstructions {
                 InstructionView(showInstructions: $showInstructions)
+            }
+            
+            if showOilSpillInstructions {
+                OilInstructionView(showInstructions: $showOilSpillInstructions) {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 10) {
+                        showOilResult = true
+                    }
+                }
+            }
+            
+            if showOilResult {
+                OilResultView() {
+                    showOilResult = false
+                    SoundManager.shared.pause(sound: OilSpillSound())
+                    SoundManager.shared.resume(sound: BackgroundSound())
+                    oilSpill.toggle()
+                }
             }
             
         }
