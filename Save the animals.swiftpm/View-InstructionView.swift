@@ -14,7 +14,7 @@ struct InstructionView: View {
     @State private var animateView: Bool = false
     
     var pages = [
-        "Welcome to save the animals. They say that in the wild the strongest animals survive, but today even the strongest are suffering from our attitudes.",
+        "Welcome to Brazil Ocean. In the wild the strongest animals survive, but today even the strongest are suffering from our attitudes.",
         "We can all collaborate for the preservation of biodiversity both in Brazil and in the world. Being aware of the preservation of the environment is a duty of every human being.",
         "In this game you will be responsible for saving the marine animals that are in danger of extinction in Brazil.",
     ]
@@ -96,7 +96,7 @@ struct InstructionView: View {
         .padding(.bottom, 100)
         .padding(.horizontal)
         .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .background(.regularMaterial)
+        .background(.thinMaterial)
         .onAppear(perform: onAppear)
     }
     

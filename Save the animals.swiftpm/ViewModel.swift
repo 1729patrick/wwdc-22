@@ -137,7 +137,9 @@ class ViewModel: ObservableObject, Identifiable {
         
         incrementSavedCount(type: animal.type)
         
-        if animalsSavedCount == 3 {
+        if level == 1 && animalsSavedCount == 3 {
+            nextLevel()
+        } else if level == 2 && animalsSavedCount == 7 {
             nextLevel()
         }
     }

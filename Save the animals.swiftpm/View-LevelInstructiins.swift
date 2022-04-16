@@ -19,9 +19,11 @@ struct LevelInstructionView: View {
         case 1:
             return "Fish are swimming in the ocean, but species are decreasing year after year, fighting pollution, heating water, oil leaks, etc. Now you must save some fish that are in the ocean and put them safely in aquariums."
         case 2:
-            return "Oh no, there was an oil leak. Tons and tons of fish die in this kind of accident. Run, save as many fish as you can."
+            return "Oh no, there was an oil leak. Tons and tons of fish die in this kind of accident. Save as many fish as you can. Go! Go! Go!"
         case 3:
-            return "Congratulations, you have already saved \(animalsSavedCount) fish. All are safe in their aquariums, but they are out of food. Your goal is to feed them. The more food you give them, the faster they will reproduce and the faster they will return to the ocean."
+            return "You have already saved \(animalsSavedCount) fish, congratulations!. All are safe in their aquariums, but they are out of food. Your goal is to feed them. The more food you give them, the faster they will reproduce and the faster they will return to the ocean."
+        case 4:
+            return "You are taking such good care of your fish, amazing! A ship has just dumped pieces of plastic and glass into the sea, and now the fish are in danger as they can mistake these objects for food. Return to the ocean and remove the garbage that was dumped."
         default:
             return ""
         }
@@ -33,6 +35,8 @@ struct LevelInstructionView: View {
             return "- Tap on the fish -"
         case 3:
     return "- Go to the aquariums and feed the fish -"
+        case 4:
+            return "- Tap on the garbage -"
         default:
             return ""
         }
@@ -90,7 +94,7 @@ struct LevelInstructionView: View {
         .padding(.bottom, 100)
         .padding(.horizontal)
         .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .background(.regularMaterial)
+        .background(.thinMaterial)
         .onAppear(perform: onAppear)
     }
     
