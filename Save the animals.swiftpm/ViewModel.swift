@@ -20,6 +20,7 @@ class ViewModel: ObservableObject, Identifiable {
     @AppStorage("timeToFeedAgain") var timeToFeedAgain: Int = .zero
     
     @AppStorage("level") var level: Int = 0
+    @AppStorage("trashesRemovedCount") var trashesRemovedCount: Int = 0
     
     var animalsSavedCount: Int {
         let keys = animalsSaved.keys.filter { $0.type == "animal"}
@@ -27,10 +28,6 @@ class ViewModel: ObservableObject, Identifiable {
        return keys.reduce(into: 0) { totalCount, type in
            totalCount += animalsSaved[type] ?? 0
         }
-    }
-  
-    var trashesRemovedCount: Int {
-        return animalsSaved.keys.filter { $0.type == "trash"}.count
     }
     
     var speciesSavedCount: Int {
@@ -169,9 +166,9 @@ class ViewModel: ObservableObject, Identifiable {
         
         incrementSavedCount(type: animal.type)
         
-        if level == 1 && animalsSavedCount == 3 {
+        if level == 1 && animalsSavedCount == 5 {
             nextLevel()
-        } else if level == 2 && animalsSavedCount == 7 {
+        } else if level == 2 && animalsSavedCount == 13 {
             nextLevel()
         }
     }
@@ -180,7 +177,9 @@ class ViewModel: ObservableObject, Identifiable {
         animal.remove()
         self.addAnimal(type: "trash")
         
-        if trashesRemovedCount == 13 {
+        trashesRemovedCount += 1
+        
+        if trashesRemovedCount == 10 {
             nextLevel()
         }
     }

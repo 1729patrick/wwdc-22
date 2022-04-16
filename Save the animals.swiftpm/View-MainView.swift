@@ -88,7 +88,7 @@ struct MainView: View {
         case 4:
             title = "Keep the ocean clean"
         case 5:
-            title = "Save all species"
+            title = "Protect the fish"
         default:
             title = "Save the animals"
         }
@@ -243,19 +243,19 @@ struct MainView: View {
         .onAppear(perform: onAppear)
         .onChange(of: viewModel.level) { level in
             if level == 2 {
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.75) {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
                     self.level = level
                     startLevel2()
                     showLevelInstructions = true
                 }
             } else if level == 3 {
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.75) {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
                     self.level = level
                     startLevel3()
                     showLevelInstructions = true
                 }
             } else if level == 4 {
-                DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 4) {
                     self.level = level
                     showLevelInstructions = true
                     startLevel4()
