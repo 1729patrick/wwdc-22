@@ -18,8 +18,9 @@ struct AnimalType: Identifiable, Hashable, Decodable, Encodable {
     let description: String
     let conservationStatus: String
     var source: String = "Wikipedia"
+    var type = "animal"
     
-    static var data: [AnimalType] {
+    static var animals: [AnimalType] {
         [
             AnimalType(
                 image: "Mustelus schmitti",
@@ -191,42 +192,47 @@ struct AnimalType: Identifiable, Hashable, Decodable, Encodable {
         ]
     }
     
-    static var trash: [AnimalType] {
+    static var trashes: [AnimalType] {
         [
             AnimalType(
                 image: "Bottle1",
-                speed: 1200,
-                scale: 1,
+                speed: 1600,
+                scale: 0.75,
                 description: "",
-                conservationStatus: ""
+                conservationStatus: "",
+                type: "trash"
             ),
             AnimalType(
                 image: "Cigarette",
-                speed: 1200,
-                scale: 0.5,
+                speed: 1600,
+                scale: 0.4,
                 description: "",
-                conservationStatus: ""
+                conservationStatus: "",
+                type: "trash"
             ),
             AnimalType(
                 image: "Bottle2",
-                speed: 1200,
-                scale: 1,
+                speed: 1600,
+                scale: 0.75,
                 description: "",
-                conservationStatus: ""
+                conservationStatus: "",
+                type: "trash"
             ),
             AnimalType(
                 image: "Bottle3",
-                speed: 1200,
-                scale: 1,
+                speed: 1600,
+                scale: 0.75,
                 description: "",
-                conservationStatus: ""
+                conservationStatus: "",
+                type: "trash"
             ),
             AnimalType(
                 image: "Cup",
-                speed: 1200,
-                scale: 0.5,
+                speed: 1600,
+                scale: 0.4,
                 description: "",
-                conservationStatus: ""
+                conservationStatus: "",
+                type: "trash"
             )
         ]
     }

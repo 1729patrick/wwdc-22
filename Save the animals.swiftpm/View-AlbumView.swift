@@ -107,7 +107,7 @@ struct AlbumView: View {
             
             ScrollView(.vertical, showsIndicators: false) {
                 LazyVGrid(columns: columns) {
-                    ForEach(AnimalType.data) { animalType in
+                    ForEach(AnimalType.animals) { animalType in
                         Button {
                             guard animalsSaved[animalType] != nil else {
                                 SoundManager.shared.play(sound: WrongSound())

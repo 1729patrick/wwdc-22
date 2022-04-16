@@ -9,6 +9,7 @@ import SwiftUI
 
 class ViewModel: ObservableObject, Identifiable {
     let maxAnimals = 12
+    let maxTrashes = 12
     
     @Published var animals = [Animal]()
     @Published var animalsSaved = [AnimalType:Int]()
@@ -21,27 +22,48 @@ class ViewModel: ObservableObject, Identifiable {
     @AppStorage("level") var level: Int = 0
     
     var animalsSavedCount: Int {
-       return animalsSaved.values.reduce(into: 0) { totalCount, typeCount in
-            totalCount += typeCount
+        let keys = animalsSaved.keys.filter { $0.type == "animal"}
+        
+       return keys.reduce(into: 0) { totalCount, type in
+           totalCount += animalsSaved[type] ?? 0
         }
+    }
+  
+    var trashesRemovedCount: Int {
+        return animalsSaved.keys.filter { $0.type == "trash"}.count
     }
     
     var speciesSavedCount: Int {
-        return animalsSaved.keys.count
+        return animalsSaved.keys.filter { $0.type == "animal"}.count
     }
     
     var animalsVisible: [Animal] {
-        animals.filter { $0.visible }
+        animals.filter { $0.type.type == "animal" && $0.visible }
     }
     
-    var nextTypeIndex: Int {
-        if animals.count < AnimalType.trash.count {
+    var trashesVisible: [Animal] {
+        animals.filter { $0.type.type == "trash" && $0.visible }
+    }
+    
+    var nextAnimalIndex: Int {
+        let animals = animals.filter { $0.type.type == "animal" }
+        
+        if animals.count < AnimalType.animals.count {
             return animals.count
         }
         
-        return animals.count % AnimalType.trash.count
+        return animals.count % AnimalType.animals.count
     }
     
+    var nextTrashIndex: Int {
+        let trash = animals.filter { $0.type.type == "trash" }
+        
+        if trash.count < AnimalType.trashes.count {
+            return trash.count
+        }
+        
+        return trash.count % AnimalType.trashes.count
+    }
     
     init() {
         setup()
@@ -60,12 +82,16 @@ class ViewModel: ObservableObject, Identifiable {
         self.saved = saved
     }
     
-    func addAnimal() {
-        if animalsVisible.count >= maxAnimals {
+    func addAnimal(type: String) {
+        guard animalsVisible.count < maxAnimals else {
             return
         }
         
-        let yRange: ClosedRange<Double> = UIScreen.screenHeight * 0.3...UIScreen.screenHeight
+        guard trashesVisible.count < maxTrashes else {
+            return
+        }
+        
+        let yRange: ClosedRange<Double> = UIScreen.screenHeight * 0.35...UIScreen.screenHeight
         
         let startLeft = Bool.random()
         let minWidth: Double = -100
@@ -102,7 +128,11 @@ class ViewModel: ObservableObject, Identifiable {
             return .init(x: x, y: y)
         }
         
-        let animalType = AnimalType.trash[nextTypeIndex]
+        var animalType: AnimalType = AnimalType.animals[nextAnimalIndex]
+        
+        if type == "trash" {
+            animalType = AnimalType.trashes[nextTrashIndex]
+        }
         
         let animal = Animal(
             from: from,
@@ -111,29 +141,31 @@ class ViewModel: ObservableObject, Identifiable {
             control2: control2,
             l2r: startLeft,
             type: animalType,
-            onDestroy: addAnimal
+            onDestroy: {
+                self.addAnimal(type: type)
+            }
         )
         
         animals.append(animal)
     }
     
     func setup() {
-        self.addAnimal()
-        self.addAnimal()
-        self.addAnimal()
+        self.addAnimal(type: "animal")
+        self.addAnimal(type: "animal")
+        self.addAnimal(type: "animal")
         
         Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { timer in
             if self.animalsVisible.count >= self.maxAnimals {
                 timer.invalidate()
             } else {
-                self.addAnimal()
+                self.addAnimal(type: "animal")
             }
         }
     }
     
     func save(animal: Animal) {
         animal.save()
-        addAnimal()
+        self.addAnimal(type: "animal")
         
         incrementSavedCount(type: animal.type)
         
@@ -144,6 +176,15 @@ class ViewModel: ObservableObject, Identifiable {
         }
     }
     
+    func remove(animal: Animal) {
+        animal.remove()
+        self.addAnimal(type: "trash")
+        
+        if trashesRemovedCount == 13 {
+            nextLevel()
+        }
+    }
+ 
     func incrementSavedCount(type: AnimalType) {
         let savedCount = animalsSaved[type] ?? 0
         animalsSaved[type] = savedCount + 1
@@ -170,5 +211,15 @@ class ViewModel: ObservableObject, Identifiable {
     
     func nextLevel() {
         level += 1
+    }
+    
+    func addTrashes() {
+        Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { timer in
+            if self.trashesVisible.count >= self.maxTrashes {
+                timer.invalidate()
+            } else {
+                self.addAnimal(type: "trash")
+            }
+        }
     }
 }

@@ -28,6 +28,7 @@ struct MainView: View {
     
     //    album icon
     @State var albumScale: Double = 1
+    @State var trashScale: Double = 1
     
     @AppStorage("showInstructions") var showInstructions: Bool = true
     
@@ -49,6 +50,15 @@ struct MainView: View {
         }
     }
     
+    var trash: some View {
+        Image("Trash")
+            .resizable()
+            .scaledToFit()
+            .frame(width: 50, height: 50)
+            .scaleEffect(animateView ? 1 : 0)
+            .scaleEffect(trashScale)
+    }
+    
     var album: some View {
         Button {
             SoundManager.shared.play(sound: ButtonSound())
@@ -67,7 +77,7 @@ struct MainView: View {
     
     var levelTitle: some View {
         var title = ""
-
+        
         switch level {
         case 1:
             title = "Save the animals"
@@ -77,10 +87,12 @@ struct MainView: View {
             title = "Feed your fish"
         case 4:
             title = "Keep the ocean clean"
+        case 5:
+            title = "Save all species"
         default:
-            title = ""
+            title = "Save the animals"
         }
-
+        
         return HStack {
             ZStack {
                 Image("Button")
@@ -119,6 +131,9 @@ struct MainView: View {
             levelTitle
             
             Spacer()
+            if level == 4 {
+                trash
+            }
             album
         }
         .padding(.horizontal)
@@ -154,7 +169,7 @@ struct MainView: View {
                         }
                     
                     
-                    OceanWaveView(progress: 0.7, waveHeight: 0.01, offset: startAnimation)
+                    OceanWaveView(progress: 0.65, waveHeight: 0.01, offset: startAnimation)
                         .fill(
                             LinearGradient(
                                 colors: oilSpill ?
@@ -243,8 +258,14 @@ struct MainView: View {
                 DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
                     self.level = level
                     showLevelInstructions = true
+                    startLevel4()
                 }
-            } else {
+            } else if level == 4 {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                    self.level = level
+                    showLevelInstructions = true
+                }
+            }else {
                 self.level = level
                 showLevelInstructions = true
             }
@@ -264,6 +285,8 @@ struct MainView: View {
         
         if level == 2 {
             startLevel2()
+        } else if level == 4 {
+            startLevel4()
         }
     }
     
@@ -283,6 +306,10 @@ struct MainView: View {
         
         SoundManager.shared.stop(sound: OilSpillSound())
         SoundManager.shared.resume(sound: BackgroundSound())
+    }
+    
+    func startLevel4() {
+        viewModel.addTrashes()
     }
     
     func getSand(size: CGSize) -> some View {
@@ -306,13 +333,18 @@ struct MainView: View {
     }
     
     func selectAnimal(with animal: Animal) {
-        if viewModel.alwaysShowDetails == true {
-            withAnimation(.interactiveSpring(response: 0.6, dampingFraction: 0.7, blendDuration: 0.7)){
-                currentAnimal = animal
-                showDetailPage = true
+        if animal.type.type == "trash" {
+            removeTrash(animal: animal)
+        } else {
+            
+            if viewModel.alwaysShowDetails == true {
+                withAnimation(.interactiveSpring(response: 0.6, dampingFraction: 0.7, blendDuration: 0.7)){
+                    currentAnimal = animal
+                    showDetailPage = true
+                }
+            }  else {
+                saveAnimal(animal: animal)
             }
-        }  else {
-            saveAnimal(animal: animal)
         }
     }
     
@@ -321,12 +353,26 @@ struct MainView: View {
         scaleAlbum()
     }
     
+    func removeTrash(animal: Animal) {
+        viewModel.remove(animal: animal)
+        scaleTrash()
+    }
+    
     func scaleAlbum() {
         withAnimation(.linear(duration: 0.2).delay(0.3)) {
             albumScale = 1.3
         }
         withAnimation(.linear(duration: 0.15).delay(0.6)) {
             albumScale = 1
+        }
+    }
+    
+    func scaleTrash() {
+        withAnimation(.linear(duration: 0.2).delay(0.6)) {
+            trashScale = 1.3
+        }
+        withAnimation(.linear(duration: 0.15).delay(0.8)) {
+            trashScale = 1
         }
     }
 }

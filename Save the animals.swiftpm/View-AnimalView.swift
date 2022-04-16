@@ -19,8 +19,12 @@ struct AnimalView: View {
     @State var scale: Double = 1
     
     var position: CGPoint {
+        if animal.removed {
+            return CGPoint(x: UIScreen.screenWidth - 100, y: 40)
+        }
+        
         if animal.saved {
-            return CGPoint(x: UIScreen.screenWidth - 40, y: 50)
+            return CGPoint(x: UIScreen.screenWidth - 40, y: 40)
         }
          
         return animal.getPosition()
@@ -64,6 +68,7 @@ struct AnimalView: View {
             .position(position)
             .onTapGesture(perform: onSave)
             .animation(.linear(duration: 0.4), value: animal.saved)
+            .animation(.linear(duration: 0.7), value: animal.removed)
             .onChange(of: animal.saved) { _ in
                 if alwaysShowDetails == true {
                     scale = (UIScreen.screenWidth * 0.85) / width
@@ -72,6 +77,12 @@ struct AnimalView: View {
                 withAnimation(.linear(duration: 0.3)) {
                     scale = 0.2
                 }
+            }
+            .onChange(of: animal.removed) { _ in
+                withAnimation(.linear(duration: 0.3)) {
+                    scale = 0.4
+                }
+                
             }
             
     }

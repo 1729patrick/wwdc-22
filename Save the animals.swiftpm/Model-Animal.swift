@@ -20,9 +20,10 @@ class Animal: Identifiable, ObservableObject, Equatable {
     
     private(set) var type: AnimalType
     
-    private(set)  var onDestroy: (() -> Void)? = nil
+    private(set) var onDestroy: (() -> Void)? = nil
     
-    private(set)  var saved: Bool = false
+    private(set) var saved: Bool = false
+    private(set) var removed: Bool = false
     private(set) var visible: Bool = true
     
     private var alongTrackDistance = CGFloat.zero
@@ -90,6 +91,14 @@ class Animal: Identifiable, ObservableObject, Equatable {
         self.timer?.cancel()
         
         saved = true
+        visible = false
+    }
+    
+    func remove() {
+        self.objectWillChange.send()
+        self.timer?.cancel()
+        
+        removed = true
         visible = false
     }
 }
