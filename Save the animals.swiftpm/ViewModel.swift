@@ -35,11 +35,11 @@ class ViewModel: ObservableObject, Identifiable {
     }
     
     var nextTypeIndex: Int {
-        if animals.count < AnimalType.data.count {
+        if animals.count < AnimalType.trash.count {
             return animals.count
         }
         
-        return animals.count % AnimalType.data.count
+        return animals.count % AnimalType.trash.count
     }
     
     
@@ -102,7 +102,7 @@ class ViewModel: ObservableObject, Identifiable {
             return .init(x: x, y: y)
         }
         
-        let animalType = AnimalType.data[nextTypeIndex]
+        let animalType = AnimalType.trash[nextTypeIndex]
         
         let animal = Animal(
             from: from,

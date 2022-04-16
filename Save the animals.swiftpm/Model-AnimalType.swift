@@ -168,12 +168,12 @@ struct AnimalType: Identifiable, Hashable, Decodable, Encodable {
                        description: "The basking shark (Cetorhinus maximus) is the second-largest living shark and fish, after the whale shark, and one of three plankton-eating shark species, along with the whale shark and megamouth shark. Adults typically reach 7.9 m (26 ft) in length. It is usually greyish-brown, with mottled skin. The caudal fin has a strong lateral keel and a crescent shape. The basking shark is a cosmopolitan migratory species, found in all the world's temperate oceans. A slow-moving filter feeder, its common name derives from its habit of feeding at the surface, appearing to be basking in the warmer water there. It has anatomical adaptations for filter-feeding, such as a greatly enlarged mouth and highly developed gill rakers. Its snout is conical and the gill slits extend around the top and bottom of its head. The gill rakers, dark and bristle-like, are used to catch plankton as water filters through the mouth and over the gills. The teeth are numerous and very small, and often number 100 per row. The teeth have a single conical cusp, are curved backwards and are the same on both the upper and lower jaws. This species has the smallest weight-for-weight brain size of any shark, reflecting its relatively passive lifestyle. The basking shark is a coastal-pelagic shark found worldwide in boreal to warm-temperate waters. It lives around the continental shelf and occasionally enters brackish waters. It is found from the surface down to at least 910 m (2,990 ft). It prefers temperatures of 8 to 14.5 °C (46.4 to 58.1 °F), but has been confirmed to cross the much-warmer waters at the equator. It is often seen close to land, including in bays with narrow openings. The shark follows plankton concentrations in the water column, so is often visible at the surface. It characteristically migrates with the seasons.",
                        conservationStatus: "CR"
                       ),
-//            AnimalType(image: "Baryancistrus longipinnis",
-//                       speed: 600,
-//                       scale: 1,
-//                       description: "",
-//                       conservationStatus: "CR"
-//                      ),
+            //            AnimalType(image: "Baryancistrus longipinnis",
+            //                       speed: 600,
+            //                       scale: 1,
+            //                       description: "",
+            //                       conservationStatus: "CR"
+            //                      ),
             
             
             AnimalType(image: "Brycon vermelha",
@@ -182,12 +182,52 @@ struct AnimalType: Identifiable, Hashable, Decodable, Encodable {
                        description: "Readily distinguishable in life from all other species of the genus in eastern Brazilian coastal rivers by the unique brightly red colored dorsal, adipose, caudal and anal fins. Differs from all other species of eastern coastal Brazilian Brycon by having the fifth infraorbital bone longer than wide and a great maximum body depth (31.7-37.5% SL). Differs from B. ferox, the only other member of the genus occurring in the Rio Mucuri, by having 11 or 12 scales between lateral line and the dorsal fin, and by a different color pattern. The coloration of this species is unique among the Bryconidae of the eastern basins, with its dorsal, adipose, caudal and anal fins having a dark red tone in life. It also differs in terms of the fifth infraorbital bone, which is longer than wide, and in terms of great height (31.7 to 37.5% in standard length).",
                        conservationStatus: "EN"
                       )
-//            AnimalType(image: "Odontesthes bicudo",
-//                       speed: 600,
-//                       scale: 1,
-//                       description: "",
-//                       conservationStatus: "EN"
-//                      )
+            //            AnimalType(image: "Odontesthes bicudo",
+            //                       speed: 600,
+            //                       scale: 1,
+            //                       description: "",
+            //                       conservationStatus: "EN"
+            //                      )
+        ]
+    }
+    
+    static var trash: [AnimalType] {
+        [
+            AnimalType(
+                image: "Bottle1",
+                speed: 1200,
+                scale: 1,
+                description: "",
+                conservationStatus: ""
+            ),
+            AnimalType(
+                image: "Cigarette",
+                speed: 1200,
+                scale: 0.5,
+                description: "",
+                conservationStatus: ""
+            ),
+            AnimalType(
+                image: "Bottle2",
+                speed: 1200,
+                scale: 1,
+                description: "",
+                conservationStatus: ""
+            ),
+            AnimalType(
+                image: "Bottle3",
+                speed: 1200,
+                scale: 1,
+                description: "",
+                conservationStatus: ""
+            ),
+            AnimalType(
+                image: "Cup",
+                speed: 1200,
+                scale: 0.5,
+                description: "",
+                conservationStatus: ""
+            )
         ]
     }
 }

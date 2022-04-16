@@ -23,7 +23,7 @@ struct LevelInstructionView: View {
         case 3:
             return "You have already saved \(animalsSavedCount) fish, congratulations!. All are safe in their aquariums, but they are out of food. Your goal is to feed them. The more food you give them, the faster they will reproduce and the faster they will return to the ocean."
         case 4:
-            return "You are taking such good care of your fish, amazing! A ship has just dumped pieces of plastic and glass into the sea, and now the fish are in danger as they can mistake these objects for food. Return to the ocean and remove the garbage that was dumped."
+            return "You are taking such good care of your fish, amazing! A ship has just dumped pieces of plastic, glass and cigarette butts into the sea, and now the fish are in danger as they can mistake these objects for food. Return to the ocean and remove the garbage that was dumped."
         default:
             return ""
         }
