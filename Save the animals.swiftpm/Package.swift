@@ -8,13 +8,13 @@ import PackageDescription
 import AppleProductTypes
 
 let package = Package(
-    name: "Marine Conservation",
+    name: "Life Marine",
     platforms: [
         .iOS("15.2")
     ],
     products: [
         .iOSApplication(
-            name: "Marine Conservation",
+            name: "Life Marine",
             targets: ["AppModule"],
             bundleIdentifier: "com.1729patrick.Save-the-animals",
             teamIdentifier: "M967Y25A5P",
