@@ -20,11 +20,11 @@ struct AnimalView: View {
     
     var position: CGPoint {
         if animal.removed {
-            return CGPoint(x: UIScreen.screenWidth - 100, y: 40)
+            return CGPoint(x: UIScreen.screenWidth - 100, y: 25)
         }
         
         if animal.saved {
-            return CGPoint(x: UIScreen.screenWidth - 40, y: 40)
+            return CGPoint(x: UIScreen.screenWidth - 40, y: 25)
         }
          
         return animal.getPosition()

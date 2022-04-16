@@ -8,8 +8,10 @@
 import SwiftUI
 
 class ViewModel: ObservableObject, Identifiable {
-    let maxAnimals = 12
-    let maxTrashes = 12
+    let maxAnimals = 8
+    var maxTrashes: Int {
+        level == 4 ? 8 : 3
+    }
     
     @Published var animals = [Animal]()
     @Published var animalsSaved = [AnimalType:Int]()
@@ -25,8 +27,8 @@ class ViewModel: ObservableObject, Identifiable {
     var animalsSavedCount: Int {
         let keys = animalsSaved.keys.filter { $0.type == "animal"}
         
-       return keys.reduce(into: 0) { totalCount, type in
-           totalCount += animalsSaved[type] ?? 0
+        return keys.reduce(into: 0) { totalCount, type in
+            totalCount += animalsSaved[type] ?? 0
         }
     }
     
@@ -80,12 +82,16 @@ class ViewModel: ObservableObject, Identifiable {
     }
     
     func addAnimal(type: String) {
-        guard animalsVisible.count < maxAnimals else {
-            return
+        if type == "animal" {
+            guard animalsVisible.count < maxAnimals else {
+                return
+            }
         }
         
-        guard trashesVisible.count < maxTrashes else {
-            return
+        if type == "trash" {
+            guard trashesVisible.count < maxTrashes else {
+                return
+            }
         }
         
         let yRange: ClosedRange<Double> = UIScreen.screenHeight * 0.35...UIScreen.screenHeight
@@ -149,10 +155,9 @@ class ViewModel: ObservableObject, Identifiable {
     func setup() {
         self.addAnimal(type: "animal")
         self.addAnimal(type: "animal")
-        self.addAnimal(type: "animal")
         
         Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { timer in
-            if self.animalsVisible.count >= self.maxAnimals {
+            if self.animalsVisible.count > self.maxAnimals {
                 timer.invalidate()
             } else {
                 self.addAnimal(type: "animal")
@@ -183,7 +188,7 @@ class ViewModel: ObservableObject, Identifiable {
             nextLevel()
         }
     }
- 
+    
     func incrementSavedCount(type: AnimalType) {
         let savedCount = animalsSaved[type] ?? 0
         animalsSaved[type] = savedCount + 1
@@ -214,7 +219,7 @@ class ViewModel: ObservableObject, Identifiable {
     
     func addTrashes() {
         Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { timer in
-            if self.trashesVisible.count >= self.maxTrashes {
+            if self.trashesVisible.count > self.maxTrashes {
                 timer.invalidate()
             } else {
                 self.addAnimal(type: "trash")

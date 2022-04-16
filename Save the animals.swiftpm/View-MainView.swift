@@ -131,7 +131,7 @@ struct MainView: View {
             levelTitle
             
             Spacer()
-            if level == 4 {
+            if level >= 4 {
                 trash
             }
             album
@@ -243,27 +243,28 @@ struct MainView: View {
         .onAppear(perform: onAppear)
         .onChange(of: viewModel.level) { level in
             if level == 2 {
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) {
                     self.level = level
                     startLevel2()
                     showLevelInstructions = true
                 }
             } else if level == 3 {
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) {
                     self.level = level
                     startLevel3()
                     showLevelInstructions = true
                 }
             } else if level == 4 {
-                DispatchQueue.main.asyncAfter(deadline: .now() + 4) {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 4.5) {
                     self.level = level
                     showLevelInstructions = true
                     startLevel4()
                 }
-            } else if level == 4 {
+            } else if level == 5 {
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
                     self.level = level
                     showLevelInstructions = true
+                    startLevel5()
                 }
             }else {
                 self.level = level
@@ -287,6 +288,8 @@ struct MainView: View {
             startLevel2()
         } else if level == 4 {
             startLevel4()
+        }  else if level == 5 {
+            startLevel5()
         }
     }
     
@@ -309,6 +312,10 @@ struct MainView: View {
     }
     
     func startLevel4() {
+        viewModel.addTrashes()
+    }
+    
+    func startLevel5() {
         viewModel.addTrashes()
     }
     

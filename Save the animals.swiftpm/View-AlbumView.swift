@@ -91,7 +91,7 @@ struct AlbumView: View {
     var body: some View {
         VStack(spacing: 0) {
             HStack(alignment: .center) {
-                Text("My aquarium")
+                Text("My aquariums")
                     .font(.system(size: 32))
                     .fontWeight(.heavy)
                     .shadow(radius: 1)

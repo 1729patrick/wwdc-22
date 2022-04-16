@@ -23,7 +23,7 @@ struct LevelInstructionView: View {
         case 3:
             return "You have already saved \(animalsSavedCount) fish, congratulations! All are safe in their aquariums, but they are out of food. Your goal is to feed them. The more food you give them, the faster they will reproduce and the faster they will return to the ocean."
         case 4:
-            return "You are taking such good care of your fish, amazing! Some pieces of plastic, cigarette butts and glass appeared in the ocean, and now the fish are in danger, as they can mistake these objects for food. Return to the ocean and remove these objects."
+            return "You are taking such good care of your fish, amazing! Some pieces of plastic, cigarette butts and glass appeared in the ocean, and now the fish are in danger, as they can mistake these objects for food. Now you must remove the garbage from the ocean so that the fish do not eat it."
         case 5:
             return "Good, you did a great job removing all the garbage from the ocean. Now the protection of endangered animals is in your hands. Keep taking care of the fish, hold the ocean clean and fight oil leaks."
         default:
@@ -38,7 +38,7 @@ struct LevelInstructionView: View {
         case 3:
             return ["- Go to the aquariums and feed the fishes -"]
         case 4:
-            return ["- Tap on the objects -"]
+            return ["- Return to the ocean and tap on the objects -"]
         case 5:
             return ["- Tap on the fishes -", "- Tap on the objects -", "- Feed the fishes -"]
         default:
@@ -53,14 +53,14 @@ struct LevelInstructionView: View {
                 Spacer()
                 
                 Text("LEVEL \(level)")
-                    .font(.system(size: 32))
+                    .font(.system(size: 30))
                     .fontWeight(.heavy)
                     .shadow(radius: 1)
                     .multilineTextAlignment(.center)
                     .scaleEffect(animateView ? 1 : 0)
                 
                 Text(description)
-                    .font(.system(size: 24))
+                    .font(.system(size: 22))
                     .fontWeight(.bold)
                     .shadow(radius: 1)
                     .lineSpacing(10)
@@ -71,14 +71,14 @@ struct LevelInstructionView: View {
                 VStack {
                     ForEach(hint, id: \.self) {
                         Text($0)
-                            .font(.system(size: 18))
+                            .font(.system(size: 16))
                             .foregroundColor(.secondary)
                             .fontWeight(.medium)
                             .shadow(radius: 1)
                             .multilineTextAlignment(.center)
                             .scaleEffect(animateView ? 1 : 0)
                             .scaleEffect(animateView ? 1 : 0)
-                            .padding(.bottom, 5)
+                            .padding(.bottom, 1)
                     }
                 }
                 .padding(.top)
