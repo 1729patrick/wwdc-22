@@ -23,6 +23,7 @@ struct AlbumView: View {
     @Namespace var animation
     
     var animalsSaved: [AnimalType: Int]
+    var speciesSavedCount: Int
 
 
     let columns = [
@@ -30,7 +31,11 @@ struct AlbumView: View {
     ]
     
     var feedDisabled: Bool {
-        timeToFeedAgain > 0
+        if !(speciesSavedCount >= 0) {
+            return true
+        }
+        
+        return timeToFeedAgain > 0
     }
     
     var timeLeftToFeed: String {
@@ -98,6 +103,7 @@ struct AlbumView: View {
                     .scaleEffect(animateView ? 1 : 0, anchor: .leading)
                 
                 Spacer()
+                
                 
                 feedButton
                 closeButton

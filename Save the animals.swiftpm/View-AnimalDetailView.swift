@@ -20,7 +20,8 @@ struct AnimalDetailView: View {
     @State private var animateView: Bool = false
     @State private var animateContent: Bool = false
     @State private var scrollOffset: CGFloat = 0
-    
+    @Namespace var animation
+    @State private var showMore: Bool = true
     
     var rotation: Angle {
         if animateView {
@@ -47,7 +48,33 @@ struct AnimalDetailView: View {
     var scale : Double {
         animateView ? (UIScreen.screenWidth * 0.85) / width : 1
     }
-  
+    
+    @State var showAllStatus = false
+    
+    let status = ["EX", "EW", "CR", "EN", "VU", "NT", "LC", "DD"]
+    
+    let descriptions = [
+        "EX": "Extinct",
+        "EW": "Extinct in the Wild",
+        "CR": "Critically Endangered",
+        "EN": "Endangered",
+        "VU": "Vulnerable",
+        "NT": "Near Threatened",
+        "LC": "Least Concern",
+        "DD": "Data Deficient"
+    ]
+    
+    let colors: [String: Color] = [
+        "EX": .black,
+        "EW": Color("Midnight"),
+        "CR": .red,
+        "EN": .orange,
+        "VU": .yellow,
+        "NT": Color("Teal"),
+        "LC": Color("Green"),
+        "DD": .blue
+    ]
+    
     var close: some View {
         Button {
             SoundManager.shared.play(sound: ButtonSound())
@@ -94,18 +121,83 @@ struct AnimalDetailView: View {
         .padding(.vertical, 80)
     }
     
-    var description: some View {
-        VStack {
-            Text(animal.type.description)
-                .font(.body)
-                .fontWeight(.medium)
-                .shadow(radius: 1)
-                .multilineTextAlignment(.leading)
-                .lineSpacing(10)
+    
+    @ViewBuilder var description: some View {
+        Text(animal.type.description)
+            .font(.body)
+            .fontWeight(.medium)
+            .shadow(radius: 1)
+            .multilineTextAlignment(.leading)
+            .lineSpacing(10)
+            .lineLimit(showMore ? 7 : nil)
+        
+        HStack {
+            Spacer()
+            
+            Button {
+                withAnimation {
+                    showMore.toggle()
+                }
+            } label: {
+                if showMore {
+                    Text("Show more")
+                } else {
+                    Text("Show less")
+                }
+            }
+            
+            Spacer()
         }
-        .offset(y: scrollOffset > 0 ? scrollOffset : 0)
-        .opacity(animateContent ? 1 : 0)
-        .scaleEffect(animateView ? 1 : 0, anchor: .top)
+    }
+    
+    func getConservationStatus(status: String)  -> some View {
+        Button {
+            withAnimation(.interactiveSpring(response: 0.6, dampingFraction: 0.7, blendDuration: 0.7)){
+                showAllStatus.toggle()
+            }
+        } label : {
+            HStack {
+                Capsule()
+                    .foregroundColor(colors[status])
+                    .frame(width: 60, height: 40)
+                
+                    .overlay {
+                        Text(status)
+                            .fontWeight(.bold)
+                            .shadow(radius: 1)
+                            .multilineTextAlignment(.leading)
+                            .lineSpacing(10)
+                            .foregroundColor(.white)
+                    }
+                
+                Text(descriptions[status] ?? "")
+                    .fontWeight(
+                        status == animal.type.conservationStatus ? .medium : .none)
+                    .shadow(radius: 1)
+                    .multilineTextAlignment(.leading)
+                    .lineSpacing(10)
+                    .foregroundColor(.white)
+                
+                Spacer()
+                
+                if status == animal.type.conservationStatus {
+                    Image(systemName: showAllStatus ? "chevron.up" : "chevron.down")
+                        .foregroundColor(.white)
+                    
+                }
+            }
+        }
+        .matchedGeometryEffect(id: status, in: animation)
+        .opacity(status == animal.type.conservationStatus ? 1 : 0.3)
+        .disabled(status != animal.type.conservationStatus)
+    }
+    
+    var conservationStatus: some View {
+        VStack {
+            ForEach(0..<status.count, id: \.self) { index in
+                getConservationStatus(status: status[index])
+            }
+        }
     }
     
     var body: some View {
@@ -116,9 +208,43 @@ struct AnimalDetailView: View {
             ScrollView(.vertical, showsIndicators: false) {
                 VStack {
                     image
-                    description
-                        .padding()
+                    
+                    VStack(alignment: .leading, spacing: 10) {
+                        Divider()
+                        
+                        if showAllStatus {
+                            conservationStatus
+                        } else {
+                            getConservationStatus(status: animal.type.conservationStatus)
+                        }
+                        
+                        Divider()
+                        
+                        description
+                        
+                        Divider()
+                        
+                        Toggle(isOn: $alwaysShowDetails, label: {
+                            Text("Always show details for new species")
+                                .font(.body)
+                                .fontWeight(.medium)
+                                .shadow(radius: 1)
+                                .multilineTextAlignment(.leading)
+                                .lineSpacing(10)
+                        })
+                        
+                        Divider()
+                        
+                        Text("Source: \(animal.type.source)")
+                            .foregroundColor(.secondary)
+                    }
+                    .offset(y: scrollOffset > 0 ? scrollOffset : 0)
+                    .opacity(animateContent ? 1 : 0)
+                    .scaleEffect(animateView ? 1 : 0, anchor: .top)
+                    
                 }
+                
+                .padding(.horizontal)
                 .offset(y: scrollOffset > 0 ? -scrollOffset : 0)
                 .offset(offset: $scrollOffset)
             }

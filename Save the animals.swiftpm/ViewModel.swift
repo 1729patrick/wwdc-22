@@ -171,9 +171,9 @@ class ViewModel: ObservableObject, Identifiable {
         
         incrementSavedCount(type: animal.type)
         
-        if level == 1 && animalsSavedCount == 5 {
+        if level == 1 && animalsSavedCount == 4 {
             nextLevel()
-        } else if level == 2 && animalsSavedCount == 13 {
+        } else if level == 2 && animalsSavedCount == 10 {
             nextLevel()
         }
     }
@@ -210,7 +210,10 @@ class ViewModel: ObservableObject, Identifiable {
     func feed() {
         timeToFeedAgain = 59
         executeFeedTimer()
-        nextLevel()
+        
+        if level == 3 {
+            nextLevel()
+        }
     }
     
     func nextLevel() {

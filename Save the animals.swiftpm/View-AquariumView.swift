@@ -137,9 +137,7 @@ struct AquariumView: View {
                     Capsule()
                         .stroke(color, lineWidth: 3)
                         .frame(width: 100, height: 70)
-                    
                 }
-                
             }
             .opacity(disabled ? 0.15 : 1)
         }

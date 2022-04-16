@@ -42,7 +42,8 @@ struct MainView: View {
                 animal: animal,
                 alwaysShowDetails: viewModel.alwaysShowDetails,
                 selected: showDetailPage && currentAnimal == animal,
-                namespace: animation
+                namespace: animation,
+                specieSaved: viewModel.animalsSaved[animal.type] ?? 0 > 0
             ) {
                 SoundManager.shared.play(sound: FishSound())
                 selectAnimal(with: animal)
@@ -208,7 +209,8 @@ struct MainView: View {
                     alwaysShowDetails: $viewModel.alwaysShowDetails,
                     timeToFeedAgain: viewModel.timeToFeedAgain,
                     feed: viewModel.feed,
-                    animalsSaved: viewModel.animalsSaved
+                    animalsSaved: viewModel.animalsSaved,
+                    speciesSavedCount: viewModel.speciesSavedCount
                 )
             }
             
@@ -243,13 +245,13 @@ struct MainView: View {
         .onAppear(perform: onAppear)
         .onChange(of: viewModel.level) { level in
             if level == 2 {
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.35) {
                     self.level = level
                     startLevel2()
                     showLevelInstructions = true
                 }
             } else if level == 3 {
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.35) {
                     self.level = level
                     startLevel3()
                     showLevelInstructions = true
@@ -261,7 +263,7 @@ struct MainView: View {
                     startLevel4()
                 }
             } else if level == 5 {
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.35) {
                     self.level = level
                     showLevelInstructions = true
                     startLevel5()
@@ -324,7 +326,7 @@ struct MainView: View {
             Spacer()
             SandWaveView(
                 progress: 0.5,
-                waveHeight: 0.015,
+                waveHeight: 0.01,
                 offset: startAnimation
             )
             .fill(LinearGradient(
@@ -344,7 +346,7 @@ struct MainView: View {
             removeTrash(animal: animal)
         } else {
             
-            if viewModel.alwaysShowDetails == true {
+            if viewModel.alwaysShowDetails == true && !(viewModel.animalsSaved[animal.type] ?? 0 > 0) {
                 withAnimation(.interactiveSpring(response: 0.6, dampingFraction: 0.7, blendDuration: 0.7)){
                     currentAnimal = animal
                     showDetailPage = true
@@ -366,19 +368,19 @@ struct MainView: View {
     }
     
     func scaleAlbum() {
-        withAnimation(.linear(duration: 0.2).delay(0.3)) {
+        withAnimation(.linear(duration: 0.2).delay(0.25)) {
             albumScale = 1.3
         }
-        withAnimation(.linear(duration: 0.15).delay(0.6)) {
+        withAnimation(.linear(duration: 0.15).delay(0.5)) {
             albumScale = 1
         }
     }
     
     func scaleTrash() {
-        withAnimation(.linear(duration: 0.2).delay(0.6)) {
+        withAnimation(.linear(duration: 0.2).delay(0.35)) {
             trashScale = 1.3
         }
-        withAnimation(.linear(duration: 0.15).delay(0.8)) {
+        withAnimation(.linear(duration: 0.15).delay(0.7)) {
             trashScale = 1
         }
     }

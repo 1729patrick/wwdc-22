@@ -19,13 +19,13 @@ struct LevelInstructionView: View {
         case 1:
             return "Fish are swimming in the ocean, but the number of species is decreasing year after year, fighting pollution, heating water, oil spills, etc. Now you must save some fish that are in the ocean and put them safely in aquariums."
         case 2:
-            return "Oh no, there was an oil leak. Tons and tons of fish die in this kind of accident. Save as many fish as you can. Go! Go! Go!"
+            return "Oh no, there was an oil spill. Tons and tons of fish die in this kind of accident. Save as many fish as you can. Go! Go! Go!"
         case 3:
             return "You have already saved \(animalsSavedCount) fish, congratulations! All are safe in their aquariums, but they are out of food. Your goal is to feed them. The more food you give them, the faster they will reproduce and the faster they will return to the ocean."
         case 4:
             return "You are taking such good care of your fish, amazing! Some pieces of plastic, cigarette butts and glass appeared in the ocean, and now the fish are in danger, as they can mistake these objects for food. Now you must remove the garbage from the ocean so that the fish do not eat it."
         case 5:
-            return "Good, you did a great job removing all the garbage from the ocean. Now the protection of endangered animals is in your hands. Keep taking care of the fish, hold the ocean clean and fight oil leaks."
+            return "Good, you did a great job removing the garbage from the ocean. Now the protection of endangered animals is in your hands. Keep taking care of the fish, hold the ocean clean and fight oil spill."
         default:
             return ""
         }
@@ -34,13 +34,14 @@ struct LevelInstructionView: View {
     var hint: [String] {
         switch level {
         case 1, 2:
-            return ["- Tap on the fishes -"]
+            return ["- Tap on the fish -"]
         case 3:
-            return ["- Go to the aquariums and feed the fishes -"]
+            return ["- Go to the aquariums and feed the fish -"]
         case 4:
             return ["- Return to the ocean and tap on the objects -"]
         case 5:
-            return ["- Tap on the fishes -", "- Tap on the objects -", "- Feed the fishes -"]
+            return []
+//            return ["- Tap on the fish -", "- Tap on the objects -", "- Feed the fish -"]
         default:
             return []
         }
@@ -67,6 +68,7 @@ struct LevelInstructionView: View {
                     .multilineTextAlignment(.center)
                     .scaleEffect(animateView ? 1 : 0)
                     .padding(.top)
+                    .minimumScaleFactor(0.1)
                 
                 VStack {
                     ForEach(hint, id: \.self) {

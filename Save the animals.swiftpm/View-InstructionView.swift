@@ -15,7 +15,7 @@ struct InstructionView: View {
     
     var pages = [
         "Welcome to Marine Conservation. In the wild the strongest animals survive, but today even the strongest are suffering from our attitudes.",
-        "We can all collaborate for the preservation of biodiversity both in Brazil and in the world. Being aware of the preservation of the environment is a duty of every human being.",
+        "We can all collaborate for the preservation of biodiversity in Brazil and in the world. Being aware of the preservation of the environment is a duty of every human being.",
         "In this game you will be responsible for saving the marine animals that are in danger of extinction in Brazil.",
     ]
     
@@ -47,6 +47,7 @@ struct InstructionView: View {
                             .multilineTextAlignment(.center)
                             .scaleEffect($0 == page ? 1 : 0)
                             .opacity($0 == page ? 1 : 0)
+                            .minimumScaleFactor(0.1)
                     }
                     
                 }

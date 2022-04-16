@@ -14,6 +14,7 @@ struct AnimalView: View {
     var selected: Bool
     
     var namespace: Namespace.ID
+    var specieSaved: Bool
     var onSave: () -> Void
     
     @State var scale: Double = 1
@@ -68,9 +69,9 @@ struct AnimalView: View {
             .position(position)
             .onTapGesture(perform: onSave)
             .animation(.linear(duration: 0.4), value: animal.saved)
-            .animation(.linear(duration: 0.7), value: animal.removed)
+            .animation(.linear(duration: 0.5), value: animal.removed)
             .onChange(of: animal.saved) { _ in
-                if alwaysShowDetails == true {
+                if alwaysShowDetails == true && !specieSaved {
                     scale = (UIScreen.screenWidth * 0.85) / width
                 }
                 
