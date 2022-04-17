@@ -10,7 +10,7 @@ import SwiftUI
 class ViewModel: ObservableObject, Identifiable {
     let maxAnimals = 8
     var maxTrashes: Int {
-        level == 4 ? 8 : 3
+        level == 4 ? 8 : 4
     }
     
     @Published var animals = [Animal]()
@@ -184,7 +184,7 @@ class ViewModel: ObservableObject, Identifiable {
         
         trashesRemovedCount += 1
         
-        if trashesRemovedCount == 10 {
+        if trashesRemovedCount == 7 {
             nextLevel()
         }
     }
