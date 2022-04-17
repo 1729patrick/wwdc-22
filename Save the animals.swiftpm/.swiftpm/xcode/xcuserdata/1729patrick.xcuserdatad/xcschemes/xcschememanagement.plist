@@ -7,12 +7,17 @@
 		<key>Life Marine.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>0</integer>
+			<integer>1</integer>
 		</dict>
 		<key>Marine Conservation.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
 			<integer>1</integer>
+		</dict>
+		<key>Marine Life.xcscheme_^#shared#^_</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>0</integer>
 		</dict>
 		<key>Save the animals.xcscheme_^#shared#^_</key>
 		<dict>
@@ -27,7 +32,17 @@
 			<key>primary</key>
 			<true/>
 		</dict>
+		<key>Life Marine</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>Marine Conservation</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>Marine Life</key>
 		<dict>
 			<key>primary</key>
 			<true/>
