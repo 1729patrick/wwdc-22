@@ -181,10 +181,23 @@ struct AquariumView: View {
             }
             
         }
+//        .overlay(alignment: .bottomLeading) {
+//            if savedCount > 0 {
+//                    Text("\(savedCount)")
+//                        .font(.caption2)
+//                        .fontWeight(.bold)
+//                        .padding(.horizontal, 4)
+//                        .padding(.vertical, 2)
+//                        .background(.white)
+//                        .foregroundColor(.blue)
+//                        .clipShape(Capsule())
+//            }
+//        }        
         .onAppear(perform: onAppear)
         .onChange(of: feed, perform: onFeedChange)
         .padding(.top)
         .padding(.top)
+        
     }
     
     func onAppear() {

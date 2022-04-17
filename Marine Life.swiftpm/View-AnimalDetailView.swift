@@ -130,7 +130,7 @@ struct AnimalDetailView: View {
             .multilineTextAlignment(.leading)
             .lineSpacing(10)
             .lineLimit(showMore ? 7 : nil)
-        
+    
         HStack {
             Spacer()
             
@@ -145,6 +145,7 @@ struct AnimalDetailView: View {
                     Text("Show less")
                 }
             }
+            .padding(.bottom, 10)
             
             Spacer()
         }
@@ -159,7 +160,7 @@ struct AnimalDetailView: View {
             HStack {
                 Capsule()
                     .foregroundColor(colors[status])
-                    .frame(width: 60, height: 40)
+                    .frame(width: 50, height: 30)
                 
                     .overlay {
                         Text(status)

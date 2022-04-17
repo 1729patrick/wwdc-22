@@ -56,6 +56,18 @@ struct MainView: View {
             .resizable()
             .scaledToFit()
             .frame(width: 50, height: 50)
+            .overlay(alignment: .bottomLeading) {
+                if viewModel.trashesRemovedCount > 0 {
+                        Text("\(viewModel.trashesRemovedCount)")
+                            .font(.caption2)
+                            .fontWeight(.bold)
+                            .padding(.horizontal, 4)
+                            .padding(.vertical, 2)
+                            .background(.white)
+                            .foregroundColor(.blue)
+                            .clipShape(Capsule())
+                }
+            }
             .scaleEffect(animateView ? 1 : 0)
             .scaleEffect(trashScale)
     }
@@ -89,9 +101,9 @@ struct MainView: View {
         case 4:
             title = "Keep the ocean clean"
         case 5:
-            title = "Protect the fish"
+            title = "Save all species"
         default:
-            title = "Save the animals"
+            title = ""
         }
         
         return HStack {
@@ -103,8 +115,8 @@ struct MainView: View {
                 
                 
                 VStack(spacing: 0) {
-                    Text("\(viewModel.level)")
-                        .font(.system(size: 22))
+                    Text(viewModel.level == 5 ? "LAST" : "\(viewModel.level)")
+                        .font(.system(size: viewModel.level == 5 ? 8 : 22))
                         .fontWeight(.heavy)
                         .shadow(radius: 1)
                         .foregroundColor(.white)
@@ -129,7 +141,9 @@ struct MainView: View {
     
     var header: some View {
         HStack {
-            levelTitle
+            if viewModel.level <= 5 {
+                levelTitle
+            }
             
             Spacer()
             if level >= 4 {
@@ -260,13 +274,13 @@ struct MainView: View {
                 DispatchQueue.main.asyncAfter(deadline: .now() + 4.5) {
                     self.level = level
                     showLevelInstructions = true
-                    startLevel4()
+                    startLevelWithTrash()
                 }
             } else if level == 5 {
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.35) {
                     self.level = level
                     showLevelInstructions = true
-                    startLevel5()
+                    startLevelWithTrash()
                 }
             }else {
                 self.level = level
@@ -288,10 +302,8 @@ struct MainView: View {
         
         if level == 2 {
             startLevel2()
-        } else if level == 4 {
-            startLevel4()
-        }  else if level == 5 {
-            startLevel5()
+        } else if level >= 4 {
+            startLevelWithTrash()
         }
     }
     
@@ -313,11 +325,7 @@ struct MainView: View {
         SoundManager.shared.resume(sound: BackgroundSound())
     }
     
-    func startLevel4() {
-        viewModel.addTrashes()
-    }
-    
-    func startLevel5() {
+    func startLevelWithTrash() {
         viewModel.addTrashes()
     }
     

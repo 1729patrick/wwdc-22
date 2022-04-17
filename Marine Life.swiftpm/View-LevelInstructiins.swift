@@ -25,7 +25,9 @@ struct LevelInstructionView: View {
         case 4:
             return "You are taking such good care of your fish, amazing! Some pieces of plastic, cigarette butts and glass appeared in the ocean, and now the fish are in danger, as they can mistake these objects for food. Now you must remove the garbage from the ocean so that the fish do not eat it."
         case 5:
-            return "Good, you did a great job removing the garbage from the ocean. Now the protection of endangered animals is in your hands. Keep taking care of the fish, hold the ocean clean and fight oil spill."
+            return "Good, you did a great job removing all the garbage from the ocean. You have already saved many species, but some are still endangered in the ocean: Now is the time to save all the species."
+        case 6:
+            return "Remember, the protection of endangered animals is in our hands. Keep taking care of the fish, hold the ocean clean and fight oil spills."
         default:
             return ""
         }
@@ -41,24 +43,34 @@ struct LevelInstructionView: View {
             return ["- Return to the ocean and tap on the objects -"]
         case 5:
             return []
-//            return ["- Tap on the fish -", "- Tap on the objects -", "- Feed the fish -"]
+            //            return ["- Tap on the fish -", "- Tap on the objects -", "- Feed the fish -"]
         default:
             return []
         }
-        
     }
+    
+    var levelTitle: String {
+        if level == 5 {
+            return "LAST LEVEL"
+        } else if level == 6 {
+            return "YOU WIN!"
+        }
+        
+        return "LEVEL \(level)"
+    }
+    
     
     var body: some View {
         ZStack(alignment: .bottom) {
             VStack {
                 Spacer()
                 
-                Text("LEVEL \(level)")
-                    .font(.system(size: 30))
-                    .fontWeight(.heavy)
-                    .shadow(radius: 1)
-                    .multilineTextAlignment(.center)
-                    .scaleEffect(animateView ? 1 : 0)
+                    Text(levelTitle)
+                        .font(.system(size: 30))
+                        .fontWeight(.heavy)
+                        .shadow(radius: 1)
+                        .multilineTextAlignment(.center)
+                        .scaleEffect(animateView ? 1 : 0)
                 
                 Text(description)
                     .font(.system(size: 22))
@@ -92,7 +104,7 @@ struct LevelInstructionView: View {
                 onGo()
                 SoundManager.shared.play(sound: ButtonSound())
             } label : {
-                Image("Go")
+                Image(level == 6 ? "Close" : "Go")
                     .resizable()
                     .scaledToFit()
                     .frame(width: 75, height: 75)

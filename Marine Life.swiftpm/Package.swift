@@ -16,7 +16,7 @@ let package = Package(
         .iOSApplication(
             name: "Marine Life",
             targets: ["AppModule"],
-            bundleIdentifier: "com.1729patrick.Save-the-animals",
+            bundleIdentifier: "com.1729patrick.marine-life",
             teamIdentifier: "M967Y25A5P",
             displayVersion: "1.0",
             bundleVersion: "1",

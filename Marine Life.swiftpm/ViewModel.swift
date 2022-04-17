@@ -175,6 +175,8 @@ class ViewModel: ObservableObject, Identifiable {
             nextLevel()
         } else if level == 2 && animalsSavedCount == 10 {
             nextLevel()
+        } else if level == 5 && speciesSavedCount == AnimalType.animals.count {
+            nextLevel()
         }
     }
     
