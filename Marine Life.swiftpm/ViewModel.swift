@@ -223,6 +223,10 @@ class ViewModel: ObservableObject, Identifiable {
     }
     
     func addTrashes() {
+        self.addAnimal(type: "trash")
+        self.addAnimal(type: "trash")
+        self.addAnimal(type: "trash")
+        
         Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { timer in
             if self.trashesVisible.count > self.maxTrashes {
                 timer.invalidate()

@@ -31,7 +31,7 @@ struct AlbumView: View {
     ]
     
     var feedDisabled: Bool {
-        if !(speciesSavedCount >= 0) {
+        if !(speciesSavedCount > 0) {
             return true
         }
         
@@ -169,7 +169,7 @@ struct AlbumView: View {
     }
     
     func executeFeed() {
-        guard feeding == false && !(timeToFeedAgain > 0) else {
+        guard feedDisabled == false else {
             SoundManager.shared.play(sound: WrongSound())
             return
         }

@@ -25,9 +25,9 @@ struct LevelInstructionView: View {
         case 4:
             return "You are taking such good care of your fish, amazing! Some pieces of plastic, cigarette butts and glass appeared in the ocean, and now the fish are in danger, as they can mistake these objects for food. Now you must remove the garbage from the ocean so that the fish do not eat it."
         case 5:
-            return "Good, you did a great job removing all the garbage from the ocean. You have already saved many species, but some are still endangered in the ocean: Now is the time to save all the species."
+            return "Good, you did a great job removing all the garbage from the ocean. You have already saved many species, but some are still endangered in the ocean. Now is the time to save all the species."
         case 6:
-            return "Remember, the protection of endangered animals is in our hands. Keep taking care of the fish, hold the ocean clean and fight oil spills."
+            return "Thank you! I hope this game helped you to realize that the lives of animals are in our hands. Keep taking care of the fish, hold the ocean clean and fight oil spills."
         default:
             return ""
         }
@@ -42,8 +42,7 @@ struct LevelInstructionView: View {
         case 4:
             return ["- Return to the ocean and tap on the objects -"]
         case 5:
-            return []
-            //            return ["- Tap on the fish -", "- Tap on the objects -", "- Feed the fish -"]
+            return ["- Tap on the fish -"]
         default:
             return []
         }
