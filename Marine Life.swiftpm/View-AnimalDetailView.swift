@@ -130,7 +130,7 @@ struct AnimalDetailView: View {
             .multilineTextAlignment(.leading)
             .lineSpacing(10)
             .lineLimit(showMore ? 7 : nil)
-    
+        
         HStack {
             Spacer()
             
@@ -201,6 +201,24 @@ struct AnimalDetailView: View {
         }
     }
     
+    var source: some View {
+        HStack {
+            Text("Source")
+                .foregroundColor(.secondary)
+            Spacer()
+            Menu {
+                Text("Chosic").fontWeight(.semibold) + Text(" and ") + Text("Mixkit").fontWeight(.semibold) + Text(" for the sounds effects")
+                Text("Conabio").fontWeight(.semibold) + Text(" for the list of animals in danger in Brazil")
+                Text("\(animal.type.source)").fontWeight(.semibold) + Text(" for the fish description")
+            } label: {
+                Image(systemName: "info.circle")
+                    .foregroundColor(.secondary)
+                    .imageScale(.large)
+                    .foregroundColor(.white)
+            }
+        }
+    }
+    
     var body: some View {
         VStack(spacing: 0) {
             header
@@ -235,9 +253,7 @@ struct AnimalDetailView: View {
                         })
                         
                         Divider()
-                        
-                        Text("Source: \(animal.type.source)")
-                            .foregroundColor(.secondary)
+                        source
                     }
                     .offset(y: scrollOffset > 0 ? scrollOffset : 0)
                     .opacity(animateContent ? 1 : 0)

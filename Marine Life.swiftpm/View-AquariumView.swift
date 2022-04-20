@@ -13,6 +13,7 @@ struct AquariumView: View {
     var namespace: Namespace.ID
     var showDetailPage: Bool
     let savedCount: Int
+    let level: Int
     @Binding var feed: Bool
     
     let colors = [
@@ -181,18 +182,18 @@ struct AquariumView: View {
             }
             
         }
-//        .overlay(alignment: .bottomLeading) {
-//            if savedCount > 0 {
-//                    Text("\(savedCount)")
-//                        .font(.caption2)
-//                        .fontWeight(.bold)
-//                        .padding(.horizontal, 4)
-//                        .padding(.vertical, 2)
-//                        .background(.white)
-//                        .foregroundColor(.blue)
-//                        .clipShape(Capsule())
-//            }
-//        }        
+        .overlay(alignment: .bottomLeading) {
+            if level == 6 {
+                    Text("\(savedCount)")
+                        .font(.caption2)
+                        .fontWeight(.bold)
+                        .padding(.horizontal, 4)
+                        .padding(.vertical, 2)
+                        .background(.white)
+                        .foregroundColor(.blue)
+                        .clipShape(Capsule())
+            }
+        }
         .onAppear(perform: onAppear)
         .onChange(of: feed, perform: onFeedChange)
         .padding(.top)

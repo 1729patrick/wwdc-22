@@ -25,7 +25,7 @@ struct BackgroundSound: Sound {
     func getFileName() -> String { "background" }
     func getFileExtension() -> String { "m4a" }
     func getVolume() -> Float {
-        0.7
+        0.3
     }
     func isLoop() -> Bool {
         true
@@ -36,7 +36,7 @@ struct ButtonSound: Sound {
     func getFileName() -> String { "button" }
     func getFileExtension() -> String { "wav" }
     func getVolume() -> Float {
-        0.3
+        0.1
     }
 }
 
@@ -44,7 +44,7 @@ struct FishSound: Sound {
     func getFileName() -> String { "fish" }
     func getFileExtension() -> String { "wav" }
     func getVolume() -> Float {
-        0.4
+        0.1
     }
 }
 
@@ -52,7 +52,7 @@ struct WrongSound: Sound {
     func getFileName() -> String { "wrong" }
     func getFileExtension() -> String { "wav" }
     func getVolume() -> Float {
-        0.4
+        0.1
     }
 }
 
@@ -60,7 +60,7 @@ struct FeedSound: Sound {
     func getFileName() -> String { "feed" }
     func getFileExtension() -> String { "wav" }
     func getVolume() -> Float {
-        0.6
+        0.2
     }
 }
 
@@ -68,7 +68,7 @@ struct OilSpillSound: Sound {
     func getFileName() -> String { "oilSpill" }
     func getFileExtension() -> String { "wav" }
     func getVolume() -> Float {
-        0.6
+        0.3
     }
     func isLoop() -> Bool { true }
 }

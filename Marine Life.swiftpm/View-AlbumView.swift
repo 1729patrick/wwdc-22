@@ -24,7 +24,7 @@ struct AlbumView: View {
     
     var animalsSaved: [AnimalType: Int]
     var speciesSavedCount: Int
-
+    let level: Int
 
     let columns = [
         GridItem(.adaptive(minimum: 120))
@@ -131,6 +131,7 @@ struct AlbumView: View {
                                 namespace: animation,
                                 showDetailPage: showDetailPage,
                                 savedCount: animalsSaved[animalType] ?? 0,
+                                level: level,
                                 feed: $feeding
                             )
                         }

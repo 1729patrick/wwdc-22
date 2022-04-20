@@ -83,6 +83,18 @@ struct MainView: View {
                 .frame(width: 50, height: 50)
         }
         .buttonStyle(ScaledButtonStyle())
+        .overlay(alignment: .bottomLeading) {
+            if viewModel.level == 6 {
+                    Text("\(viewModel.animalsSavedCount)")
+                        .font(.caption2)
+                        .fontWeight(.bold)
+                        .padding(.horizontal, 4)
+                        .padding(.vertical, 2)
+                        .background(.white)
+                        .foregroundColor(.blue)
+                        .clipShape(Capsule())
+            }
+        }
         .scaleEffect(albumScale)
         .scaleEffect(animateView ? 1 : 0)
     }
@@ -224,7 +236,8 @@ struct MainView: View {
                     timeToFeedAgain: viewModel.timeToFeedAgain,
                     feed: viewModel.feed,
                     animalsSaved: viewModel.animalsSaved,
-                    speciesSavedCount: viewModel.speciesSavedCount
+                    speciesSavedCount: viewModel.speciesSavedCount,
+                    level: viewModel.level
                 )
             }
             

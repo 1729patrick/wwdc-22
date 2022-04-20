@@ -14,8 +14,9 @@ struct InstructionView: View {
     @State private var animateView: Bool = false
     
     var pages = [
-        "Welcome to Marine Life. In the wild the strongest animals survive, but today even the strongest are suffering from our attitudes.",
-        "We can all collaborate for the preservation of biodiversity in Brazil and in the world. Being aware of the preservation of the environment is a duty of every human being.",
+        "In the wild the strongest animals survive, but today even the strongest are suffering from our attitudes.",
+        "We can all collaborate for the preservation of biodiversity in Brazil and in the world.",
+        "Being aware of the preservation of the environment is a duty of every human being.",
         "In this game you will be responsible for saving the marine animals that are in danger of extinction in Brazil.",
     ]
     
@@ -23,30 +24,36 @@ struct InstructionView: View {
         ZStack(alignment: .bottom) {
             VStack {
                 HStack {
+                    Text("Marine Life")
+                        .font(.system(size: 26))
+                        .fontWeight(.bold)
+                        .shadow(radius: 1)
+                        .scaleEffect(animateView ? 1 : 0)
                     Spacer()
                     Text("\(page + 1)/\(pages.count)")
                         .font(.system(size: 26))
-                        .fontWeight(.heavy)
+                        .fontWeight(.bold)
                         .shadow(radius: 1)
                         .scaleEffect(animateView ? 1 : 0)
                 }
                 
                 Spacer()
             }
+            .padding(.top)
             
             VStack {
                 Spacer()
                 
                 ZStack {
-                    ForEach(0..<pages.count) {
-                        Text(pages[$0])
+                    ForEach(0..<pages.count) { index in
+                        Text(pages[index])
                             .font(.system(size: 32))
-                            .fontWeight(.heavy)
+                            .fontWeight(.bold)
                             .shadow(radius: 1)
                             .lineSpacing(10)
                             .multilineTextAlignment(.center)
-                            .scaleEffect($0 == page ? 1 : 0)
-                            .opacity($0 == page ? 1 : 0)
+                            .scaleEffect(index == page ? 1 : 0)
+                            .opacity(index == page ? 1 : 0)
                             .minimumScaleFactor(0.1)
                     }
                     
