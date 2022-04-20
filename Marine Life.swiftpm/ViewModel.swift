@@ -97,8 +97,8 @@ class ViewModel: ObservableObject, Identifiable {
         let yRange: ClosedRange<Double> = UIScreen.screenHeight * 0.35...UIScreen.screenHeight
         
         let startLeft = Bool.random()
-        let minWidth: Double = -100
-        let maxWidth: Double = UIScreen.screenWidth + CGFloat(100)
+        let minWidth: Double = UIDevice.isIPad ? -400 : -100
+        let maxWidth: Double = UIScreen.screenWidth + CGFloat(abs(minWidth))
         
         var from: CGPoint {
             let y = Double.random(in: yRange)

@@ -7,6 +7,16 @@
 
 import SwiftUI
 
+extension UIDevice {
+    static var isIPad: Bool {
+        UIDevice.current.userInterfaceIdiom == .pad
+    }
+    
+    static var isIPhone: Bool {
+        UIDevice.current.userInterfaceIdiom == .phone
+    }
+}
+
 struct AnimalDetailView: View {
     var animal: Animal
     let namespace: Namespace.ID
@@ -39,14 +49,18 @@ struct AnimalDetailView: View {
     
     var height: Double {
         if animateView {
-            return 75
+            return (UIScreen.screenWidth / 5.5)
         }
         
         return size
     }
     
     var scale : Double {
-        animateView ? (UIScreen.screenWidth * 0.85) / width : 1
+        if UIDevice.isIPad {
+            return animateView ? (UIScreen.screenWidth * 0.6) / width : 1
+        }
+        
+        return animateView ? (UIScreen.screenWidth * 0.85) / width : 1
     }
     
     @State var showAllStatus = false
@@ -129,25 +143,27 @@ struct AnimalDetailView: View {
             .shadow(radius: 1)
             .multilineTextAlignment(.leading)
             .lineSpacing(10)
-            .lineLimit(showMore ? 7 : nil)
+            .lineLimit(UIDevice.isIPhone && showMore ? 7 : nil)
         
-        HStack {
-            Spacer()
-            
-            Button {
-                withAnimation {
-                    showMore.toggle()
+        if UIDevice.isIPhone {
+            HStack {
+                Spacer()
+                
+                Button {
+                    withAnimation {
+                        showMore.toggle()
+                    }
+                } label: {
+                    if showMore {
+                        Text("Show more")
+                    } else {
+                        Text("Show less")
+                    }
                 }
-            } label: {
-                if showMore {
-                    Text("Show more")
-                } else {
-                    Text("Show less")
-                }
+                .padding(.bottom, 10)
+                
+                Spacer()
             }
-            .padding(.bottom, 10)
-            
-            Spacer()
         }
     }
     

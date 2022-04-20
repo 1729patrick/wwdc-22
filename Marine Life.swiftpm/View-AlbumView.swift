@@ -27,7 +27,9 @@ struct AlbumView: View {
     let level: Int
 
     let columns = [
-        GridItem(.adaptive(minimum: 120))
+        GridItem(.flexible()),
+       GridItem(.flexible()),
+       GridItem(.flexible())
     ]
     
     var feedDisabled: Bool {
@@ -155,7 +157,7 @@ struct AlbumView: View {
                     showDetailPage: $showDetailPage,
                     alwaysShowDetails: $alwaysShowDetails,
                     id: "album\(animalType.id)",
-                    size: 40 * max(1, animalType.scale * 0.7)
+                    size: (UIScreen.screenWidth / 10) * max(1, animalType.scale * 0.7)
                 )
             }
         }

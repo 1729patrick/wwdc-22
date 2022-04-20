@@ -61,12 +61,13 @@ struct AquariumView: View {
     }
     
     var size: Double {
-        40 * max(1, animalType.scale * 0.7)
+        (UIScreen.screenWidth / 10) * max(1, animalType.scale * 0.7)
     }
     
     var scale: Double {
         if showDetailPage && animalType == currentAnimalType {
-            return (UIScreen.screenWidth * 0.85) / size
+            let alpha = UIDevice.isIPad ? 0.6 : 0.85
+            return (UIScreen.screenWidth * alpha) / size
         }
         
         return 1
@@ -77,7 +78,7 @@ struct AquariumView: View {
             Capsule()
                 .fill(Color("Light Gold"))
                 .frame(width: 6, height: 6)
-                .scaleEffect(food ? 0 : 1)
+                .scaleEffect(food ? 0 : UIDevice.isIPad ? 1.3 : 1)
                 .offset(
                     x: 0,
                     y: food ? 40.0 : 15.0
@@ -85,7 +86,7 @@ struct AquariumView: View {
             Capsule()
                 .fill(Color("Light Gold"))
                 .frame(width: 5, height: 8)
-                .scaleEffect(food ? 0 : 1)
+                .scaleEffect(food ? 0 : UIDevice.isIPad ? 1.3 : 1)
                 .offset(
                     x: 7,
                     y: food ? 45.0 : 20.0
@@ -93,7 +94,7 @@ struct AquariumView: View {
             Capsule()
                 .fill(Color("Light Gold"))
                 .frame(width: 4, height: 8)
-                .scaleEffect(food ? 0 : 1)
+                .scaleEffect(food ? 0 : UIDevice.isIPad ? 1.3 : 1)
                 .offset(
                     x: -7,
                     y: food ? 50.0 : 20.0
@@ -101,7 +102,7 @@ struct AquariumView: View {
             Capsule()
                 .fill(Color("Light Gold"))
                 .frame(width: 4, height: 6)
-                .scaleEffect(food ? 0 : 1)
+                .scaleEffect(food ? 0 : UIDevice.isIPad ? 1.3 : 1)
                 .offset(
                     x: 0,
                     y: food ? 55.0 : 25.0
@@ -113,8 +114,8 @@ struct AquariumView: View {
         ZStack {
             VStack(spacing: 0) {
                 Capsule()
-                    .stroke(color, lineWidth: 3)
-                    .frame(width: 55, height: 10)
+                    .stroke(color, lineWidth: UIDevice.isIPhone ? 3 : 5)
+                    .frame(width: UIScreen.screenWidth / 8, height: UIDevice.isIPhone ? 10 : 14)
                 
                 ZStack {
                     OceanWaveView(
@@ -132,12 +133,12 @@ struct AquariumView: View {
                             endPoint: .bottom)
                         
                     )
-                    .frame(width: 102, height: 70)
+                    .frame(width: UIScreen.screenWidth / 4, height: UIScreen.screenWidth / 6)
                     .clipShape(Capsule())
                     
                     Capsule()
-                        .stroke(color, lineWidth: 3)
-                        .frame(width: 100, height: 70)
+                        .stroke(color, lineWidth: UIDevice.isIPhone ? 3 : 5)
+                        .frame(width: UIScreen.screenWidth / 4, height: UIScreen.screenWidth / 6)
                 }
             }
             .opacity(disabled ? 0.15 : 1)
@@ -173,7 +174,7 @@ struct AquariumView: View {
                     .frame(width: 40, height: 40)
                     .rotation3DEffect(Angle(degrees: 180), axis: (x: 0, y: 1, z: 0))
                     .rotationEffect(Angle(degrees: feeding ? -80 : -40))
-                    .scaleEffect(feed ? 1 : 0)
+                    .scaleEffect(feed ? UIDevice.isIPad ? 1.3 : 1 : 0)
                     .overlay(alignment: .leading) {
                         foods
                     }

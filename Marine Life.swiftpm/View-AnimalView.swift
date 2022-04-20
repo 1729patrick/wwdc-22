@@ -42,15 +42,15 @@ struct AnimalView: View {
     }
     
     var width: Double {
-        75 * animal.type.scale
+        return (UIScreen.screenWidth / 5.5) * animal.type.scale
     }
     
     var height: Double {
         if selected {
-            return 75
+            return (UIScreen.screenWidth / 5.5)
         }
         
-        return 75 * animal.type.scale
+        return (UIScreen.screenWidth / 5.5) * animal.type.scale
     }
     
     var body: some View {
@@ -76,12 +76,12 @@ struct AnimalView: View {
                 }
                 
                 withAnimation(.linear(duration: 0.3)) {
-                    scale = 0.2
+                    scale = UIDevice.isIPad ? 0 : 0.1
                 }
             }
             .onChange(of: animal.removed) { _ in
                 withAnimation(.linear(duration: 0.3)) {
-                    scale = 0.4
+                    scale = UIDevice.isIPad ? 0 : 0.3
                 }
                 
             }

@@ -173,7 +173,7 @@ struct MainView: View {
                 
                 
                 ZStack(alignment: .bottom) {
-                    Image("Background")
+                    Image(UIDevice.isIPad ? "BackgroundPad" : "Background")
                         .resizable()
                         .scaledToFill()
                         .ignoresSafeArea()
@@ -248,7 +248,7 @@ struct MainView: View {
                     showDetailPage: $showDetailPage,
                     alwaysShowDetails: $viewModel.alwaysShowDetails,
                     id: animal.id.uuidString,
-                    size: 75 * animal.type.scale,
+                    size: (UIScreen.screenWidth / 5.5) * animal.type.scale,
                     onClose: {
                         saveAnimal(animal: animal)
                         currentAnimal = nil
