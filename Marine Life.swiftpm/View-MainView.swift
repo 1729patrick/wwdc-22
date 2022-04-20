@@ -35,6 +35,7 @@ struct MainView: View {
     @State var showLevelInstructions: Bool = false
     
     @State var level: Int = 0
+    @State private var phase = 0.0
     
     var animals: some View {
         ForEach(viewModel.animals) { animal in
@@ -194,9 +195,7 @@ struct MainView: View {
                             )
                             .ignoresSafeArea()
                         }
-                    
-                    
-                    OceanWaveView(progress: 0.65, waveHeight: 0.01, offset: startAnimation)
+                    Wave(strength: 10, frequency: 5, start: 0.35, phase: phase)
                         .fill(
                             LinearGradient(
                                 colors: oilSpill ?
@@ -216,7 +215,7 @@ struct MainView: View {
                         .overlay {
                             getSand(size: size)
                             WaterDropsView()
-                            
+
                             animals
                         }
                     
@@ -305,9 +304,13 @@ struct MainView: View {
     func onAppear() {
         level = viewModel.level
         
-        withAnimation(.linear(duration: 5).repeatForever(autoreverses: false)){
-            startAnimation = UIScreen.screenWidth - 70
-        }
+        withAnimation(.linear(duration: 8).repeatForever(autoreverses: false)) {
+               self.phase = .pi * 2
+           }
+        
+//        withAnimation(.linear(duration: 5).repeatForever(autoreverses: false)){
+//            startAnimation = UIScreen.screenWidth
+//        }
         
         withAnimation(.interactiveSpring(response: 0.6, dampingFraction: 0.7, blendDuration: 0.7)){
             animateView = true
@@ -345,11 +348,7 @@ struct MainView: View {
     func getSand(size: CGSize) -> some View {
         VStack {
             Spacer()
-            SandWaveView(
-                progress: 0.5,
-                waveHeight: 0.01,
-                offset: startAnimation
-            )
+            Wave(strength: 3, frequency: 5, start: 0.35, phase: phase)
             .fill(LinearGradient(
                 colors: [Color("Light Gold"), Color("Dark Gold")],
                 startPoint: .top,

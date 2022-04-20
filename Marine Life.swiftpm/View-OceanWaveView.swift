@@ -3,42 +3,61 @@
 //  Save the animals
 //
 //  Created by Patrick Battisti Forsthofer on 08/04/22.
-//
+// https://www.hackingwithswift.com/plus/custom-swiftui-components/creating-a-waveview-to-draw-smooth-waveforms
 
 import SwiftUI
 
-struct OceanWaveView: Shape{
+struct Wave: Shape {
+    // how high our waves should be
+    var strength: Double
+
+    // how frequent our waves should be
+    var frequency: Double
+
+    var start: Double
     
-    var progress: CGFloat
-    // Wave Height
-    var waveHeight: CGFloat
-    // Intial Animation Start
-    var offset: CGFloat
+    // how much to offset our waves horizontally
+    var phase: Double
     
-    // Enabling Animation
-    var animatableData: CGFloat{
-        get{offset}
-        set{offset = newValue}
+    // allow SwiftUI to animate the wave phase
+    var animatableData: Double {
+        get { phase }
+        set { self.phase = newValue }
     }
     
     func path(in rect: CGRect) -> Path {
-        
-        return Path{path in
-            path.move(to: .zero)
+        let path = UIBezierPath()
 
-            let progressHeight: CGFloat = (1 - progress) * rect.height
-            let height = waveHeight * rect.height
+        // calculate some important values up front
+        let width = Double(rect.width)
+        let height = Double(rect.height)
+        let midWidth = width / 2
+        let midHeight = height * start
+
+        // split our total width up based on the frequency
+        let wavelength = width / frequency
+
+        // start at the left center
+        path.move(to: CGPoint(x: 0, y: midHeight))
+
+        // now count across individual horizontal points one by one
+        for x in stride(from: 0, through: width, by: 1) {
+            // find our current position relative to the wavelength
+            let relativeX = x / wavelength
             
-            for value in stride(from: 0, through: rect.width, by: 2){
-                let x: CGFloat = value
-                let sine: CGFloat = sin(Angle(degrees: value + offset).radians)
-                let y: CGFloat = progressHeight + (height * sine)
-                
-                path.addLine(to: CGPoint(x: x, y: y))
-            }
-            
-            path.addLine(to: CGPoint(x: rect.width, y: rect.height))
-            path.addLine(to: CGPoint(x: 0, y: rect.height))
+            // calculate the sine of that position
+            let sine = sin(relativeX + phase)
+
+            // multiply that sine by our strength to determine final offset, then move it down to the middle of our view
+            let y = strength * sine + midHeight
+
+            // add a line to here
+            path.addLine(to: CGPoint(x: x, y: y))
         }
+
+        path.addLine(to: CGPoint(x: rect.width, y: rect.height))
+        path.addLine(to: CGPoint(x: 0, y: rect.height))
+        
+        return Path(path.cgPath)
     }
 }

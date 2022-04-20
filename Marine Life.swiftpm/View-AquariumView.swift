@@ -36,6 +36,8 @@ struct AquariumView: View {
     @State var startAnimation: CGFloat = 0
     @State var fishAnimation: CGFloat = 0
     
+    @State private var phase = 0.0
+    
     var disabled: Bool {
         return !(savedCount > 0)
     }
@@ -118,23 +120,19 @@ struct AquariumView: View {
                     .frame(width: UIScreen.screenWidth / 8, height: UIDevice.isIPhone ? 10 : 14)
                 
                 ZStack {
-                    OceanWaveView(
-                        progress: 0.75,
-                        waveHeight: 0.1,
-                        offset: startAnimation
-                    )
-                    .fill(
-                        LinearGradient(
-                            colors: [
-                                Color("Light Blue"),
-                                Color("Dark Blue")
-                            ],
-                            startPoint: .top,
-                            endPoint: .bottom)
-                        
-                    )
-                    .frame(width: UIScreen.screenWidth / 4, height: UIScreen.screenWidth / 6)
-                    .clipShape(Capsule())
+                    Wave(strength: 2, frequency: 5, start: 0.25, phase: phase)
+                        .fill(
+                            LinearGradient(
+                                colors: [
+                                    Color("Light Blue"),
+                                    Color("Dark Blue")
+                                ],
+                                startPoint: .top,
+                                endPoint: .bottom)
+                            
+                        )
+                        .frame(width: UIScreen.screenWidth / 4, height: UIScreen.screenWidth / 6)
+                        .clipShape(Capsule())
                     
                     Capsule()
                         .stroke(color, lineWidth: UIDevice.isIPhone ? 3 : 5)
@@ -168,16 +166,16 @@ struct AquariumView: View {
             
             if disabled == false {
                 VStack {
-                Image("Feed Pot")
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: 40, height: 40)
-                    .rotation3DEffect(Angle(degrees: 180), axis: (x: 0, y: 1, z: 0))
-                    .rotationEffect(Angle(degrees: feeding ? -80 : -40))
-                    .scaleEffect(feed ? UIDevice.isIPad ? 1.3 : 1 : 0)
-                    .overlay(alignment: .leading) {
-                        foods
-                    }
+                    Image("Feed Pot")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 40, height: 40)
+                        .rotation3DEffect(Angle(degrees: 180), axis: (x: 0, y: 1, z: 0))
+                        .rotationEffect(Angle(degrees: feeding ? -80 : -40))
+                        .scaleEffect(feed ? UIDevice.isIPad ? 1.3 : 1 : 0)
+                        .overlay(alignment: .leading) {
+                            foods
+                        }
                     Spacer()
                 }
             }
@@ -185,14 +183,14 @@ struct AquariumView: View {
         }
         .overlay(alignment: .bottomLeading) {
             if level == 6 {
-                    Text("\(savedCount)")
-                        .font(.caption2)
-                        .fontWeight(.bold)
-                        .padding(.horizontal, 4)
-                        .padding(.vertical, 2)
-                        .background(.white)
-                        .foregroundColor(.blue)
-                        .clipShape(Capsule())
+                Text("\(savedCount)")
+                    .font(.caption2)
+                    .fontWeight(.bold)
+                    .padding(.horizontal, 4)
+                    .padding(.vertical, 2)
+                    .background(.white)
+                    .foregroundColor(.blue)
+                    .clipShape(Capsule())
             }
         }
         .onAppear(perform: onAppear)
@@ -203,15 +201,13 @@ struct AquariumView: View {
     }
     
     func onAppear() {
-        withAnimation(.linear(duration: 8).repeatForever(autoreverses: false)){
-            startAnimation = UIScreen.screenWidth - 70
+        withAnimation(.linear(duration: 5).repeatForever(autoreverses: false)) {
+            self.phase = .pi * 2
         }
         
-        withAnimation(.linear(duration: 4).repeatForever(autoreverses: true)){
+        withAnimation(.linear(duration: 8).repeatForever(autoreverses: true)){
             fishAnimation = 1
         }
-        
-        //        color = Color(colors.randomElement() ?? "Gold")
     }
     
     func onFeedChange(_: Bool) {
