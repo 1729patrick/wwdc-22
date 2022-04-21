@@ -27,7 +27,7 @@ struct LevelInstructionView: View {
         case 5:
             return "Good, you did a great job removing all the garbage from the ocean. You have already saved many species, but some are still endangered in the ocean. Now is the time to save all the species."
         case 6:
-            return "I hope this game helped you to realize that the lives of animals are in our hands. Keep taking care of the fish, hold the ocean clean and fight oil spills. Thank you!"
+            return "I hope this game helped you to realize that the lives of animals are in our hands. Keep taking care of the fish, hold the ocean clean and fight oil spills.\nThank you!"
         default:
             return ""
         }

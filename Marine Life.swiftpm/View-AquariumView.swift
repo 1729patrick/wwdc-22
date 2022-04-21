@@ -16,18 +16,6 @@ struct AquariumView: View {
     let level: Int
     @Binding var feed: Bool
     
-    let colors = [
-        "Red",
-        "Gold",
-        "Purple",
-        "Midnight",
-        "Orange",
-        "Teal",
-        "Pink",
-        "Dark Gray",
-        "Gray"
-    ]
-    
     @State var color: Color = Color("Gray")
     @State var feeding: Bool = false
     @State var food: Bool = true
@@ -181,7 +169,7 @@ struct AquariumView: View {
             }
             
         }
-        .overlay(alignment: .bottomLeading) {
+        .overlay(alignment: UIDevice.isIPad ? .bottom : .bottomLeading) {
             if level == 6 {
                 Text("\(savedCount)")
                     .font(.caption2)
@@ -191,6 +179,7 @@ struct AquariumView: View {
                     .background(.white)
                     .foregroundColor(.blue)
                     .clipShape(Capsule())
+                    .offset(x: 0, y: UIDevice.isIPad ? 7.5 : 0)
             }
         }
         .onAppear(perform: onAppear)
