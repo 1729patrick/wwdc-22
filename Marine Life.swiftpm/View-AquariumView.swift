@@ -141,7 +141,7 @@ struct AquariumView: View {
                     height: size
                 )
                 .scaleEffect(scale)
-                .matchedGeometryEffect(id: "album\(animalType.id)", in: namespace)
+                .matchedGeometryEffect(id: "aquarium\(animalType.id)", in: namespace)
                 .rotationEffect(rotation)
                 .offset(x: 0, y: y)
             

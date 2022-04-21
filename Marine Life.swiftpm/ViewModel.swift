@@ -175,7 +175,7 @@ class ViewModel: ObservableObject, Identifiable {
             nextLevel()
         } else if level == 2 && animalsSavedCount == 10 {
             nextLevel()
-        } else if level == 5 && speciesSavedCount == SwimmerType.animals.count {
+        } else if level == 5 && speciesSavedCount == SwimmerType.animals.count {    
             nextLevel()
         }
     }
@@ -186,8 +186,12 @@ class ViewModel: ObservableObject, Identifiable {
         
         trashesRemovedCount += 1
         
-        if trashesRemovedCount == 7 {
+        if trashesRemovedCount == 13 {
             nextLevel()
+            
+            if speciesSavedCount == SwimmerType.animals.count {
+                nextLevel()
+            }
         }
     }
     

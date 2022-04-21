@@ -69,7 +69,7 @@ struct ContentView: View {
             .scaleEffect(trashScale)
     }
     
-    var album: some View {
+    var aquarium: some View {
         Button {
             SoundManager.shared.play(sound: ButtonSound())
             showingAquariumList = true
@@ -159,9 +159,9 @@ struct ContentView: View {
             if level >= 4 {
                 trash
             }
-            album
+            aquarium
         }
-        .padding(.horizontal)
+        .padding()
     }
     
     var body: some View {
@@ -290,9 +290,13 @@ struct ContentView: View {
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.35) {
                     self.level = level
                     showingLevelInstructions = true
-                    startLevelWithTrash()
                 }
-            }else {
+            } else if level == 6 {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.35) {
+                    self.level = level
+                    showingLevelInstructions = true
+                }
+            } else {
                 self.level = level
                 showingLevelInstructions = true
             }

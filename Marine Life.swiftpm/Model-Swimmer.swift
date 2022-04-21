@@ -70,7 +70,8 @@ class Swimmer: Identifiable, ObservableObject, Equatable {
             .autoconnect()
             .sink(receiveValue: { (_) in
                 self.objectWillChange.send()
-                self.alongTrackDistance += self.track.totalArcLength / self.type.speed
+                
+                self.alongTrackDistance += self.track.totalArcLength / self.type.speed / (UIDevice.isIPad ? 0.75 : 3)
                 
                 if self.alongTrackDistance > self.track.totalArcLength {
                     self.timer?.cancel()

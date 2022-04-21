@@ -199,6 +199,7 @@ struct AnimalDetailView: View {
                     .foregroundColor(.white)
             }
         }
+        .padding(.bottom)
     }
     
     var body: some View {
@@ -235,6 +236,7 @@ struct AnimalDetailView: View {
                         })
                         
                         Divider()
+                        
                         source
                     }
                     .offset(y: scrollOffset > 0 ? scrollOffset : 0)
@@ -248,7 +250,7 @@ struct AnimalDetailView: View {
                 .offset(offset: $scrollOffset)
             }
             .coordinateSpace(name: "SCROLL")
-            .padding(.bottom)
+         
         }
         .onAppear(perform: onAppear)
         .transition(.identity)
