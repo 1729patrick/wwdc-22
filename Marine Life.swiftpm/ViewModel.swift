@@ -14,10 +14,10 @@ class ViewModel: ObservableObject, Identifiable {
     }
     
     @Published var swimmers = [Swimmer]()
-    @Published var swimmerSaved = [SwimmerType:Int]()
+    @Published var swimmersSaved = [SwimmerType:Int]()
     
     @AppStorage("alwaysShowDetails") var alwaysShowDetails: Bool = true
-    @AppStorage("swimmerSaved") var saved: Data = Data()
+    @AppStorage("swimmersSaved") var saved: Data = Data()
     
     @AppStorage("timeToFeedAgain") var timeToFeedAgain: Int = .zero
     
@@ -25,15 +25,15 @@ class ViewModel: ObservableObject, Identifiable {
     @AppStorage("trashesRemovedCount") var trashesRemovedCount: Int = 0
     
     var animalsSavedCount: Int {
-        let keys = swimmerSaved.keys.filter { $0.type == .animal}
+        let keys = swimmersSaved.keys.filter { $0.type == .animal}
         
         return keys.reduce(into: 0) { totalCount, type in
-            totalCount += swimmerSaved[type] ?? 0
+            totalCount += swimmersSaved[type] ?? 0
         }
     }
     
     var speciesSavedCount: Int {
-        return swimmerSaved.keys.filter { $0.type == .animal}.count
+        return swimmersSaved.keys.filter { $0.type == .animal}.count
     }
     
     var animalsVisible: [Swimmer] {
@@ -71,13 +71,13 @@ class ViewModel: ObservableObject, Identifiable {
     }
     
     func decodeSavedAnimals() {
-        guard let swimmerSaved = try? JSONDecoder().decode([SwimmerType:Int].self, from: saved) else { return }
+        guard let swimmersSaved = try? JSONDecoder().decode([SwimmerType:Int].self, from: saved) else { return }
         
-        self.swimmerSaved = swimmerSaved
+        self.swimmersSaved = swimmersSaved
     }
     
     func encodeSavedAnimals() {
-        guard let saved = try? JSONEncoder().encode(swimmerSaved) else { return }
+        guard let saved = try? JSONEncoder().encode(swimmersSaved) else { return }
         self.saved = saved
     }
     
@@ -97,7 +97,7 @@ class ViewModel: ObservableObject, Identifiable {
         let yRange: ClosedRange<Double> = UIScreen.screenHeight * 0.35...UIScreen.screenHeight
         
         let startLeft = Bool.random()
-        let minWidth: Double = UIDevice.isIPad ? -400 : -100
+        let minWidth: Double = UIDevice.isIPad ? -400 : -200
         let maxWidth: Double = UIScreen.screenWidth + CGFloat(abs(minWidth))
         
         var from: CGPoint {
@@ -192,8 +192,8 @@ class ViewModel: ObservableObject, Identifiable {
     }
     
     func incrementSavedCount(type: SwimmerType) {
-        let savedCount = swimmerSaved[type] ?? 0
-        swimmerSaved[type] = savedCount + 1
+        let savedCount = swimmersSaved[type] ?? 0
+        swimmersSaved[type] = savedCount + 1
         
         encodeSavedAnimals()
     }
@@ -241,6 +241,6 @@ class ViewModel: ObservableObject, Identifiable {
     }
     
     func getSpeciesSaved(_ type: SwimmerType)-> Int {
-        swimmerSaved[type] ?? 0
+        swimmersSaved[type] ?? 0
     }
 }

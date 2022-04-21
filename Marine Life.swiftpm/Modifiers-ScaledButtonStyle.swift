@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct ScaledButtonStyle: ButtonStyle{
+struct ScaledButtonStyle: ButtonStyle {
     func makeBody(configuration: Configuration) -> some View {
         configuration.label
             .scaleEffect(configuration.isPressed ? 0.6 : 1)

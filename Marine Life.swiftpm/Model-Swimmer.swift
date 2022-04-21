@@ -14,18 +14,12 @@ class Swimmer: Identifiable, ObservableObject, Equatable {
     }
     
     private(set) var id = UUID()
-    
     private(set) var l2r: Bool
-    
-    
     private(set) var type: SwimmerType
-    
     private(set) var onDestroy: (() -> Void)? = nil
-    
     private(set) var saved: Bool = false
     private(set) var removed: Bool = false
     private(set) var visible: Bool = true
-    
     private var alongTrackDistance = CGFloat.zero
     
     private var timer: Cancellable? = nil

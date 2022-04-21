@@ -14,6 +14,7 @@ struct AquariumView: View {
     var showingDetails: Bool
     let savedCount: Int
     let level: Int
+    
     @Binding var feed: Bool
     
     @State var color: Color = Color("Gray")
@@ -21,10 +22,9 @@ struct AquariumView: View {
     @State var food: Bool = true
     
     //  ocean and sand  wave
-    @State var startAnimation: CGFloat = 0
-    @State var fishAnimation: CGFloat = 0
+    @State var swimming: CGFloat = 0
     
-    @State private var phase = 0.0
+    @State private var wave = 0.0
     
     var disabled: Bool {
         return !(savedCount > 0)
@@ -39,7 +39,7 @@ struct AquariumView: View {
             return Angle(degrees: 0)
         }
         
-        return Angle(degrees: fishAnimation == 0 ? -15 : 15)
+        return Angle(degrees: swimming == 0 ? -15 : 15)
     }
     
     var y: Double {
@@ -47,7 +47,7 @@ struct AquariumView: View {
             return 0
         }
         
-        return fishAnimation == 0 ? 15 : 5
+        return swimming == 0 ? 15 : 5
     }
     
     var size: Double {
@@ -108,7 +108,7 @@ struct AquariumView: View {
                     .frame(width: UIScreen.screenWidth / 8, height: UIDevice.isIPhone ? 10 : 14)
                 
                 ZStack {
-                    WaveView(strength: 2, frequency: 5, start: 0.25, phase: phase)
+                    WaveView(strength: 2, frequency: 5, start: 0.25, phase: wave)
                         .fill(
                             LinearGradient(
                                 colors: [
@@ -191,11 +191,11 @@ struct AquariumView: View {
     
     func onAppear() {
         withAnimation(.linear(duration: 5).repeatForever(autoreverses: false)) {
-            self.phase = .pi * 2
+            self.wave = .pi * 2
         }
         
         withAnimation(.linear(duration: 8).repeatForever(autoreverses: true)){
-            fishAnimation = 1
+            swimming = 1
         }
     }
     
@@ -221,7 +221,6 @@ struct AquariumView: View {
                 food = true
             }
         }
-        
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 4) {
             withAnimation(.easeOut(duration: 0.15)){

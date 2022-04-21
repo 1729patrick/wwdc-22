@@ -23,6 +23,8 @@ struct AnimalDetailView: View {
     @Namespace var animation
     @State private var showMore: Bool = true
     
+    @State var showAllStatus = false
+    
     var rotation: Angle {
         if animateView {
             let alpha: Double = animal.getRotation().degrees < 0 ? -1 : 1
@@ -52,32 +54,6 @@ struct AnimalDetailView: View {
         
         return animateView ? (UIScreen.screenWidth * 0.85) / width : 1
     }
-    
-    @State var showAllStatus = false
-    
-    let status = ["EX", "EW", "CR", "EN", "VU", "NT", "LC", "DD"]
-    
-    let descriptions = [
-        "EX": "Extinct",
-        "EW": "Extinct in the Wild",
-        "CR": "Critically Endangered",
-        "EN": "Endangered",
-        "VU": "Vulnerable",
-        "NT": "Near Threatened",
-        "LC": "Least Concern",
-        "DD": "Data Deficient"
-    ]
-    
-    let colors: [String: Color] = [
-        "EX": .black,
-        "EW": Color("Midnight"),
-        "CR": .red,
-        "EN": .orange,
-        "VU": .yellow,
-        "NT": Color("Teal"),
-        "LC": Color("Green"),
-        "DD": .blue
-    ]
     
     var close: some View {
         Button {
@@ -157,7 +133,7 @@ struct AnimalDetailView: View {
         }
     }
     
-    func getConservationStatus(status: String)  -> some View {
+    func getConservationStatus(with conservationStatus: ConservationStatus)  -> some View {
         Button {
             withAnimation(.interactiveSpring(response: 0.6, dampingFraction: 0.7, blendDuration: 0.7)){
                 showAllStatus.toggle()
@@ -165,11 +141,11 @@ struct AnimalDetailView: View {
         } label : {
             HStack {
                 Capsule()
-                    .foregroundColor(colors[status])
+                    .foregroundColor(Color(conservationStatus.color))
                     .frame(width: 50, height: 30)
                 
                     .overlay {
-                        Text(status)
+                        Text(conservationStatus.code)
                             .fontWeight(.bold)
                             .shadow(radius: 1)
                             .multilineTextAlignment(.leading)
@@ -177,9 +153,9 @@ struct AnimalDetailView: View {
                             .foregroundColor(.white)
                     }
                 
-                Text(descriptions[status] ?? "")
+                Text(conservationStatus.description)
                     .fontWeight(
-                        status == animal.type.conservationStatus ? .medium : .none)
+                        conservationStatus == animal.type.conservationStatus ? .medium : .none)
                     .shadow(radius: 1)
                     .multilineTextAlignment(.leading)
                     .lineSpacing(10)
@@ -187,22 +163,22 @@ struct AnimalDetailView: View {
                 
                 Spacer()
                 
-                if status == animal.type.conservationStatus {
+                if conservationStatus == animal.type.conservationStatus {
                     Image(systemName: showAllStatus ? "chevron.up" : "chevron.down")
                         .foregroundColor(.white)
                     
                 }
             }
         }
-        .matchedGeometryEffect(id: status, in: animation)
-        .opacity(status == animal.type.conservationStatus ? 1 : 0.3)
-        .disabled(status != animal.type.conservationStatus)
+        .matchedGeometryEffect(id: conservationStatus.id, in: animation)
+        .opacity(conservationStatus == animal.type.conservationStatus ? 1 : 0.3)
+        .disabled(conservationStatus != animal.type.conservationStatus)
     }
     
     var conservationStatus: some View {
         VStack {
-            ForEach(0..<status.count, id: \.self) { index in
-                getConservationStatus(status: status[index])
+            ForEach(ConservationStatus.statusValues) { conservationStatus in
+                getConservationStatus(with: conservationStatus)
             }
         }
     }
@@ -240,7 +216,7 @@ struct AnimalDetailView: View {
                         if showAllStatus {
                             conservationStatus
                         } else {
-                            getConservationStatus(status: animal.type.conservationStatus)
+                            getConservationStatus(with: animal.type.conservationStatus)
                         }
                         
                         Divider()

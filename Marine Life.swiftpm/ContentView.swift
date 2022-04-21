@@ -16,14 +16,14 @@ struct ContentView: View {
     //    animal details
     @State var showingDetails: Bool = false
     @State var currentSwimmer: Swimmer?
-    @State var showingAlbum: Bool = false
+    @State var showingAquariumList: Bool = false
     
     @Namespace var animation
     
     @State var oilSpill: Bool = false
     
     //    icons scale
-    @State var albumScale: Double = 1
+    @State var aquariumScale: Double = 1
     @State var trashScale: Double = 1
     
     @AppStorage("showInstructions") var showInstructions: Bool = true
@@ -31,7 +31,7 @@ struct ContentView: View {
     @State var showLevelInstructions: Bool = false
     
     @State var level: Int = 0
-    @State private var phase = 0.0
+    @State private var wave = 0.0
     
     var swimmers: some View {
         ForEach(viewModel.swimmers) { swimmer in
@@ -72,7 +72,7 @@ struct ContentView: View {
     var album: some View {
         Button {
             SoundManager.shared.play(sound: ButtonSound())
-            showingAlbum = true
+            showingAquariumList = true
         } label: {
             Image("Aquarium")
                 .resizable()
@@ -92,7 +92,7 @@ struct ContentView: View {
                         .clipShape(Capsule())
             }
         }
-        .scaleEffect(albumScale)
+        .scaleEffect(aquariumScale)
         .scaleEffect(animateView ? 1 : 0)
     }
     
@@ -191,7 +191,7 @@ struct ContentView: View {
                             )
                             .ignoresSafeArea()
                         }
-                    WaveView(strength: 10, frequency: 5, start: 0.35, phase: phase)
+                    WaveView(strength: 10, frequency: 5, start: 0.35, phase: wave)
                         .fill(
                             LinearGradient(
                                 colors: oilSpill ?
@@ -224,9 +224,9 @@ struct ContentView: View {
             
             header
             
-            if showingAlbum {
-                AlbumView(
-                    showingAlbum: $showingAlbum,
+            if showingAquariumList {
+                AquariumListView(
+                    showingAquariumList: $showingAquariumList,
                     alwaysShowDetails: $viewModel.alwaysShowDetails,
                     timeToFeedAgain: viewModel.timeToFeedAgain,
                     feed: viewModel.feed,
@@ -302,7 +302,7 @@ struct ContentView: View {
         level = viewModel.level
         
         withAnimation(.linear(duration: 8).repeatForever(autoreverses: false)) {
-               self.phase = .pi * 2
+               self.wave = .pi * 2
            }
         
         withAnimation(.interactiveSpring(response: 0.6, dampingFraction: 0.7, blendDuration: 0.7)){
@@ -341,7 +341,7 @@ struct ContentView: View {
     func getSand(size: CGSize) -> some View {
         VStack {
             Spacer()
-            WaveView(strength: 3, frequency: 5, start: 0, phase: phase)
+            WaveView(strength: 3, frequency: 5, start: 0, phase: wave)
             .fill(LinearGradient(
                 colors: [Color("Light Gold"), Color("Dark Gold")],
                 startPoint: .top,
@@ -383,10 +383,10 @@ struct ContentView: View {
     
     func scaleAlbum() {
         withAnimation(.linear(duration: 0.2).delay(0.25)) {
-            albumScale = 1.3
+            aquariumScale = 1.3
         }
         withAnimation(.linear(duration: 0.15).delay(0.5)) {
-            albumScale = 1
+            aquariumScale = 1
         }
     }
     

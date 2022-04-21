@@ -1,5 +1,5 @@
 //
-//  View-AlbumView.swift
+//  View-AquariumListView.swift
 //  Marine Life
 //
 //  Created by Patrick Battisti Forsthofer on 09/04/22.
@@ -7,8 +7,8 @@
 
 import SwiftUI
 
-struct AlbumView: View {
-    @Binding var showingAlbum: Bool
+struct AquariumListView: View {
+    @Binding var showingAquariumList: Bool
     @Binding var alwaysShowDetails: Bool
     
     @State var animateView: Bool = false
@@ -30,8 +30,8 @@ struct AlbumView: View {
 
     let columns = [
         GridItem(.flexible()),
-       GridItem(.flexible()),
-       GridItem(.flexible())
+        GridItem(.flexible()),
+        GridItem(.flexible())
     ]
     
     var feedDisabled: Bool {
@@ -158,7 +158,7 @@ struct AlbumView: View {
                     namespace: animation,
                     showingDetails: $showingDetails,
                     alwaysShowDetails: $alwaysShowDetails,
-                    id: "album\(animalType.id)",
+                    id: "aquarium\(animalType.id)",
                     size: (UIScreen.screenWidth / 10) * max(1, animalType.scale * 0.7)
                 )
             }
@@ -188,15 +188,15 @@ struct AlbumView: View {
         SoundManager.shared.play(sound: ButtonSound())
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) {
-            guard showingAlbum else { return }
+            guard showingAquariumList else { return }
             SoundManager.shared.play(sound: FeedSound())
             
             DispatchQueue.main.asyncAfter(deadline: .now() + 1.6) {
-                guard showingAlbum else { return }
+                guard showingAquariumList else { return }
                 SoundManager.shared.play(sound: FeedSound())
                 
                 DispatchQueue.main.asyncAfter(deadline: .now() + 1.6) {
-                    guard showingAlbum else { return }
+                    guard showingAquariumList else { return }
                     SoundManager.shared.play(sound: FeedSound())
                 }
             }
@@ -215,6 +215,6 @@ struct AlbumView: View {
             animateView = false
         }
         
-        showingAlbum = false
+        showingAquariumList = false
     }
 }
