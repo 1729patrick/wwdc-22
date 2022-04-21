@@ -14,6 +14,10 @@ struct SandPlantsView: View {
         UIScreen.screenWidth / 2
     }
     
+    var height: CGFloat {
+        return UIScreen.screenHeight * 0.15
+    }
+    
     var body: some View {
         ZStack {
             //   only ipad
@@ -22,7 +26,7 @@ struct SandPlantsView: View {
                     .resizable()
                     .scaledToFit()
                     .frame(width: 50, height: 50)
-                    .position(x: midWidth - 475, y: 100)
+                    .position(x: midWidth - 475, y: height * 0.66)
                 
                 Image("Plant1")
                     .resizable()
@@ -34,7 +38,7 @@ struct SandPlantsView: View {
                     .resizable()
                     .scaledToFill()
                     .frame(width: 25, height: 25)
-                    .position(x: midWidth - 400, y: 50)
+                    .position(x: midWidth - 400, y: height * 0.33)
                 
                 Image("Plant11")
                     .resizable()
@@ -46,7 +50,7 @@ struct SandPlantsView: View {
                     .resizable()
                     .scaledToFit()
                     .frame(width: 50, height: 50)
-                    .position(x:  midWidth - 325, y: 100)
+                    .position(x:  midWidth - 325, y: height * 0.66)
             }
             
             Group {
@@ -60,7 +64,7 @@ struct SandPlantsView: View {
                     .resizable()
                     .scaledToFill()
                     .frame(width: 50, height: 70)
-                    .position(x: midWidth - 175, y: 75)
+                    .position(x: midWidth - 175, y: height * 0.5)
                 
                 Image("Plant1")
                     .resizable()
@@ -72,7 +76,7 @@ struct SandPlantsView: View {
                     .resizable()
                     .scaledToFill()
                     .frame(width: 25, height: 25)
-                    .position(x: midWidth - 50, y: 75)
+                    .position(x: midWidth - 50, y: height * 0.5)
              
             }
             
@@ -83,13 +87,13 @@ struct SandPlantsView: View {
                     .resizable()
                     .scaledToFill()
                     .frame(width: 50, height: 50)
-                    .position(x: midWidth + 30, y: 25)
+                    .position(x: midWidth + 30, y: height * 0.15)
                 
                 Image("Plant13")
                     .resizable()
                     .scaledToFill()
                     .frame(width: 50, height: 50)
-                    .position(x: midWidth + 30, y: 100)
+                    .position(x: midWidth + 30, y: height * 0.66)
                 
                 
                 Group {
@@ -97,13 +101,13 @@ struct SandPlantsView: View {
                         .resizable()
                         .scaledToFit()
                         .frame(width: 50, height: 50)
-                        .position(x: midWidth + 100, y: 75)
+                        .position(x: midWidth + 100, y: height * 0.5)
                     
                     Image("Rock")
                         .resizable()
                         .scaledToFit()
                         .frame(width: 30, height: 30)
-                        .position(x: midWidth + 120, y: 85)
+                        .position(x: midWidth + 120, y: height * 0.56)
                 }
                 
                 Image("Plant10")
@@ -116,7 +120,7 @@ struct SandPlantsView: View {
                     .resizable()
                     .scaledToFit()
                     .frame(width: 50, height: 50)
-                    .position(x:  midWidth + 175, y: 100)
+                    .position(x:  midWidth + 175, y: height * 0.66)
             }
             
 //             only ipad
@@ -131,7 +135,7 @@ struct SandPlantsView: View {
                     .resizable()
                     .scaledToFill()
                     .frame(width: 50, height: 70)
-                    .position(x: midWidth + 275, y: 75)
+                    .position(x: midWidth + 275, y: height * 0.5)
                 
                 Image("Plant11")
                     .resizable()
@@ -144,13 +148,13 @@ struct SandPlantsView: View {
                         .resizable()
                         .scaledToFit()
                         .frame(width: 60, height: 60)
-                        .position(x: midWidth + 450, y: 100)
+                        .position(x: midWidth + 450, y: height * 0.66)
                     
                     Image("Rock")
                         .resizable()
                         .scaledToFit()
                         .frame(width: 35, height: 35)
-                        .position(x: midWidth + 470, y: 110)
+                        .position(x: midWidth + 470, y: height * 0.73)
                 }
             }
         }

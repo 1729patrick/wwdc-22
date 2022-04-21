@@ -359,7 +359,7 @@ struct ContentView: View {
                 SandPlantsView(size: size)
             }
             .shadow(color: .black.opacity(0.1), radius: 2, x: 0, y: 1)
-            .frame(width: size.width, height: 150)
+            .frame(width: size.width, height: UIScreen.screenHeight * 0.15)
         }
     }
     
