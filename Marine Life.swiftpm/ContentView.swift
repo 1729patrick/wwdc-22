@@ -15,7 +15,7 @@ struct ContentView: View {
     
     //    animal details
     @State var showingDetails: Bool = false
-    @State var currentAnimal: Swimmer?
+    @State var currentSwimmer: Swimmer?
     @State var showingAlbum: Bool = false
     
     @Namespace var animation
@@ -33,17 +33,17 @@ struct ContentView: View {
     @State var level: Int = 0
     @State private var phase = 0.0
     
-    var animals: some View {
-        ForEach(viewModel.animals) { animal in
-            AnimalView(
-                animal: animal,
+    var swimmers: some View {
+        ForEach(viewModel.swimmers) { swimmer in
+            SwimmerView(
+                swimmer: swimmer,
                 alwaysShowDetails: viewModel.alwaysShowDetails,
-                selected: showingDetails && currentAnimal == animal,
+                selected: showingDetails && currentSwimmer == swimmer,
                 namespace: animation,
-                specieSaved: viewModel.isSpecieSaved(animal.type)
+                specieSaved: viewModel.isSpecieSaved(swimmer.type)
             ) {
-                SoundManager.shared.play(sound: FishSound())
-                selectAnimal(with: animal)
+                SoundManager.shared.play(sound: SwimmerSound())
+                selectAnimal(with: swimmer)
             }
         }
     }
@@ -212,7 +212,7 @@ struct ContentView: View {
                             getSand(size: size)
                             WaterDropsView()
 
-                            animals
+                            swimmers
                         }
                     
                         .onTapGesture {
@@ -237,7 +237,7 @@ struct ContentView: View {
                 )
             }
             
-            if let animal = currentAnimal, showingDetails {
+            if let animal = currentSwimmer, showingDetails {
                 AnimalDetailView(
                     animal: animal,
                     namespace: animation,
@@ -247,7 +247,7 @@ struct ContentView: View {
                     size: (UIScreen.screenWidth / 5.5) * animal.type.scale,
                     onClose: {
                         saveAnimal(animal: animal)
-                        currentAnimal = nil
+                        currentSwimmer = nil
                     }
                 )
             }
@@ -354,20 +354,21 @@ struct ContentView: View {
         }
     }
     
-    func selectAnimal(with animal: Swimmer) {
-        if animal.type.type == .trash {
-            removeTrash(animal: animal)
-        } else {
-            
-            if viewModel.alwaysShowDetails == true && viewModel.isSpecieSaved(animal.type) == false {
-                withAnimation(.interactiveSpring(response: 0.6, dampingFraction: 0.7, blendDuration: 0.7)){
-                    currentAnimal = animal
-                    showingDetails = true
-                }
-            }  else {
-                saveAnimal(animal: animal)
-            }
+    func selectAnimal(with swimmer: Swimmer) {
+        if swimmer.type.type == .trash {
+            removeTrash(trash: swimmer)
+            return
         }
+        
+        if viewModel.alwaysShowDetails == true && viewModel.isSpecieSaved(swimmer.type) == false {
+            withAnimation(.interactiveSpring(response: 0.6, dampingFraction: 0.7, blendDuration: 0.7)){
+                currentSwimmer = swimmer
+                showingDetails = true
+            }
+        }  else {
+            saveAnimal(animal: swimmer)
+        }
+        
     }
     
     func saveAnimal(animal: Swimmer) {
@@ -375,8 +376,8 @@ struct ContentView: View {
         scaleAlbum()
     }
     
-    func removeTrash(animal: Swimmer) {
-        viewModel.remove(animal: animal)
+    func removeTrash(trash: Swimmer) {
+        viewModel.remove(trash: trash)
         scaleTrash()
     }
     

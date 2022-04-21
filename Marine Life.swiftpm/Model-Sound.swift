@@ -40,8 +40,8 @@ struct ButtonSound: Sound {
     }
 }
 
-struct FishSound: Sound {
-    func getFileName() -> String { "fish" }
+struct SwimmerSound: Sound {
+    func getFileName() -> String { "swimmer" }
     func getFileExtension() -> String { "wav" }
     func getVolume() -> Float {
         0.1

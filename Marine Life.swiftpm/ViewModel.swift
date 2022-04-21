@@ -13,7 +13,7 @@ class ViewModel: ObservableObject, Identifiable {
         level == 4 ? 8 : 4
     }
     
-    @Published var animals = [Swimmer]()
+    @Published var swimmers = [Swimmer]()
     @Published var swimmerSaved = [SwimmerType:Int]()
     
     @AppStorage("alwaysShowDetails") var alwaysShowDetails: Bool = true
@@ -37,15 +37,15 @@ class ViewModel: ObservableObject, Identifiable {
     }
     
     var animalsVisible: [Swimmer] {
-        animals.filter { $0.type.type == .animal && $0.visible }
+        swimmers.filter { $0.type.type == .animal && $0.visible }
     }
     
     var trashesVisible: [Swimmer] {
-        animals.filter { $0.type.type == .trash && $0.visible }
+        swimmers.filter { $0.type.type == .trash && $0.visible }
     }
     
     var nextAnimalIndex: Int {
-        let animals = animals.filter { $0.type.type == .animal }
+        let animals = swimmers.filter { $0.type.type == .animal }
         
         if animals.count < SwimmerType.animals.count {
             return animals.count
@@ -55,7 +55,7 @@ class ViewModel: ObservableObject, Identifiable {
     }
     
     var nextTrashIndex: Int {
-        let trash = animals.filter { $0.type.type == .trash }
+        let trash = swimmers.filter { $0.type.type == .trash }
         
         if trash.count < SwimmerType.trashes.count {
             return trash.count
@@ -137,7 +137,7 @@ class ViewModel: ObservableObject, Identifiable {
             animalType = SwimmerType.trashes[nextTrashIndex]
         }
         
-        let animal = Swimmer(
+        let swimmer = Swimmer(
             from: from,
             to: to,
             control1: control1,
@@ -149,7 +149,7 @@ class ViewModel: ObservableObject, Identifiable {
             }
         )
         
-        animals.append(animal)
+        swimmers.append(swimmer)
     }
     
     func setup() {
@@ -180,8 +180,8 @@ class ViewModel: ObservableObject, Identifiable {
         }
     }
     
-    func remove(animal: Swimmer) {
-        animal.remove()
+    func remove(trash: Swimmer) {
+        trash.remove()
         self.addSwimmer(type: .trash)
         
         trashesRemovedCount += 1
