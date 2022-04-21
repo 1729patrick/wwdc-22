@@ -129,5 +129,4 @@ struct Bezier3: ParametricCurve {
         let dy = 6 * E * t + 2 * F
         return CGVector(dx: dx, dy: dy)
     }
-
 }

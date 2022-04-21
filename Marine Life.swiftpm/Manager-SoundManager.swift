@@ -5,7 +5,6 @@
 //  Created by Patrick Battisti Forsthofer on 13/04/22.
 //
 
-
 import AVFAudio
 
 final class SoundManager: NSObject, AVAudioPlayerDelegate {

@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct Wave: Shape {
+struct WaveView: Shape {
     // how high our waves should be
     var strength: Double
 

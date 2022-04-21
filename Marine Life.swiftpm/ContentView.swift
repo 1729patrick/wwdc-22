@@ -195,7 +195,7 @@ struct ContentView: View {
                             )
                             .ignoresSafeArea()
                         }
-                    Wave(strength: 10, frequency: 5, start: 0.35, phase: phase)
+                    WaveView(strength: 10, frequency: 5, start: 0.35, phase: phase)
                         .fill(
                             LinearGradient(
                                 colors: oilSpill ?
@@ -348,7 +348,7 @@ struct ContentView: View {
     func getSand(size: CGSize) -> some View {
         VStack {
             Spacer()
-            Wave(strength: 3, frequency: 5, start: 0, phase: phase)
+            WaveView(strength: 3, frequency: 5, start: 0, phase: phase)
             .fill(LinearGradient(
                 colors: [Color("Light Gold"), Color("Dark Gold")],
                 startPoint: .top,
@@ -403,14 +403,5 @@ struct ContentView: View {
         withAnimation(.linear(duration: 0.15).delay(0.7)) {
             trashScale = 1
         }
-    }
-}
-
-
-struct ScaledButtonStyle: ButtonStyle{
-    func makeBody(configuration: Configuration) -> some View {
-        configuration.label
-            .scaleEffect(configuration.isPressed ? 0.6 : 1)
-            .animation(.easeInOut, value: configuration.isPressed)
     }
 }

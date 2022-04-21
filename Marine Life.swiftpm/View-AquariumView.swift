@@ -51,7 +51,7 @@ struct AquariumView: View {
     }
     
     var size: Double {
-        (UIScreen.screenWidth / 10) * max(1, animalType.scale * 0.7)
+        (UIScreen.screenWidth / 11) * max(1, animalType.scale * 0.7)
     }
     
     var scale: Double {
@@ -108,7 +108,7 @@ struct AquariumView: View {
                     .frame(width: UIScreen.screenWidth / 8, height: UIDevice.isIPhone ? 10 : 14)
                 
                 ZStack {
-                    Wave(strength: 2, frequency: 5, start: 0.25, phase: phase)
+                    WaveView(strength: 2, frequency: 5, start: 0.25, phase: phase)
                         .fill(
                             LinearGradient(
                                 colors: [
