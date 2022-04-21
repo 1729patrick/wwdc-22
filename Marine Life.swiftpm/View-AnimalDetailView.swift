@@ -10,7 +10,7 @@ import SwiftUI
 struct AnimalDetailView: View {
     var animal: Swimmer
     let namespace: Namespace.ID
-    @Binding var showDetailPage: Bool
+    @Binding var showingDetails: Bool
     @Binding var alwaysShowDetails: Bool
     var id: String
     var size: Double
@@ -290,7 +290,7 @@ struct AnimalDetailView: View {
     
     func dismiss() {
         withAnimation(.interactiveSpring(response: 0.6, dampingFraction: 0.7, blendDuration: 0.7)){
-            showDetailPage = false
+            showingDetails = false
             animateView = false
             animateContent = false
             onClose?()

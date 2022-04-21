@@ -14,10 +14,10 @@ class ViewModel: ObservableObject, Identifiable {
     }
     
     @Published var animals = [Swimmer]()
-    @Published var animalsSaved = [SwimmerType:Int]()
+    @Published var swimmerSaved = [SwimmerType:Int]()
     
     @AppStorage("alwaysShowDetails") var alwaysShowDetails: Bool = true
-    @AppStorage("animalsSaved") var saved: Data = Data()
+    @AppStorage("swimmerSaved") var saved: Data = Data()
     
     @AppStorage("timeToFeedAgain") var timeToFeedAgain: Int = .zero
     
@@ -25,27 +25,27 @@ class ViewModel: ObservableObject, Identifiable {
     @AppStorage("trashesRemovedCount") var trashesRemovedCount: Int = 0
     
     var animalsSavedCount: Int {
-        let keys = animalsSaved.keys.filter { $0.type == "animal"}
+        let keys = swimmerSaved.keys.filter { $0.type == .animal}
         
         return keys.reduce(into: 0) { totalCount, type in
-            totalCount += animalsSaved[type] ?? 0
+            totalCount += swimmerSaved[type] ?? 0
         }
     }
     
     var speciesSavedCount: Int {
-        return animalsSaved.keys.filter { $0.type == "animal"}.count
+        return swimmerSaved.keys.filter { $0.type == .animal}.count
     }
     
     var animalsVisible: [Swimmer] {
-        animals.filter { $0.type.type == "animal" && $0.visible }
+        animals.filter { $0.type.type == .animal && $0.visible }
     }
     
     var trashesVisible: [Swimmer] {
-        animals.filter { $0.type.type == "trash" && $0.visible }
+        animals.filter { $0.type.type == .trash && $0.visible }
     }
     
     var nextAnimalIndex: Int {
-        let animals = animals.filter { $0.type.type == "animal" }
+        let animals = animals.filter { $0.type.type == .animal }
         
         if animals.count < SwimmerType.animals.count {
             return animals.count
@@ -55,7 +55,7 @@ class ViewModel: ObservableObject, Identifiable {
     }
     
     var nextTrashIndex: Int {
-        let trash = animals.filter { $0.type.type == "trash" }
+        let trash = animals.filter { $0.type.type == .trash }
         
         if trash.count < SwimmerType.trashes.count {
             return trash.count
@@ -71,24 +71,24 @@ class ViewModel: ObservableObject, Identifiable {
     }
     
     func decodeSavedAnimals() {
-        guard let animalsSaved = try? JSONDecoder().decode([SwimmerType:Int].self, from: saved) else { return }
+        guard let swimmerSaved = try? JSONDecoder().decode([SwimmerType:Int].self, from: saved) else { return }
         
-        self.animalsSaved = animalsSaved
+        self.swimmerSaved = swimmerSaved
     }
     
     func encodeSavedAnimals() {
-        guard let saved = try? JSONEncoder().encode(animalsSaved) else { return }
+        guard let saved = try? JSONEncoder().encode(swimmerSaved) else { return }
         self.saved = saved
     }
     
-    func addAnimal(type: String) {
-        if type == "animal" {
+    func addSwimmer(type: SwimmerType.Types) {
+        if type == .animal {
             guard animalsVisible.count < maxAnimals else {
                 return
             }
         }
         
-        if type == "trash" {
+        if type == .trash {
             guard trashesVisible.count < maxTrashes else {
                 return
             }
@@ -133,7 +133,7 @@ class ViewModel: ObservableObject, Identifiable {
         
         var animalType: SwimmerType = SwimmerType.animals[nextAnimalIndex]
         
-        if type == "trash" {
+        if type == .trash {
             animalType = SwimmerType.trashes[nextTrashIndex]
         }
         
@@ -145,7 +145,7 @@ class ViewModel: ObservableObject, Identifiable {
             l2r: startLeft,
             type: animalType,
             onDestroy: {
-                self.addAnimal(type: type)
+                self.addSwimmer(type: type)
             }
         )
         
@@ -153,21 +153,21 @@ class ViewModel: ObservableObject, Identifiable {
     }
     
     func setup() {
-        self.addAnimal(type: "animal")
-        self.addAnimal(type: "animal")
+        self.addSwimmer(type: .animal)
+        self.addSwimmer(type: .animal)
         
         Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { timer in
             if self.animalsVisible.count > self.maxAnimals {
                 timer.invalidate()
             } else {
-                self.addAnimal(type: "animal")
+                self.addSwimmer(type: .animal)
             }
         }
     }
     
     func save(animal: Swimmer) {
         animal.save()
-        self.addAnimal(type: "animal")
+        self.addSwimmer(type: .animal)
         
         incrementSavedCount(type: animal.type)
         
@@ -182,7 +182,7 @@ class ViewModel: ObservableObject, Identifiable {
     
     func remove(animal: Swimmer) {
         animal.remove()
-        self.addAnimal(type: "trash")
+        self.addSwimmer(type: .trash)
         
         trashesRemovedCount += 1
         
@@ -192,8 +192,8 @@ class ViewModel: ObservableObject, Identifiable {
     }
     
     func incrementSavedCount(type: SwimmerType) {
-        let savedCount = animalsSaved[type] ?? 0
-        animalsSaved[type] = savedCount + 1
+        let savedCount = swimmerSaved[type] ?? 0
+        swimmerSaved[type] = savedCount + 1
         
         encodeSavedAnimals()
     }
@@ -223,16 +223,24 @@ class ViewModel: ObservableObject, Identifiable {
     }
     
     func addTrashes() {
-        self.addAnimal(type: "trash")
-        self.addAnimal(type: "trash")
-        self.addAnimal(type: "trash")
+        self.addSwimmer(type: .trash)
+        self.addSwimmer(type: .trash)
+        self.addSwimmer(type: .trash)
         
         Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { timer in
             if self.trashesVisible.count > self.maxTrashes {
                 timer.invalidate()
             } else {
-                self.addAnimal(type: "trash")
+                self.addSwimmer(type: .trash)
             }
         }
+    }
+    
+    func isSpecieSaved(_ type: SwimmerType)-> Bool {
+        getSpeciesSaved(type) > 0
+    }
+    
+    func getSpeciesSaved(_ type: SwimmerType)-> Int {
+        swimmerSaved[type] ?? 0
     }
 }

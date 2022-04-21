@@ -11,7 +11,7 @@ struct AquariumView: View {
     let animalType: SwimmerType
     let currentSwimmerType: SwimmerType?
     var namespace: Namespace.ID
-    var showDetailPage: Bool
+    var showingDetails: Bool
     let savedCount: Int
     let level: Int
     @Binding var feed: Bool
@@ -35,7 +35,7 @@ struct AquariumView: View {
             return Angle(degrees: 0)
         }
         
-        if showDetailPage && animalType == currentSwimmerType {
+        if showingDetails && animalType == currentSwimmerType {
             return Angle(degrees: 0)
         }
         
@@ -55,7 +55,7 @@ struct AquariumView: View {
     }
     
     var scale: Double {
-        if showDetailPage && animalType == currentSwimmerType {
+        if showingDetails && animalType == currentSwimmerType {
             let alpha = UIDevice.isIPad ? 0.6 : 0.85
             return (UIScreen.screenWidth * alpha) / size
         }

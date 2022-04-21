@@ -15,14 +15,16 @@ struct AlbumView: View {
     @State var feeding: Bool = false
     
     @State var currentSwimmerType: SwimmerType?
-    @State var showDetailPage: Bool = false
+    @State var showingDetails: Bool = false
     
     var timeToFeedAgain: Int
     var feed: () -> Void
     
     @Namespace var animation
     
-    var animalsSaved: [SwimmerType: Int]
+    var isSpecieSaved: (SwimmerType) -> Bool
+    var getSpeciesSaved: (SwimmerType) -> Int
+    
     var speciesSavedCount: Int
     let level: Int
 
@@ -117,7 +119,7 @@ struct AlbumView: View {
                 LazyVGrid(columns: columns) {
                     ForEach(SwimmerType.animals) { animalType in
                         Button {
-                            guard animalsSaved[animalType] != nil else {
+                            guard isSpecieSaved(animalType) else {
                                 SoundManager.shared.play(sound: WrongSound())
                                 return
                             }
@@ -131,8 +133,8 @@ struct AlbumView: View {
                                 animalType: animalType,
                                 currentSwimmerType: currentSwimmerType,
                                 namespace: animation,
-                                showDetailPage: showDetailPage,
-                                savedCount: animalsSaved[animalType] ?? 0,
+                                showingDetails: showingDetails,
+                                savedCount: getSpeciesSaved(animalType),
                                 level: level,
                                 feed: $feeding
                             )
@@ -143,7 +145,7 @@ struct AlbumView: View {
             }
         }
         .overlay {
-            if let animalType = currentSwimmerType, showDetailPage {
+            if let animalType = currentSwimmerType, showingDetails {
                 AnimalDetailView(
                     animal: Swimmer(
                         from: .init(x: 10, y: 0),
@@ -154,7 +156,7 @@ struct AlbumView: View {
                         type: currentSwimmerType!
                     ),
                     namespace: animation,
-                    showDetailPage: $showDetailPage,
+                    showingDetails: $showingDetails,
                     alwaysShowDetails: $alwaysShowDetails,
                     id: "album\(animalType.id)",
                     size: (UIScreen.screenWidth / 10) * max(1, animalType.scale * 0.7)
@@ -204,7 +206,7 @@ struct AlbumView: View {
     func selectAnimal(with animalType: SwimmerType) {
         withAnimation(.interactiveSpring(response: 0.6, dampingFraction: 0.7, blendDuration: 0.7)){
             currentSwimmerType = animalType
-            showDetailPage = true
+            showingDetails = true
         }
     }
     

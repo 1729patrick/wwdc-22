@@ -11,22 +11,18 @@ import Combine
 struct ContentView: View {
     @StateObject var viewModel = ViewModel()
     
-    @State var startAnimation: CGFloat = 0
-    
     @State private var animateView: Bool = false
     
     //    animal details
-    @State var showDetailPage: Bool = false
+    @State var showingDetails: Bool = false
     @State var currentAnimal: Swimmer?
     @State var showingAlbum: Bool = false
     
     @Namespace var animation
     
     @State var oilSpill: Bool = false
-    @State var showOilSpillInstructions: Bool = false
-    @State var showOilResult: Bool = false
     
-    //    album icon
+    //    icons scale
     @State var albumScale: Double = 1
     @State var trashScale: Double = 1
     
@@ -42,9 +38,9 @@ struct ContentView: View {
             AnimalView(
                 animal: animal,
                 alwaysShowDetails: viewModel.alwaysShowDetails,
-                selected: showDetailPage && currentAnimal == animal,
+                selected: showingDetails && currentAnimal == animal,
                 namespace: animation,
-                specieSaved: viewModel.animalsSaved[animal.type] ?? 0 > 0
+                specieSaved: viewModel.isSpecieSaved(animal.type)
             ) {
                 SoundManager.shared.play(sound: FishSound())
                 selectAnimal(with: animal)
@@ -234,17 +230,18 @@ struct ContentView: View {
                     alwaysShowDetails: $viewModel.alwaysShowDetails,
                     timeToFeedAgain: viewModel.timeToFeedAgain,
                     feed: viewModel.feed,
-                    animalsSaved: viewModel.animalsSaved,
+                    isSpecieSaved: viewModel.isSpecieSaved,
+                    getSpeciesSaved: viewModel.getSpeciesSaved,
                     speciesSavedCount: viewModel.speciesSavedCount,
                     level: viewModel.level
                 )
             }
             
-            if let animal = currentAnimal, showDetailPage {
+            if let animal = currentAnimal, showingDetails {
                 AnimalDetailView(
                     animal: animal,
                     namespace: animation,
-                    showDetailPage: $showDetailPage,
+                    showingDetails: $showingDetails,
                     alwaysShowDetails: $viewModel.alwaysShowDetails,
                     id: animal.id.uuidString,
                     size: (UIScreen.screenWidth / 5.5) * animal.type.scale,
@@ -308,10 +305,6 @@ struct ContentView: View {
                self.phase = .pi * 2
            }
         
-//        withAnimation(.linear(duration: 5).repeatForever(autoreverses: false)){
-//            startAnimation = UIScreen.screenWidth
-//        }
-        
         withAnimation(.interactiveSpring(response: 0.6, dampingFraction: 0.7, blendDuration: 0.7)){
             animateView = true
         }
@@ -362,14 +355,14 @@ struct ContentView: View {
     }
     
     func selectAnimal(with animal: Swimmer) {
-        if animal.type.type == "trash" {
+        if animal.type.type == .trash {
             removeTrash(animal: animal)
         } else {
             
-            if viewModel.alwaysShowDetails == true && !(viewModel.animalsSaved[animal.type] ?? 0 > 0) {
+            if viewModel.alwaysShowDetails == true && viewModel.isSpecieSaved(animal.type) == false {
                 withAnimation(.interactiveSpring(response: 0.6, dampingFraction: 0.7, blendDuration: 0.7)){
                     currentAnimal = animal
-                    showDetailPage = true
+                    showingDetails = true
                 }
             }  else {
                 saveAnimal(animal: animal)
