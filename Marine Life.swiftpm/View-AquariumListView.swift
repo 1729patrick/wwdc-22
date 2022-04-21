@@ -101,9 +101,10 @@ struct AquariumListView: View {
         VStack(spacing: 0) {
             HStack(alignment: .center) {
                 Text("My aquariums")
-                    .font(.system(size: 32))
+                    .font(.system(size: 26))
                     .fontWeight(.heavy)
                     .shadow(radius: 1)
+                    .lineLimit(1)
                     .scaleEffect(animateView ? 1 : 0, anchor: .leading)
                 
                 Spacer()

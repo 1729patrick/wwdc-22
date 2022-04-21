@@ -23,7 +23,7 @@ struct AnimalDetailView: View {
     @Namespace var animation
     @State private var showMore: Bool = true
     
-    @State var showAllStatus = false
+    @State var showingAllStatus = false
     
     var rotation: Angle {
         if animateView {
@@ -72,7 +72,7 @@ struct AnimalDetailView: View {
     var header: some View {
         HStack(alignment: .center) {
             Text(animal.type.id)
-                .font(.system(size: 32))
+                .font(.system(size: 26))
                 .fontWeight(.heavy)
                 .shadow(radius: 1)
                 .lineLimit(1)
@@ -136,7 +136,7 @@ struct AnimalDetailView: View {
     func getConservationStatus(with conservationStatus: ConservationStatus)  -> some View {
         Button {
             withAnimation(.interactiveSpring(response: 0.6, dampingFraction: 0.7, blendDuration: 0.7)){
-                showAllStatus.toggle()
+                showingAllStatus.toggle()
             }
         } label : {
             HStack {
@@ -164,7 +164,7 @@ struct AnimalDetailView: View {
                 Spacer()
                 
                 if conservationStatus == animal.type.conservationStatus {
-                    Image(systemName: showAllStatus ? "chevron.up" : "chevron.down")
+                    Image(systemName: showingAllStatus ? "chevron.up" : "chevron.down")
                         .foregroundColor(.white)
                     
                 }
@@ -213,7 +213,7 @@ struct AnimalDetailView: View {
                     VStack(alignment: .leading, spacing: 10) {
                         Divider()
                         
-                        if showAllStatus {
+                        if showingAllStatus {
                             conservationStatus
                         } else {
                             getConservationStatus(with: animal.type.conservationStatus)
@@ -248,6 +248,7 @@ struct AnimalDetailView: View {
                 .offset(offset: $scrollOffset)
             }
             .coordinateSpace(name: "SCROLL")
+            .padding(.bottom)
         }
         .onAppear(perform: onAppear)
         .transition(.identity)

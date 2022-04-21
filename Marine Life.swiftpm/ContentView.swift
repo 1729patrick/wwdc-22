@@ -26,9 +26,9 @@ struct ContentView: View {
     @State var aquariumScale: Double = 1
     @State var trashScale: Double = 1
     
-    @AppStorage("showInstructions") var showInstructions: Bool = true
+    @AppStorage("showingInstructions") var showingInstructions: Bool = true
     
-    @State var showLevelInstructions: Bool = false
+    @State var showingLevelInstructions: Bool = false
     
     @State var level: Int = 0
     @State private var wave = 0.0
@@ -144,6 +144,7 @@ struct ContentView: View {
                     .font(.system(size: 20))
                     .fontWeight(.heavy)
                     .shadow(radius: 1)
+                    .lineLimit(1)
             }
         }
     }
@@ -252,16 +253,16 @@ struct ContentView: View {
                 )
             }
             
-            if showInstructions {
+            if showingInstructions {
                 InstructionView() {
-                    showInstructions = false
+                    showingInstructions = false
                     viewModel.nextLevel()
                 }
             }
             
-            if showLevelInstructions {
+            if showingLevelInstructions {
                 LevelInstructionView(level: viewModel.level, animalsSavedCount: viewModel.animalsSavedCount) {
-                    showLevelInstructions = false
+                    showingLevelInstructions = false
                 }
             }
         }
@@ -271,29 +272,29 @@ struct ContentView: View {
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.35) {
                     self.level = level
                     startLevel2()
-                    showLevelInstructions = true
+                    showingLevelInstructions = true
                 }
             } else if level == 3 {
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.35) {
                     self.level = level
                     startLevel3()
-                    showLevelInstructions = true
+                    showingLevelInstructions = true
                 }
             } else if level == 4 {
                 DispatchQueue.main.asyncAfter(deadline: .now() + 4.5) {
                     self.level = level
-                    showLevelInstructions = true
+                    showingLevelInstructions = true
                     startLevelWithTrash()
                 }
             } else if level == 5 {
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.35) {
                     self.level = level
-                    showLevelInstructions = true
+                    showingLevelInstructions = true
                     startLevelWithTrash()
                 }
             }else {
                 self.level = level
-                showLevelInstructions = true
+                showingLevelInstructions = true
             }
         }
     }

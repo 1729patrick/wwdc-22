@@ -21,46 +21,39 @@ struct InstructionView: View {
     ]
     
     var body: some View {
-        ZStack(alignment: .bottom) {
-            VStack {
-                HStack {
-                    Text("Marine Life")
-                        .font(.system(size: 26))
-                        .fontWeight(.bold)
-                        .shadow(radius: 1)
-                        .scaleEffect(animateView ? 1 : 0)
-                    Spacer()
-                    Text("\(page + 1)/\(pages.count)")
-                        .font(.system(size: 26))
-                        .fontWeight(.bold)
-                        .shadow(radius: 1)
-                        .scaleEffect(animateView ? 1 : 0)
-                }
-                
+        VStack {
+            HStack {
+                Text("Marine Life")
+                    .font(.system(size: 26))
+                    .fontWeight(.bold)
+                    .shadow(radius: 1)
+                    .scaleEffect(animateView ? 1 : 0)
                 Spacer()
+                Text("\(page + 1)/\(pages.count)")
+                    .font(.system(size: 26))
+                    .fontWeight(.bold)
+                    .shadow(radius: 1)
+                    .scaleEffect(animateView ? 1 : 0)
             }
             .padding(.top)
             
-            VStack {
-                Spacer()
-                
-                ZStack {
-                    ForEach(0..<pages.count) { index in
-                        Text(pages[index])
-                            .font(.system(size: 32))
-                            .fontWeight(.bold)
-                            .shadow(radius: 1)
-                            .lineSpacing(10)
-                            .multilineTextAlignment(.center)
-                            .scaleEffect(index == page ? 1 : 0)
-                            .opacity(index == page ? 1 : 0)
-                            .minimumScaleFactor(0.1)
-                    }
-                    
+            Spacer()
+            
+            ZStack {
+                ForEach(0..<pages.count) { index in
+                    Text(pages[index])
+                        .font(.system(size: 32))
+                        .fontWeight(.bold)
+                        .shadow(radius: 1)
+                        .lineSpacing(10)
+                        .multilineTextAlignment(.center)
+                        .scaleEffect(index == page ? 1 : 0)
+                        .opacity(index == page ? 1 : 0)
+                        .minimumScaleFactor(0.1)
                 }
-                .scaleEffect(animateView ? 1 : 0)
-                Spacer()
+                
             }
+            .scaleEffect(animateView ? 1 : 0)
             
             
             ZStack {
@@ -84,6 +77,7 @@ struct InstructionView: View {
                 .opacity(page == pages.count - 1 ? 0 : 1)
                 .buttonStyle(ScaledButtonStyle())
                 .disabled(page == pages.count - 1)
+                .padding(.top, 40)
                 
                 Button {
                     SoundManager.shared.play(sound: ButtonSound())
@@ -98,10 +92,12 @@ struct InstructionView: View {
                 .opacity(page == pages.count - 1 ? 1 : 0)
                 .buttonStyle(ScaledButtonStyle())
                 .disabled(page != pages.count - 1)
+                .padding(.top, 40)
             }
             .scaleEffect(animateView ? 1 : 0)
+            
+            Spacer()
         }
-        .padding(.bottom, 100)
         .padding(.horizontal)
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(.thinMaterial)

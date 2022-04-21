@@ -60,44 +60,41 @@ struct LevelInstructionView: View {
     
     
     var body: some View {
-        ZStack(alignment: .bottom) {
+        VStack {
+            Spacer()
+            
+            Text(levelTitle)
+                .font(.system(size: 30))
+                .fontWeight(.heavy)
+                .shadow(radius: 1)
+                .multilineTextAlignment(.center)
+                .scaleEffect(animateView ? 1 : 0)
+            
+            Text(description)
+                .font(.system(size: 22))
+                .fontWeight(.bold)
+                .shadow(radius: 1)
+                .lineSpacing(10)
+                .multilineTextAlignment(.center)
+                .scaleEffect(animateView ? 1 : 0)
+                .padding(.top)
+                .minimumScaleFactor(0.1)
+            
             VStack {
-                Spacer()
-                
-                    Text(levelTitle)
-                        .font(.system(size: 30))
-                        .fontWeight(.heavy)
+                ForEach(hint, id: \.self) {
+                    Text($0)
+                        .font(.system(size: 16))
+                        .foregroundColor(.secondary)
+                        .fontWeight(.medium)
                         .shadow(radius: 1)
                         .multilineTextAlignment(.center)
                         .scaleEffect(animateView ? 1 : 0)
-                
-                Text(description)
-                    .font(.system(size: 22))
-                    .fontWeight(.bold)
-                    .shadow(radius: 1)
-                    .lineSpacing(10)
-                    .multilineTextAlignment(.center)
-                    .scaleEffect(animateView ? 1 : 0)
-                    .padding(.top)
-                    .minimumScaleFactor(0.1)
-                
-                VStack {
-                    ForEach(hint, id: \.self) {
-                        Text($0)
-                            .font(.system(size: 16))
-                            .foregroundColor(.secondary)
-                            .fontWeight(.medium)
-                            .shadow(radius: 1)
-                            .multilineTextAlignment(.center)
-                            .scaleEffect(animateView ? 1 : 0)
-                            .scaleEffect(animateView ? 1 : 0)
-                            .padding(.bottom, 1)
-                    }
+                        .scaleEffect(animateView ? 1 : 0)
+                        .padding(.bottom, 1)
                 }
-                .padding(.top)
-                
-                Spacer()
             }
+            .padding(.top)
+            
             
             Button {
                 onGo()
@@ -110,10 +107,10 @@ struct LevelInstructionView: View {
             }
             .buttonStyle(ScaledButtonStyle())
             .scaleEffect(animateView ? 1 : 0)
+            .padding(.top, 40)
             
-            
+            Spacer()
         }
-        .padding(.bottom, 100)
         .padding(.horizontal)
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(.thinMaterial)
