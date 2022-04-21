@@ -8,7 +8,7 @@
 import SwiftUI
 
 class ViewModel: ObservableObject, Identifiable {
-    let maxAnimals = 8
+    let maxAnimals = 1
     var maxTrashes: Int {
         level == 4 ? 8 : 4
     }
@@ -96,8 +96,11 @@ class ViewModel: ObservableObject, Identifiable {
         
         let yRange: ClosedRange<Double> = UIScreen.screenHeight * 0.35...UIScreen.screenHeight
         
+              
+        let maxAnimalWidth = UIScreen.screenWidth / 5.5 * 3
+        
         let startLeft = Bool.random()
-        let minWidth: Double = UIDevice.isIPad ? -400 : -200
+        let minWidth: Double = UIDevice.isIPad ? -maxAnimalWidth : -maxAnimalWidth / 2
         let maxWidth: Double = UIScreen.screenWidth + CGFloat(abs(minWidth))
         
         var from: CGPoint {

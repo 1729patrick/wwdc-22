@@ -21,9 +21,10 @@ To implement the features above, these frameworks/techniques are used:
 1. Math: The fish move in a simple parametric curve using two anchor points, one above the starting point, and one below;
 2. Shapes and Animations: The sea waves and the sand are a curved line that have an animation for the movement effect;
 3. GeometryEffect: Some transitions use the GeometryEffect to move a View from one position to another;
-4. AVFAudio: All iterations with the sounds are done through AVFAudio;
-5. MVVC and Protocol Extensions: The project's architecture was based on MVVC, and the development made heavy use of protocol extensions, to facilitate the creation of new functionality and project scalability;
-6. Vectornator and GIMP: The fish images, background, buttons, icon and plants were created by Vectornator and GIMP.
+4. Core Haptics: To create the vibration when an invalid option is pressed;
+5. AVFAudio: All iterations with the sounds are done through AVFAudio;
+6. MVVC and extension-oriented design: The project's architecture was based on MVVC and the development made using extension-oriented design, to facilitate the creation of new functionality, reusability and scalability;
+7. Vectornator and GIMP: The fish images, background, buttons, icon and plants were created by Vectornator and GIMP.
 
 #### If you've shared or considered sharing your coding knowledge and enthusiasm for computer science with others, let us know
 

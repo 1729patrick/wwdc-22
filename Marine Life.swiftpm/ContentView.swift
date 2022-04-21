@@ -33,6 +33,8 @@ struct ContentView: View {
     @State var level: Int = 0
     @State private var wave = 0.0
     
+    @State private var impactFeedback = UIImpactFeedbackGenerator(style: .light)
+    
     var swimmers: some View {
         ForEach(viewModel.swimmers) { swimmer in
             SwimmerView(
@@ -218,6 +220,7 @@ struct ContentView: View {
                     
                         .onTapGesture {
                             SoundManager.shared.play(sound: WrongSound())
+                            impactFeedback.impactOccurred()
                         }
                 }
             }
@@ -355,6 +358,7 @@ struct ContentView: View {
             .overlay {
                 SandPlantsView(size: size)
             }
+            .shadow(color: .black.opacity(0.1), radius: 2, x: 0, y: 1)
             .frame(width: size.width, height: 150)
         }
     }

@@ -49,7 +49,6 @@ struct SandPlantsView: View {
                     .position(x:  midWidth - 325, y: 100)
             }
             
-            
             Group {
                 Image("Plant6")
                     .resizable()
@@ -74,6 +73,7 @@ struct SandPlantsView: View {
                     .scaledToFill()
                     .frame(width: 25, height: 25)
                     .position(x: midWidth - 50, y: 75)
+             
             }
             
             //            middle

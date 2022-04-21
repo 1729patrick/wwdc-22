@@ -71,7 +71,10 @@ class Swimmer: Identifiable, ObservableObject, Equatable {
             .sink(receiveValue: { (_) in
                 self.objectWillChange.send()
                 
-                self.alongTrackDistance += self.track.totalArcLength / self.type.speed / (UIDevice.isIPad ? 0.75 : 3)
+                let percent = self.alongTrackDistance / self.track.totalArcLength
+                
+                let increaseDistance = self.track.totalArcLength / self.type.speed / (UIDevice.isIPad ? 0.65 : 1)
+                self.alongTrackDistance += percent < 0.1 || percent > 0.9 ? increaseDistance * 2 : increaseDistance
                 
                 if self.alongTrackDistance > self.track.totalArcLength {
                     self.timer?.cancel()

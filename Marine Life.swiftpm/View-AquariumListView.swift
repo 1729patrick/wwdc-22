@@ -16,6 +16,7 @@ struct AquariumListView: View {
     
     @State var currentSwimmerType: SwimmerType?
     @State var showingDetails: Bool = false
+    @State private var impactFeedback = UIImpactFeedbackGenerator(style: .light)
     
     var timeToFeedAgain: Int
     var feed: () -> Void
@@ -122,6 +123,7 @@ struct AquariumListView: View {
                         Button {
                             guard isSpecieSaved(animalType) else {
                                 SoundManager.shared.play(sound: WrongSound())
+                                impactFeedback.impactOccurred()
                                 return
                             }
                             
@@ -177,6 +179,7 @@ struct AquariumListView: View {
     func executeFeed() {
         guard feedDisabled == false else {
             SoundManager.shared.play(sound: WrongSound())
+            impactFeedback.impactOccurred()
             return
         }
         
