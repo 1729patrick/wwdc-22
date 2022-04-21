@@ -1,6 +1,6 @@
 //
 //  ContentView.swift
-//  Save the animals
+//  Marine Life
 //
 //  Created by Patrick Battisti Forsthofer on 08/04/22.
 //
@@ -17,7 +17,7 @@ struct ContentView: View {
     
     //    animal details
     @State var showDetailPage: Bool = false
-    @State var currentAnimal: Animal?
+    @State var currentAnimal: Swimmer?
     @State var showingAlbum: Bool = false
     
     @Namespace var animation
@@ -106,7 +106,7 @@ struct ContentView: View {
         
         switch level {
         case 1:
-            title = "Save the animals"
+            title = "Marine Life"
         case 2:
             title = "Run against the oil spill"
         case 3:
@@ -361,7 +361,7 @@ struct ContentView: View {
         }
     }
     
-    func selectAnimal(with animal: Animal) {
+    func selectAnimal(with animal: Swimmer) {
         if animal.type.type == "trash" {
             removeTrash(animal: animal)
         } else {
@@ -377,12 +377,12 @@ struct ContentView: View {
         }
     }
     
-    func saveAnimal(animal: Animal) {
+    func saveAnimal(animal: Swimmer) {
         viewModel.save(animal: animal)
         scaleAlbum()
     }
     
-    func removeTrash(animal: Animal) {
+    func removeTrash(animal: Swimmer) {
         viewModel.remove(animal: animal)
         scaleTrash()
     }

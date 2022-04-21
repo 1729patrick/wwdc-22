@@ -1,6 +1,6 @@
 //
 //  View-OceanWaveView.swift
-//  Save the animals
+//  Marine Life
 //
 //  Created by Patrick Battisti Forsthofer on 08/04/22.
 // https://www.hackingwithswift.com/plus/custom-swiftui-components/creating-a-waveview-to-draw-smooth-waveforms

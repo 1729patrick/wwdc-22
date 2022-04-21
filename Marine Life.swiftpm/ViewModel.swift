@@ -1,6 +1,6 @@
 //
 //  ViewModel.swift
-//  Save the animals
+//  Marine Life
 //
 //  Created by Patrick Battisti Forsthofer on 08/04/22.
 //
@@ -13,8 +13,8 @@ class ViewModel: ObservableObject, Identifiable {
         level == 4 ? 8 : 4
     }
     
-    @Published var animals = [Animal]()
-    @Published var animalsSaved = [AnimalType:Int]()
+    @Published var animals = [Swimmer]()
+    @Published var animalsSaved = [SwimmerType:Int]()
     
     @AppStorage("alwaysShowDetails") var alwaysShowDetails: Bool = true
     @AppStorage("animalsSaved") var saved: Data = Data()
@@ -36,32 +36,32 @@ class ViewModel: ObservableObject, Identifiable {
         return animalsSaved.keys.filter { $0.type == "animal"}.count
     }
     
-    var animalsVisible: [Animal] {
+    var animalsVisible: [Swimmer] {
         animals.filter { $0.type.type == "animal" && $0.visible }
     }
     
-    var trashesVisible: [Animal] {
+    var trashesVisible: [Swimmer] {
         animals.filter { $0.type.type == "trash" && $0.visible }
     }
     
     var nextAnimalIndex: Int {
         let animals = animals.filter { $0.type.type == "animal" }
         
-        if animals.count < AnimalType.animals.count {
+        if animals.count < SwimmerType.animals.count {
             return animals.count
         }
         
-        return animals.count % AnimalType.animals.count
+        return animals.count % SwimmerType.animals.count
     }
     
     var nextTrashIndex: Int {
         let trash = animals.filter { $0.type.type == "trash" }
         
-        if trash.count < AnimalType.trashes.count {
+        if trash.count < SwimmerType.trashes.count {
             return trash.count
         }
         
-        return trash.count % AnimalType.trashes.count
+        return trash.count % SwimmerType.trashes.count
     }
     
     init() {
@@ -71,7 +71,7 @@ class ViewModel: ObservableObject, Identifiable {
     }
     
     func decodeSavedAnimals() {
-        guard let animalsSaved = try? JSONDecoder().decode([AnimalType:Int].self, from: saved) else { return }
+        guard let animalsSaved = try? JSONDecoder().decode([SwimmerType:Int].self, from: saved) else { return }
         
         self.animalsSaved = animalsSaved
     }
@@ -131,13 +131,13 @@ class ViewModel: ObservableObject, Identifiable {
             return .init(x: x, y: y)
         }
         
-        var animalType: AnimalType = AnimalType.animals[nextAnimalIndex]
+        var animalType: SwimmerType = SwimmerType.animals[nextAnimalIndex]
         
         if type == "trash" {
-            animalType = AnimalType.trashes[nextTrashIndex]
+            animalType = SwimmerType.trashes[nextTrashIndex]
         }
         
-        let animal = Animal(
+        let animal = Swimmer(
             from: from,
             to: to,
             control1: control1,
@@ -165,7 +165,7 @@ class ViewModel: ObservableObject, Identifiable {
         }
     }
     
-    func save(animal: Animal) {
+    func save(animal: Swimmer) {
         animal.save()
         self.addAnimal(type: "animal")
         
@@ -175,12 +175,12 @@ class ViewModel: ObservableObject, Identifiable {
             nextLevel()
         } else if level == 2 && animalsSavedCount == 10 {
             nextLevel()
-        } else if level == 5 && speciesSavedCount == AnimalType.animals.count {
+        } else if level == 5 && speciesSavedCount == SwimmerType.animals.count {
             nextLevel()
         }
     }
     
-    func remove(animal: Animal) {
+    func remove(animal: Swimmer) {
         animal.remove()
         self.addAnimal(type: "trash")
         
@@ -191,7 +191,7 @@ class ViewModel: ObservableObject, Identifiable {
         }
     }
     
-    func incrementSavedCount(type: AnimalType) {
+    func incrementSavedCount(type: SwimmerType) {
         let savedCount = animalsSaved[type] ?? 0
         animalsSaved[type] = savedCount + 1
         

@@ -1,6 +1,6 @@
 //
-//  Model-Animal.swift
-//  Save the animals
+//  Model-Swimmer.swift
+//  Marine Life
 //
 //  Created by Patrick Battisti Forsthofer on 08/04/22.
 //
@@ -8,8 +8,8 @@
 import Combine
 import SwiftUI
 
-class Animal: Identifiable, ObservableObject, Equatable {
-    static func == (lhs: Animal, rhs: Animal) -> Bool {
+class Swimmer: Identifiable, ObservableObject, Equatable {
+    static func == (lhs: Swimmer, rhs: Swimmer) -> Bool {
         lhs.id == rhs.id
     }
     
@@ -18,7 +18,7 @@ class Animal: Identifiable, ObservableObject, Equatable {
     private(set) var l2r: Bool
     
     
-    private(set) var type: AnimalType
+    private(set) var type: SwimmerType
     
     private(set) var onDestroy: (() -> Void)? = nil
     
@@ -38,7 +38,7 @@ class Animal: Identifiable, ObservableObject, Equatable {
         control1: CGPoint,
         control2: CGPoint,
         l2r: Bool,
-        type: AnimalType,
+        type: SwimmerType,
         onDestroy: (() -> Void)? = nil
     ) {
         track = Bezier3(from: from, to: to, control1: control1, control2: control2)

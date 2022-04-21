@@ -1,6 +1,6 @@
 //
 //  View-AlbumView.swift
-//  Save the animals
+//  Marine Life
 //
 //  Created by Patrick Battisti Forsthofer on 09/04/22.
 //
@@ -14,7 +14,7 @@ struct AlbumView: View {
     @State var animateView: Bool = false
     @State var feeding: Bool = false
     
-    @State var currentAnimalType: AnimalType?
+    @State var currentSwimmerType: SwimmerType?
     @State var showDetailPage: Bool = false
     
     var timeToFeedAgain: Int
@@ -22,7 +22,7 @@ struct AlbumView: View {
     
     @Namespace var animation
     
-    var animalsSaved: [AnimalType: Int]
+    var animalsSaved: [SwimmerType: Int]
     var speciesSavedCount: Int
     let level: Int
 
@@ -115,7 +115,7 @@ struct AlbumView: View {
             
             ScrollView(.vertical, showsIndicators: false) {
                 LazyVGrid(columns: columns) {
-                    ForEach(AnimalType.animals) { animalType in
+                    ForEach(SwimmerType.animals) { animalType in
                         Button {
                             guard animalsSaved[animalType] != nil else {
                                 SoundManager.shared.play(sound: WrongSound())
@@ -129,7 +129,7 @@ struct AlbumView: View {
                         } label: {
                             AquariumView(
                                 animalType: animalType,
-                                currentAnimalType: currentAnimalType,
+                                currentSwimmerType: currentSwimmerType,
                                 namespace: animation,
                                 showDetailPage: showDetailPage,
                                 savedCount: animalsSaved[animalType] ?? 0,
@@ -143,15 +143,15 @@ struct AlbumView: View {
             }
         }
         .overlay {
-            if let animalType = currentAnimalType, showDetailPage {
+            if let animalType = currentSwimmerType, showDetailPage {
                 AnimalDetailView(
-                    animal: Animal(
+                    animal: Swimmer(
                         from: .init(x: 10, y: 0),
                         to: .init(x: 0, y: 0),
                         control1: .init(x: 0, y: 0),
                         control2: .init(x: 0, y: 0),
                         l2r: false,
-                        type: currentAnimalType!
+                        type: currentSwimmerType!
                     ),
                     namespace: animation,
                     showDetailPage: $showDetailPage,
@@ -201,9 +201,9 @@ struct AlbumView: View {
         }
     }
     
-    func selectAnimal(with animalType: AnimalType) {
+    func selectAnimal(with animalType: SwimmerType) {
         withAnimation(.interactiveSpring(response: 0.6, dampingFraction: 0.7, blendDuration: 0.7)){
-            currentAnimalType = animalType
+            currentSwimmerType = animalType
             showDetailPage = true
         }
     }

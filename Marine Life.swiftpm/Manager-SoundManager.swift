@@ -1,6 +1,6 @@
 //
 //  SoundManager.swift
-//  Save the animals
+//  Marine Life
 //
 //  Created by Patrick Battisti Forsthofer on 13/04/22.
 //

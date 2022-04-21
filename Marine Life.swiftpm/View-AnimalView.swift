@@ -1,6 +1,6 @@
 //
 //  View-AnimalView.swift
-//  Save the animals
+//  Marine Life
 //
 //  Created by Patrick Battisti Forsthofer on 08/04/22.
 //
@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct AnimalView: View {
-    @ObservedObject var animal: Animal
+    @ObservedObject var animal: Swimmer
     
     var alwaysShowDetails: Bool
     var selected: Bool

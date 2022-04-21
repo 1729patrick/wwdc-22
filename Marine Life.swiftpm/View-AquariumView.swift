@@ -1,6 +1,6 @@
 //
 //  View-AquariumView.swift
-//  Save the animals
+//  Marine Life
 //
 //  Created by Patrick Battisti Forsthofer on 10/04/22.
 //
@@ -8,8 +8,8 @@
 import SwiftUI
 
 struct AquariumView: View {
-    let animalType: AnimalType
-    let currentAnimalType: AnimalType?
+    let animalType: SwimmerType
+    let currentSwimmerType: SwimmerType?
     var namespace: Namespace.ID
     var showDetailPage: Bool
     let savedCount: Int
@@ -35,7 +35,7 @@ struct AquariumView: View {
             return Angle(degrees: 0)
         }
         
-        if showDetailPage && animalType == currentAnimalType {
+        if showDetailPage && animalType == currentSwimmerType {
             return Angle(degrees: 0)
         }
         
@@ -55,7 +55,7 @@ struct AquariumView: View {
     }
     
     var scale: Double {
-        if showDetailPage && animalType == currentAnimalType {
+        if showDetailPage && animalType == currentSwimmerType {
             let alpha = UIDevice.isIPad ? 0.6 : 0.85
             return (UIScreen.screenWidth * alpha) / size
         }

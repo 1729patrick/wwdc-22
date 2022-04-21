@@ -1,6 +1,6 @@
 //
 //  Extension-UIScreen+Size.swift
-//  Save the animals
+//  Marine Life
 //
 //  Created by Patrick Battisti Forsthofer on 08/04/22.
 //

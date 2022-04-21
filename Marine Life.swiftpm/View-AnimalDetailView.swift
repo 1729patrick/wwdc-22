@@ -1,6 +1,6 @@
 //
 //  View-AnimalDetailView.swift
-//  Save the animals
+//  Marine Life
 //
 //  Created by Patrick Battisti Forsthofer on 09/04/22.
 //
@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct AnimalDetailView: View {
-    var animal: Animal
+    var animal: Swimmer
     let namespace: Namespace.ID
     @Binding var showDetailPage: Bool
     @Binding var alwaysShowDetails: Bool
