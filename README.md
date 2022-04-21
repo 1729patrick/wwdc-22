@@ -18,12 +18,12 @@ You will be responsible for saving the fish that are in danger in the ocean, and
 
 To implement the features above, these frameworks/techniques are used:
 
-Math: The fish move in a simple parametric curve using two anchor points, one above the starting point, and one below;
-Shapes and Animations: The sea waves and the sand are a curved line that have an animation for the movement effect;
-GeometryEffect: Some transitions use the GeometryEffect to move a View from one position to another;
-AVFAudio: All iterations with the sounds are done through AVFAudio;
-MVVC and Protocol Extensions: The project's architecture was based on MVVC, and the development made heavy use of protocol extensions, to facilitate the creation of new functionality and project scalability;
-Vectornator and GIMP: The fish images, background, buttons, icon and plants were created by Vectornator and GIMP.
+1. Math: The fish move in a simple parametric curve using two anchor points, one above the starting point, and one below;
+2. Shapes and Animations: The sea waves and the sand are a curved line that have an animation for the movement effect;
+3. GeometryEffect: Some transitions use the GeometryEffect to move a View from one position to another;
+4. AVFAudio: All iterations with the sounds are done through AVFAudio;
+5. MVVC and Protocol Extensions: The project's architecture was based on MVVC, and the development made heavy use of protocol extensions, to facilitate the creation of new functionality and project scalability;
+6. Vectornator and GIMP: The fish images, background, buttons, icon and plants were created by Vectornator and GIMP.
 
 #### If you've shared or considered sharing your coding knowledge and enthusiasm for computer science with others, let us know
 
@@ -35,4 +35,4 @@ In addition, I also love to share knowledge by developing projects in my spare t
 
 For the same reason, to share knowledge about environmental issues that affect marine life, I chose the topic for this Swift Student Challenge. I hope this game helps people to realize how small personal attitudes, united with other people, generate a big result.
 
-Lastly, I would like to talk about the events that happened for me to be here today. My connection to Apple started in 2017, when I installed Hackintosh on my laptop (I know this is wrong, but at the time I didn't have the money to buy the official products, sorry). Not all macOS features worked, but this was the best way to get close to this amazing operating system. In 2020, I was already using a MacBook, but not yet developing with Swift. A little over a year and a half later, a combination of factors happened that changed my life: I had just bought an iPhone and I had just read Steve Jobs' biography. The iPhone showed me how things worked incredibly well, they had a certain magic, the way everything worked was surprising and inspiring, and the biography showed me that we can change the world for the better, that we can create things we could never have imagined that one day. could exist, that all our actions can have a positive impact on people's lives and change the way things happen. And so, 4 months ago, I quit my job to learn Swift and create apps that can change people's lives too.
+Lastly, I would like to talk about the events that happened for me to be here today. My connection to Apple started in 2017, when I installed Hackintosh on my laptop (I know this is wrong, but at the time I didn't have the money to buy the official products, sorry). Not all macOS features worked, but this was the best way to get close to this amazing operating system. In 2020, I was already using a MacBook, but not yet developing with Swift. A little over a year and a half later, a combination of factors happened that changed my life: I had just bought an iPhone and I had just read Steve Jobs' biography. The iPhone showed me how things worked incredibly well, they had a certain magic, the way everything worked was surprising and inspiring, and the biography showed me that we can change the world for the better, that we can create things we could never have imagined that one day could exist, that all our actions can have a positive impact on people's lives and change the way things happen. And so, 4 months ago, I quit my job to learn Swift and create apps that can help others.
