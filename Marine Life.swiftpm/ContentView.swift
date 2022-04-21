@@ -248,7 +248,7 @@ struct ContentView: View {
                     showingDetails: $showingDetails,
                     alwaysShowDetails: $viewModel.alwaysShowDetails,
                     id: animal.id.uuidString,
-                    size: (UIScreen.screenWidth / 5.5) * animal.type.scale,
+                    size: (UIScreen.screenWidth / (UIDevice.isIPad ? 7.5 : 5.5)) * animal.type.scale,
                     onClose: {
                         saveAnimal(animal: animal)
                         currentSwimmer = nil

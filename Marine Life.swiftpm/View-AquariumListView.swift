@@ -156,13 +156,14 @@ struct AquariumListView: View {
                         control1: .init(x: 0, y: 0),
                         control2: .init(x: 0, y: 0),
                         l2r: false,
-                        type: currentSwimmerType!
+                        type: currentSwimmerType!,
+                        starting: false
                     ),
                     namespace: animation,
                     showingDetails: $showingDetails,
                     alwaysShowDetails: $alwaysShowDetails,
                     id: "aquarium\(animalType.id)",
-                    size: (UIScreen.screenWidth / 10) * max(1, animalType.scale * 0.7)
+                    size: (UIScreen.screenWidth / 11) * max(1, animalType.scale * 0.7)
                 )
             }
         }

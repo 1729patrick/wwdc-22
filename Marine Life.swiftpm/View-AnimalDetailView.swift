@@ -41,7 +41,7 @@ struct AnimalDetailView: View {
     
     var height: Double {
         if animateView {
-            return (UIScreen.screenWidth / 5.5)
+            return (UIScreen.screenWidth / (UIDevice.isIPad ? 7.5 : 5.5))
         }
         
         return size
@@ -49,7 +49,7 @@ struct AnimalDetailView: View {
     
     var scale : Double {
         if UIDevice.isIPad {
-            return animateView ? (UIScreen.screenWidth * 0.6) / width : 1
+            return animateView ? (UIScreen.screenWidth * 0.5) / width : 1
         }
         
         return animateView ? (UIScreen.screenWidth * 0.85) / width : 1

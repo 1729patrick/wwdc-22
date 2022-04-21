@@ -8,7 +8,8 @@
 import SwiftUI
 
 class ViewModel: ObservableObject, Identifiable {
-    let maxAnimals = 1
+    let maxAnimals = 10
+    
     var maxTrashes: Int {
         level == 4 ? 8 : 4
     }
@@ -81,7 +82,7 @@ class ViewModel: ObservableObject, Identifiable {
         self.saved = saved
     }
     
-    func addSwimmer(type: SwimmerType.Types) {
+    func addSwimmer(type: SwimmerType.Types, starting: Bool = false) {
         if type == .animal {
             guard animalsVisible.count < maxAnimals else {
                 return
@@ -96,11 +97,9 @@ class ViewModel: ObservableObject, Identifiable {
         
         let yRange: ClosedRange<Double> = UIScreen.screenHeight * 0.35...UIScreen.screenHeight
         
-              
-        let maxAnimalWidth = UIScreen.screenWidth / 5.5 * 3
-        
         let startLeft = Bool.random()
-        let minWidth: Double = UIDevice.isIPad ? -maxAnimalWidth : -maxAnimalWidth / 2
+        
+        let minWidth: Double = UIDevice.isIPad ? -Swimmer.maxAnimalWidth : -Swimmer.maxAnimalWidth / 2
         let maxWidth: Double = UIScreen.screenWidth + CGFloat(abs(minWidth))
         
         var from: CGPoint {
@@ -147,6 +146,7 @@ class ViewModel: ObservableObject, Identifiable {
             control2: control2,
             l2r: startLeft,
             type: animalType,
+            starting: starting,
             onDestroy: {
                 self.addSwimmer(type: type)
             }
@@ -156,8 +156,10 @@ class ViewModel: ObservableObject, Identifiable {
     }
     
     func setup() {
-        self.addSwimmer(type: .animal)
-        self.addSwimmer(type: .animal)
+        self.addSwimmer(type: .animal, starting: true)
+        self.addSwimmer(type: .animal, starting: true)
+        self.addSwimmer(type: .animal, starting: true)
+        self.addSwimmer(type: .animal, starting: true)
         
         Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { timer in
             if self.animalsVisible.count > self.maxAnimals {
@@ -230,9 +232,9 @@ class ViewModel: ObservableObject, Identifiable {
     }
     
     func addTrashes() {
-        self.addSwimmer(type: .trash)
-        self.addSwimmer(type: .trash)
-        self.addSwimmer(type: .trash)
+        self.addSwimmer(type: .trash, starting: true)
+        self.addSwimmer(type: .trash, starting: true)
+        self.addSwimmer(type: .trash, starting: true)
         
         Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { timer in
             if self.trashesVisible.count > self.maxTrashes {

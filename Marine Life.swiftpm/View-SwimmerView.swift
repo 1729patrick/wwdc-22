@@ -42,21 +42,21 @@ struct SwimmerView: View {
     }
     
     var width: Double {
-        return (UIScreen.screenWidth / 5.5) * swimmer.type.scale
+        return (UIScreen.screenWidth / (UIDevice.isIPad ? 7.5 : 5.5)) * swimmer.type.scale
     }
     
     var height: Double {
         if selected {
-            return (UIScreen.screenWidth / 5.5)
+            return (UIScreen.screenWidth / (UIDevice.isIPad ? 7.5 : 5.5))
         }
         
-        return (UIScreen.screenWidth / 5.5) * swimmer.type.scale
+        return (UIScreen.screenWidth / (UIDevice.isIPad ? 7.5 : 5.5)) * swimmer.type.scale
     }
     
     var body: some View {
-//        animal.path
+//        swimmer.path
 //            .stroke(style: StrokeStyle(lineWidth: 0.4))
-//
+
         Image(swimmer.type.image)
             .resizable()
             .scaledToFit()

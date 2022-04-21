@@ -33,6 +33,7 @@ class Swimmer: Identifiable, ObservableObject, Equatable {
         control2: CGPoint,
         l2r: Bool,
         type: SwimmerType,
+        starting: Bool,
         onDestroy: (() -> Void)? = nil
     ) {
         track = Bezier3(from: from, to: to, control1: control1, control2: control2)
@@ -46,7 +47,7 @@ class Swimmer: Identifiable, ObservableObject, Equatable {
         self.onDestroy = onDestroy
         self.type = type
         
-        startSwimming()
+        startSwimming(starting: starting)
     }
     
     func getPosition() -> CGPoint {
@@ -64,22 +65,25 @@ class Swimmer: Identifiable, ObservableObject, Equatable {
         return h
     }
     
-    func startSwimming() {
+    func startSwimming(starting: Bool) {
+        if starting {
+            self.alongTrackDistance = self.track.totalArcLength * 0.3
+        }
+        
         timer = Timer
             .publish(every: 0.01, on: RunLoop.main, in: RunLoop.Mode.default)
             .autoconnect()
             .sink(receiveValue: { (_) in
                 self.objectWillChange.send()
                 
-                let percent = self.alongTrackDistance / self.track.totalArcLength
+                let increaseDistance = self.track.totalArcLength / self.type.speed / (UIDevice.isIPad ? 0.5 : 1)
                 
-                let increaseDistance = self.track.totalArcLength / self.type.speed / (UIDevice.isIPad ? 0.65 : 1)
-                self.alongTrackDistance += percent < 0.1 || percent > 0.9 ? increaseDistance * 2 : increaseDistance
+                self.alongTrackDistance += increaseDistance
                 
                 if self.alongTrackDistance > self.track.totalArcLength {
+                    self.visible = false
                     self.timer?.cancel()
                     self.onDestroy?()
-                    self.visible = false
                 }
             })
     }
@@ -99,4 +103,6 @@ class Swimmer: Identifiable, ObservableObject, Equatable {
         removed = true
         visible = false
     }
+    
+    static var maxAnimalWidth = (UIScreen.screenWidth / (UIDevice.isIPad ? 7.5 : 5.5)) * 3
 }
