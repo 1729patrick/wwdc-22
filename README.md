@@ -1,6 +1,6 @@
 # [Submitted] WWDC22 Swift Student Challenge
 
-Uploading Demo.mov…
+https://user-images.githubusercontent.com/35247414/164762200-3dda2993-9f72-4106-a5bb-3dbcd6f7b402.mov
 
 #### Did you use any content you do not have ownership rights to?
 
