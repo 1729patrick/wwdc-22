@@ -68,7 +68,7 @@ struct OilSpillSound: Sound {
     func getFileName() -> String { "oilSpill" }
     func getFileExtension() -> String { "wav" }
     func getVolume() -> Float {
-        0.3
+        0.2
     }
     func isLoop() -> Bool { true }
 }

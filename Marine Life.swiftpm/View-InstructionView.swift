@@ -14,10 +14,11 @@ struct InstructionView: View {
     @State private var animateView: Bool = false
     
     var pages = [
-        "In the wild the strongest animals survive, but today even the strongest are suffering from our attitudes.",
-        "We can all collaborate for the preservation of biodiversity in the world.",
-        "Being aware of the preservation of the environment is a duty of every human being.",
-        "In this app you will be responsible for saving the marine animals that are in danger of extinction in Brazil.",
+        "Welcome to Marine Life.",
+        "In the wild, only the strongest survive. But these days, even the strongest are fighting humans to survive.",
+        "Now it is your turn. You will be responsible for saving endangered marine animals in Brazil.",
+        "We can all collaborate for the preservation of marine life, both in Brazil and in the world.",
+        "What can you do, it looks like a drop in the middle of the ocean, but without it, the ocean would be smaller.",
     ]
     
     var body: some View {
