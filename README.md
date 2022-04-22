@@ -1,6 +1,6 @@
 # [Submitted] WWDC22 Swift Student Challenge
 
-![App]()
+![App](https://github.com/1729patrick/wwdc-21/blob/main/final.mp4)
 
 #### Did you use any content you do not have ownership rights to?
 
