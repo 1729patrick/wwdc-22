@@ -56,7 +56,7 @@ struct AquariumView: View {
     
     var scale: Double {
         if showingDetails && animalType == currentSwimmerType {
-            let alpha = UIDevice.isIPad ? 0.6 : 0.85
+            let alpha = UIDevice.isIPad ? 0.5 : 0.85
             return (UIScreen.screenWidth * alpha) / size
         }
         

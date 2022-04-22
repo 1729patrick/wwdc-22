@@ -72,7 +72,9 @@ struct SwimmerView: View {
             .animation(.linear(duration: 0.5), value: swimmer.removed)
             .onChange(of: swimmer.saved) { _ in
                 if alwaysShowDetails == true && !specieSaved {
-                    scale = (UIScreen.screenWidth * 0.85) / width
+                    let alpha = UIDevice.isIPad ? 0.5 : 0.85
+                    
+                    scale = (UIScreen.screenWidth * alpha) / width
                 }
                 
                 withAnimation(.linear(duration: 0.3)) {
