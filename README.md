@@ -14,9 +14,9 @@ Yes, I don’t have ownership of the sounds effects, endangered animals list and
 
 In Brazil, we see a significant increase in endangered animals. In 2014, the number of endangered animal species was 698, today, 1,399, unfortunately doubled in 8 years. Many of the animals that were on the list in 2014 remain on the list, meaning little effective action has been taken to reverse the situation.
 
-In the future, I want to live on a sailboat, one of the big reasons for this is that I want to know the depths of the oceans and its marine life, but I am apprehensive that many of the species that are threatened today, will be extinct or not be free, when that moment comes. Therefore, this game tries to make people aware of the environmental problems that affect marine animals in Brazil, teaching that our attitudes, even if small, help to save marine life.
+In the future, I want to live on a sailboat, one of the big reasons for this is that I want to know the depths of the oceans and its marine life, but I am apprehensive that many of the species that are threatened today, will be extinct or not be free, when that moment comes. Therefore, this app tries to make people aware of the environmental problems that affect marine animals in Brazil and in the world, teaching that our attitudes, even if small, help to save marine life.
 
-You will be responsible for saving the fish that are in danger in the ocean, and putting them in aquariums (this is the last action before an animal goes extinct), doing this, also comes the responsibility of feeding these fish. The animals that remain in the ocean can still suffer from human attitudes, such as pollution and chemical spills (such as oil, fertilizers, etc…) so you will have to fight these problems for the fish to survive.
+You will be responsible for saving the fish that are in danger in the ocean, and putting them in aquariums (this is the last action before an animal goes extinct), doing this, also comes the responsibility of feeding these fish. The animals that remain in the ocean can still suffer from human attitudes, such as pollution and chemical spills (such as oil, fertilizers…) so you will have to fight these problems for the fish to survive.
 
 To implement the features above, these frameworks/techniques are used:
 
@@ -26,7 +26,7 @@ To implement the features above, these frameworks/techniques are used:
 4. Core Haptics: To create the vibration when an invalid option is pressed;
 5. AVFAudio: All iterations with the sounds are done through AVFAudio;
 6. MVVC and extension-oriented design: The project's architecture was based on MVVC and the development made using extension-oriented design;
-7. Vectornator and GIMP: The all images (fish, background, buttons, icon, plants) were created by Vectornator and GIMP.
+7. Vectornator and GIMP: All images (fish, background, buttons, icon, plants) were created by Vectornator and GIMP.
 
 #### If you've shared or considered sharing your coding knowledge and enthusiasm for computer science with others, let us know
 
@@ -36,4 +36,4 @@ In my first year of college, I had the opportunity to help my computer science p
 
 In addition, I also love to share knowledge by developing projects in my spare time. Once I helped to develop a co-funded by the Erasmus+ Program of the European Union to facilitate the exchanges between schools across Europe and make more common and usual teaching and learning by having an international approach. This project emerged precisely to facilitate the union of knowledge that is dispersed throughout society, especially among schools.
 
-For the same reason, to share knowledge about environmental issues that affect marine life, I chose the topic for this Swift Student Challenge. I hope this app helps people to realize how small personal attitudes, united with other people, generate a big result and change the world.
+For the same reason, to share knowledge about environmental issues that affect marine life, I chose the topic for this Swift Student Challenge. I hope this app helps people to realize how small personal attitudes, united with other people, generate a big result and can change the world.
