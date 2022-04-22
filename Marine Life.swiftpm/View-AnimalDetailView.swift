@@ -118,6 +118,7 @@ struct AnimalDetailView: View {
                 Button {
                     withAnimation {
                         showMore.toggle()
+                        SoundManager.shared.play(sound: ButtonSound())
                     }
                 } label: {
                     if showMore {
@@ -137,6 +138,7 @@ struct AnimalDetailView: View {
         Button {
             withAnimation(.interactiveSpring(response: 0.6, dampingFraction: 0.7, blendDuration: 0.7)){
                 showingAllStatus.toggle()
+                SoundManager.shared.play(sound: ButtonSound())
             }
         } label : {
             HStack {
@@ -198,6 +200,9 @@ struct AnimalDetailView: View {
                     .imageScale(.large)
                     .foregroundColor(.white)
             }
+            .onTapGesture {
+                SoundManager.shared.play(sound: ButtonSound())
+            }
         }
         .padding(.bottom)
     }
@@ -234,6 +239,9 @@ struct AnimalDetailView: View {
                                 .multilineTextAlignment(.leading)
                                 .lineSpacing(10)
                         })
+                        .onChange(of: alwaysShowDetails) { _ in
+                            SoundManager.shared.play(sound: ButtonSound())
+                        }
                         
                         Divider()
                         
