@@ -10,70 +10,48 @@ import SwiftUI
 struct SandPlantsView: View {
     var size: CGSize
     
-    var midWidth: CGFloat {
-        UIScreen.screenWidth / 2
+    var width: CGFloat {
+        UIScreen.screenWidth
+    }
+    
+    var height: CGFloat {
+        UIScreen.screenHeight * 0.15
+    }
+    
+    var scale: CGFloat {
+        if UIDevice.isIPad {
+            return UIScreen.screenWidth / 520
+        }
+        
+        return UIScreen.screenWidth / 420
     }
     
     var body: some View {
         ZStack {
-            //   only ipad
-            Group {
-                Image("Plant11")
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: 50, height: 50)
-                    .position(x: midWidth - 475, y: 100)
-                
-                Image("Plant1")
-                    .resizable()
-                    .scaledToFill()
-                    .frame(width: 50, height: 125)
-                    .position(x: midWidth - 475, y: -25)
-                
-                Image("Rock")
-                    .resizable()
-                    .scaledToFill()
-                    .frame(width: 25, height: 25)
-                    .position(x: midWidth - 400, y: 50)
-                
-                Image("Plant11")
-                    .resizable()
-                    .scaledToFill()
-                    .frame(width: 50, height: 100)
-                    .position(x: midWidth - 300, y: -15)
-                
-                Image("Plant10")
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: 50, height: 50)
-                    .position(x:  midWidth - 325, y: 100)
-            }
-            
-            
             Group {
                 Image("Plant6")
                     .resizable()
                     .scaledToFill()
-                    .frame(width: 50, height: 75)
-                    .position(x: midWidth - 175, y: 0)
+                    .frame(width: 50 * scale, height: 75 * scale)
+                    .position(x: width * 0.07, y: 0)
                 
                 Image("Plant12")
                     .resizable()
                     .scaledToFill()
-                    .frame(width: 50, height: 70)
-                    .position(x: midWidth - 175, y: 75)
+                    .frame(width: 50 * scale, height: 70 * scale)
+                    .position(x: width * 0.12, y: height * 0.6)
                 
                 Image("Plant1")
                     .resizable()
                     .scaledToFill()
-                    .frame(width: 50, height: 125)
-                    .position(x: midWidth - 50, y: -25)
+                    .frame(width: 50 * scale, height: 125 * scale)
+                    .position(x: width * 0.35, y: -height * 0.16)
                 
                 Image("Rock")
                     .resizable()
                     .scaledToFill()
-                    .frame(width: 25, height: 25)
-                    .position(x: midWidth - 50, y: 75)
+                    .frame(width: 25 * scale, height: 25 * scale)
+                    .position(x: width * 0.4, y: height * 0.55)
             }
             
             //            middle
@@ -82,76 +60,41 @@ struct SandPlantsView: View {
                 Image("Plant3")
                     .resizable()
                     .scaledToFill()
-                    .frame(width: 50, height: 50)
-                    .position(x: midWidth + 30, y: 25)
+                    .frame(width: 50 * scale, height: 50 * scale)
+                    .position(x: width * 0.6, y: height * 0.16)
                 
                 Image("Plant13")
                     .resizable()
                     .scaledToFill()
-                    .frame(width: 50, height: 50)
-                    .position(x: midWidth + 30, y: 100)
+                    .frame(width: 50 * scale, height: 50 * scale)
+                    .position(x: width * 0.6, y: height * 0.66)
                 
                 
-                Group {
+                ZStack(alignment: .bottomTrailing){
                     Image("Rock")
                         .resizable()
                         .scaledToFit()
-                        .frame(width: 50, height: 50)
-                        .position(x: midWidth + 100, y: 75)
+                        .frame(width: 50 * scale, height: 50 * scale)
                     
                     Image("Rock")
                         .resizable()
                         .scaledToFit()
-                        .frame(width: 30, height: 30)
-                        .position(x: midWidth + 120, y: 85)
+                        .frame(width: 30 * scale, height: 30 * scale)
+                        .offset(x: 10)
                 }
+                .position(x: width * 0.75, y: height * 0.5)
                 
                 Image("Plant10")
                     .resizable()
                     .scaledToFill()
-                    .frame(width: 50, height: 100)
-                    .position(x: midWidth + 150, y: -15)
+                    .frame(width: 50 * scale, height: 85 * scale)
+                    .position(x: width * 0.9, y: -height * 0.1)
                 
                 Image("Plant11")
                     .resizable()
                     .scaledToFit()
-                    .frame(width: 50, height: 50)
-                    .position(x:  midWidth + 175, y: 100)
-            }
-            
-//             only ipad
-            Group {
-                Image("Plant12")
-                    .resizable()
-                    .scaledToFill()
-                    .frame(width: 50, height: 75)
-                    .position(x: midWidth + 275, y: 0)
-                
-                Image("Plant6")
-                    .resizable()
-                    .scaledToFill()
-                    .frame(width: 50, height: 70)
-                    .position(x: midWidth + 275, y: 75)
-                
-                Image("Plant11")
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: 125, height: 125)
-                    .position(x:  midWidth + 400, y: 0)
-                
-                Group {
-                    Image("Rock")
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: 60, height: 60)
-                        .position(x: midWidth + 450, y: 100)
-                    
-                    Image("Rock")
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: 35, height: 35)
-                        .position(x: midWidth + 470, y: 110)
-                }
+                    .frame(width: 50 * scale, height: 50 * scale)
+                    .position(x:  width * 0.95, y: height * 0.66)
             }
         }
     }

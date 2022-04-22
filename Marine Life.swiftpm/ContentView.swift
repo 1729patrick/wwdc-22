@@ -57,14 +57,14 @@ struct ContentView: View {
             .frame(width: 50, height: 50)
             .overlay(alignment: .bottomLeading) {
                 if viewModel.trashesRemovedCount > 0 {
-                        Text("\(viewModel.trashesRemovedCount)")
-                            .font(.caption2)
-                            .fontWeight(.bold)
-                            .padding(.horizontal, 4)
-                            .padding(.vertical, 2)
-                            .background(.white)
-                            .foregroundColor(.blue)
-                            .clipShape(Capsule())
+                    Text("\(viewModel.trashesRemovedCount)")
+                        .font(.caption2)
+                        .fontWeight(.bold)
+                        .padding(.horizontal, 4)
+                        .padding(.vertical, 2)
+                        .background(.white)
+                        .foregroundColor(.blue)
+                        .clipShape(Capsule())
                 }
             }
             .scaleEffect(animateView ? 1 : 0)
@@ -84,14 +84,14 @@ struct ContentView: View {
         .buttonStyle(ScaledButtonStyle())
         .overlay(alignment: .bottomLeading) {
             if viewModel.level == 6 {
-                    Text("\(viewModel.animalsSavedCount)")
-                        .font(.caption2)
-                        .fontWeight(.bold)
-                        .padding(.horizontal, 4)
-                        .padding(.vertical, 2)
-                        .background(.white)
-                        .foregroundColor(.blue)
-                        .clipShape(Capsule())
+                Text("\(viewModel.animalsSavedCount)")
+                    .font(.caption2)
+                    .fontWeight(.bold)
+                    .padding(.horizontal, 4)
+                    .padding(.vertical, 2)
+                    .background(.white)
+                    .foregroundColor(.blue)
+                    .clipShape(Capsule())
             }
         }
         .scaleEffect(aquariumScale)
@@ -114,30 +114,32 @@ struct ContentView: View {
         case 5:
             title = "Save all species"
         default:
-            title = ""
+            title = "Marine Life"
         }
         
         return HStack {
-            ZStack {
-                Image("Button")
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: 50, height: 50)
-                
-                
-                VStack(spacing: 0) {
-                    Text(viewModel.level == 5 ? "LAST" : "\(viewModel.level)")
-                        .font(.system(size: viewModel.level == 5 ? 8 : 22))
-                        .fontWeight(.heavy)
-                        .shadow(radius: 1)
-                        .foregroundColor(.white)
+            if viewModel.level <= 5 {
+                ZStack {
+                    Image("Button")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 50, height: 50)
                     
-                    Text("LEVEL")
-                        .font(.system(size: 8))
-                        .fontWeight(.heavy)
-                        .shadow(radius: 1)
-                        .foregroundColor(.white)
-                        .padding(.top, -2)
+                    
+                    VStack(spacing: 0) {
+                        Text(viewModel.level == 5 ? "LAST" : "\(viewModel.level)")
+                            .font(.system(size: viewModel.level == 5 ? 8 : 22))
+                            .fontWeight(.heavy)
+                            .shadow(radius: 1)
+                            .foregroundColor(.white)
+                        
+                        Text("LEVEL")
+                            .font(.system(size: 8))
+                            .fontWeight(.heavy)
+                            .shadow(radius: 1)
+                            .foregroundColor(.white)
+                            .padding(.top, -2)
+                    }
                 }
             }
             
@@ -153,9 +155,7 @@ struct ContentView: View {
     
     var header: some View {
         HStack {
-            if viewModel.level <= 5 {
-                levelTitle
-            }
+            levelTitle
             
             Spacer()
             if level >= 4 {
@@ -214,7 +214,7 @@ struct ContentView: View {
                         .overlay {
                             getSand(size: size)
                             WaterDropsView()
-
+                            
                             swimmers
                         }
                     
@@ -310,8 +310,8 @@ struct ContentView: View {
         level = viewModel.level
         
         withAnimation(.linear(duration: 8).repeatForever(autoreverses: false)) {
-               self.wave = .pi * 2
-           }
+            self.wave = .pi * 2
+        }
         
         withAnimation(.interactiveSpring(response: 0.6, dampingFraction: 0.7, blendDuration: 0.7)){
             animateView = true
@@ -350,16 +350,16 @@ struct ContentView: View {
         VStack {
             Spacer()
             WaveView(strength: 3, frequency: 5, start: 0, phase: wave)
-            .fill(LinearGradient(
-                colors: [Color("Light Gold"), Color("Dark Gold")],
-                startPoint: .top,
-                endPoint: .bottom)
-            )
-            .overlay {
-                SandPlantsView(size: size)
-            }
-            .shadow(color: .black.opacity(0.1), radius: 2, x: 0, y: 1)
-            .frame(width: size.width, height: 150)
+                .fill(LinearGradient(
+                    colors: [Color("Light Gold"), Color("Dark Gold")],
+                    startPoint: .top,
+                    endPoint: .bottom)
+                )
+                .overlay {
+                    SandPlantsView(size: size)
+                }
+                .shadow(color: .black.opacity(0.1), radius: 2, x: 0, y: 1)
+                .frame(width: size.width, height: UIScreen.screenHeight * 0.15)
         }
     }
     

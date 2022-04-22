@@ -19,7 +19,7 @@ struct LevelInstructionView: View {
         case 1:
             return "Fish are swimming in the ocean, but the number of species is decreasing year after year, fighting pollution, heating water, oil spills, etc. Now you must save some fish that are in the ocean and put them safely in aquariums."
         case 2:
-            return "Oh no, there was an oil spill. Tons and tons of fish die in this kind of accident. Save as many fish as you can. Go! Go! Go!"
+            return "Oh no, there was an oil spill. Tons of fish die in this kind of accident. Save as many fish as you can. Go! Go! Go!"
         case 3:
             return "You have already saved \(animalsSavedCount) fish, congratulations! All are safe in their aquariums, but they are out of food. Your goal is to feed them. The more food you give them, the faster they will reproduce and the faster they will return to the ocean."
         case 4:
@@ -27,7 +27,7 @@ struct LevelInstructionView: View {
         case 5:
             return "Good, you did a great job removing all the garbage from the ocean. You have already saved many species, but some are still endangered in the ocean. Now is the time to save all the species."
         case 6:
-            return "I hope this game helped you to realize that the lives of animals are in our hands. Keep taking care of the fish, hold the ocean clean and fight oil spills.\nThank you!"
+            return "I hope this game helped you to realize that the lives of animals are in our hands. Keep taking care of the fish, hold the ocean clean and fight oil spills. Thank you!"
         default:
             return ""
         }

@@ -17,7 +17,7 @@ struct InstructionView: View {
         "In the wild the strongest animals survive, but today even the strongest are suffering from our attitudes.",
         "We can all collaborate for the preservation of biodiversity in the world.",
         "Being aware of the preservation of the environment is a duty of every human being.",
-        "In this game you will be responsible for saving the marine animals that are in danger of extinction in Brazil.",
+        "In this app you will be responsible for saving the marine animals that are in danger of extinction in Brazil.",
     ]
     
     var body: some View {
