@@ -1,8 +1,10 @@
-# [Submitted] The WWDC22 Swift Student Challenge
+# [Submitted] WWDC22 Swift Student Challenge
+
+![App]()
 
 #### Did you use any content you do not have ownership rights to?
 
-Yes, I don’t have ownership of the sounds effects, endangered animals list and fish description. All content is in accordance with the respective licensing terms and copyright obligations.
+Yes, I don’t have ownership of the sounds effects, endangered animals list and fish descriptions. All content is in accordance with the respective licensing terms and copyright obligations.
 
 1. Sounds Effects: I used sounds that are free for commercial and non-commercial projects. That sounds includes background, buttons tap, wrong tap, feeding effects. I really want to thanks the Mixkit and Chosic for the sounds;
 2. List of endangered animals: The list was prepared by the National Biodiversity Commission (Conabio). Conabio is a permanent inter-ministerial commission of the Federal Brazil government;
@@ -34,4 +36,4 @@ In my first year of college, I had the opportunity to help my computer science p
 
 In addition, I also love to share knowledge by developing projects in my spare time. Once I helped to develop a co-funded by the Erasmus+ Program of the European Union to facilitate the exchanges between schools across Europe and make more common and usual teaching and learning by having an international approach. This project emerged precisely to facilitate the union of knowledge that is dispersed throughout society, especially among schools.
 
-For the same reason, to share knowledge about environmental issues that affect marine life, I chose the topic for this Swift Student Challenge. I hope this app helps people to realize how small personal attitudes, united with other people, generate a big result.
+For the same reason, to share knowledge about environmental issues that affect marine life, I chose the topic for this Swift Student Challenge. I hope this app helps people to realize how small personal attitudes, united with other people, generate a big result and change the world.
