@@ -85,7 +85,7 @@ struct LevelInstructionView: View {
             VStack {
                 ForEach(hint, id: \.self) {
                     Text($0)
-                        .font(.system(size: 16))
+                        .font(.system(size: 18))
                         .foregroundColor(.secondary)
                         .fontWeight(.medium)
                         .shadow(radius: 1)
