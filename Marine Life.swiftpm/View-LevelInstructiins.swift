@@ -17,7 +17,7 @@ struct LevelInstructionView: View {
     var description: String {
         switch level {
         case 1:
-            return "Fish are swimming in the ocean, but the number of species is decreasing year after year, due to pollution, heating water, oil spillage, etc. Now you must save some fish that are in the ocean and put them safely in aquariums."
+            return "Fish are swimming in the ocean, but the number of species is decreasing year after year, due to pollution, warming water and oil spills. Now you must save some fish that are in the ocean and put them safely in aquariums."
         case 2:
             return "Oh no, there was an oil spill. Tons of fish die in this type of accident. Save as many fish as you can. Go! Go! Go!"
         case 3:
