@@ -75,8 +75,8 @@ class Swimmer: Identifiable, ObservableObject, Equatable {
             .autoconnect()
             .sink(receiveValue: { (_) in
                 self.objectWillChange.send()
-                
-                let increaseDistance = self.track.totalArcLength / self.type.speed / (UIDevice.isIPad ? 0.5 : 1)
+
+                let increaseDistance = self.track.totalArcLength / self.type.speed / (UIDevice.isIPad ? 0.5 : 420 / UIScreen.screenWidth)
                 
                 self.alongTrackDistance += increaseDistance
                 
