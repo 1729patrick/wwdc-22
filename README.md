@@ -1,5 +1,12 @@
 # [Submitted] WWDC22 Swift Student Challenge
 
+<details>
+  <summary>Demo</summary>
+  
+https://user-images.githubusercontent.com/35247414/164914485-2f8b309c-ae7a-48be-a904-82b186264c36.mov
+
+</details>
+
 #### Did you use any content you do not have ownership rights to?
 
 Yes, I don’t have ownership of the sounds effects, endangered animals list, and fish descriptions. All content is under the respective licensing terms and copyright obligations.
