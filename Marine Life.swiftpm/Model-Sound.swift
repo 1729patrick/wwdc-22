@@ -36,7 +36,7 @@ struct InspiringSound: Sound {
     func getFileName() -> String { "inspiring" }
     func getFileExtension() -> String { "m4a" }
     func getVolume() -> Float {
-        0.6
+        0.3
     }
     func isLoop() -> Bool {
         true
