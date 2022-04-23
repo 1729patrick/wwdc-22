@@ -327,8 +327,6 @@ struct ContentView: View {
             startLevel2()
         } else if level >= 4 {
             startLevelWithTrash()
-        } else if level > 5 {
-            playInspiringSong()
         }
     }
     
