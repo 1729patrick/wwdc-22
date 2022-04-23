@@ -303,20 +303,16 @@ struct ContentView: View {
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.35) {
                     self.level = level
                     showingLevelInstructions = true
+                    playInspiringSong()
                 }
             } else {
                 self.level = level
                 showingLevelInstructions = true
             }
         }
-        .onChange(of: showingInstructions) { _ in
-            playBackgroundSound()
-        }
     }
     
     func onAppear() {
-        playBackgroundSound()
-        
         level = viewModel.level
         
         withAnimation(.linear(duration: 8).repeatForever(autoreverses: false)) {
@@ -331,16 +327,14 @@ struct ContentView: View {
             startLevel2()
         } else if level >= 4 {
             startLevelWithTrash()
+        } else if level > 5 {
+            playInspiringSong()
         }
     }
     
-    func playBackgroundSound() {
-        if showingInstructions {
-            SoundManager.shared.play(sound: InspiringSound())
-        } else {
-            SoundManager.shared.stop(sound: InspiringSound())
-            SoundManager.shared.play(sound: BackgroundSound())
-        }
+    func playInspiringSong() {
+        SoundManager.shared.stop(sound: BackgroundSound())
+        SoundManager.shared.play(sound: InspiringSound())
     }
     
     func startLevel2() {
@@ -410,19 +404,19 @@ struct ContentView: View {
     }
     
     func scaleAlbum() {
-        withAnimation(.linear(duration: 0.2).delay(0.65)) {
+        withAnimation(.linear(duration: 0.2).delay(0.45)) {
             aquariumScale = 1.3
         }
-        withAnimation(.linear(duration: 0.15).delay(0.9)) {
+        withAnimation(.linear(duration: 0.15).delay(0.7)) {
             aquariumScale = 1
         }
     }
     
     func scaleTrash() {
-        withAnimation(.linear(duration: 0.2).delay(0.75)) {
+        withAnimation(.linear(duration: 0.2).delay(0.55)) {
             trashScale = 1.3
         }
-        withAnimation(.linear(duration: 0.15).delay(1.1)) {
+        withAnimation(.linear(duration: 0.15).delay(0.9)) {
             trashScale = 1
         }
     }

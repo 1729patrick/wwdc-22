@@ -186,24 +186,9 @@ struct AnimalDetailView: View {
     }
     
     var source: some View {
-        HStack {
-            Text("Source")
-                .foregroundColor(.secondary)
-            Spacer()
-            Menu {
-                Text("Conabio").fontWeight(.semibold) + Text(" for the list of animals in danger in Brazil")
-                Text("\(animal.type.source)").fontWeight(.semibold) + Text(" for the fish description")
-            } label: {
-                Image(systemName: "info.circle")
-                    .foregroundColor(.secondary)
-                    .imageScale(.large)
-                    .foregroundColor(.white)
-            }
-            .onTapGesture {
-                SoundManager.shared.play(sound: ButtonSound())
-            }
-        }
-        .padding(.bottom)
+        Text("Source: \(animal.type.source)")
+            .foregroundColor(.secondary)
+            .padding(.bottom)
     }
     
     var body: some View {
@@ -257,7 +242,7 @@ struct AnimalDetailView: View {
                 .offset(offset: $scrollOffset)
             }
             .coordinateSpace(name: "SCROLL")
-         
+            
         }
         .onAppear(perform: onAppear)
         .transition(.identity)
