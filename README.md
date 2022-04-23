@@ -4,7 +4,7 @@
 
 Yes, I don’t have ownership of the sounds effects, endangered animals list, and fish descriptions. All content is under the respective licensing terms and copyright obligations.
 
-1. Sounds Effects: I used sounds that are royalty-free and can be used without attribution. That sounds include background, buttons tap, wrong tap, and feeding effect.
+1. Sounds Effects: I used sounds that can be used without attribution. That sounds include background, buttons tap, wrong tap, and feeding effect.
 2. List of endangered animals: The list was prepared by the National Biodiversity Commission (Conabio). Conabio is a permanent inter-ministerial commission of the Federal Brazil government;
 3. Fish descriptions: The descriptive texts of the fish were taken mostly from Wikipedia, but also from Austrolebias cinereus, (Amato, 1986) and New species of the genus Leporinus Agassiz.
 
@@ -38,4 +38,4 @@ For the same reason, to share knowledge about environmental issues that affect m
 
 #### Is there anything else you would like us to know?
 
-I'm not sure I answered "Which software should we use to run your application project?" correctly. I created an app for iPhone and iPad with Xcode's Swift Playground App.
+I'm not sure I answered "Which software should we use to run your application project?" correctly. This app was created by "Swift Playground App" in Xcode, but the target is iPhones and iPads.
