@@ -68,8 +68,8 @@ struct SwimmerView: View {
             .matchedGeometryEffect(id: swimmer.id.uuidString, in: namespace)
             .position(position)
             .onTapGesture(perform: onSave)
-            .animation(.linear(duration: 0.4), value: swimmer.saved)
-            .animation(.linear(duration: 0.5), value: swimmer.removed)
+            .animation(.easeOut(duration: 0.8), value: swimmer.saved)
+            .animation(.easeOut(duration: 0.9), value: swimmer.removed)
             .onChange(of: swimmer.saved) { _ in
                 if alwaysShowDetails == true && !specieSaved {
                     let alpha = UIDevice.isIPad ? 0.5 : 0.85
@@ -78,12 +78,12 @@ struct SwimmerView: View {
                 }
                 
                 withAnimation(.linear(duration: 0.3)) {
-                    scale = UIDevice.isIPad ? 0 : 0.1
+                    scale = UIDevice.isIPad ? 0.1 : 0.2
                 }
             }
             .onChange(of: swimmer.removed) { _ in
                 withAnimation(.linear(duration: 0.3)) {
-                    scale = UIDevice.isIPad ? 0 : 0.3
+                    scale = 0.2
                 }
             }
     }

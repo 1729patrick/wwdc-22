@@ -80,6 +80,7 @@ struct LevelInstructionView: View {
                 .multilineTextAlignment(.center)
                 .scaleEffect(animateView ? 1 : 0)
                 .padding(.top)
+                .padding(.horizontal, UIDevice.isIPad ? UIScreen.screenWidth * 0.2 : 0)
                 .minimumScaleFactor(0.1)
             
             VStack {

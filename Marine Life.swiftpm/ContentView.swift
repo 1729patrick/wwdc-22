@@ -104,9 +104,9 @@ struct ContentView: View {
         
         switch level {
         case 1:
-            title = "Marine Life"
+            title = "Save the fish"
         case 2:
-            title = "Run against the oil spill"
+            title = "Run against oil spill"
         case 3:
             title = "Feed your fish"
         case 4:
@@ -391,19 +391,19 @@ struct ContentView: View {
     }
     
     func scaleAlbum() {
-        withAnimation(.linear(duration: 0.2).delay(0.25)) {
+        withAnimation(.linear(duration: 0.2).delay(0.65)) {
             aquariumScale = 1.3
         }
-        withAnimation(.linear(duration: 0.15).delay(0.5)) {
+        withAnimation(.linear(duration: 0.15).delay(0.9)) {
             aquariumScale = 1
         }
     }
     
     func scaleTrash() {
-        withAnimation(.linear(duration: 0.2).delay(0.35)) {
+        withAnimation(.linear(duration: 0.2).delay(0.75)) {
             trashScale = 1.3
         }
-        withAnimation(.linear(duration: 0.15).delay(0.7)) {
+        withAnimation(.linear(duration: 0.15).delay(1.1)) {
             trashScale = 1
         }
     }

@@ -54,8 +54,8 @@ struct InstructionView: View {
                 }
                 
             }
+            .padding(.horizontal, UIDevice.isIPad ? UIScreen.screenWidth * 0.2 : 0)
             .scaleEffect(animateView ? 1 : 0)
-            
             
             ZStack {
                 Button {
