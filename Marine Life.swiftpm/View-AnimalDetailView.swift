@@ -191,7 +191,6 @@ struct AnimalDetailView: View {
                 .foregroundColor(.secondary)
             Spacer()
             Menu {
-                Text("Chosic").fontWeight(.semibold) + Text(" and ") + Text("Mixkit").fontWeight(.semibold) + Text(" for the sounds effects")
                 Text("Conabio").fontWeight(.semibold) + Text(" for the list of animals in danger in Brazil")
                 Text("\(animal.type.source)").fontWeight(.semibold) + Text(" for the fish description")
             } label: {

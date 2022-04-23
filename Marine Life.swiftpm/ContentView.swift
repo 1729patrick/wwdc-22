@@ -33,7 +33,7 @@ struct ContentView: View {
     @State var level: Int = 0
     @State private var wave = 0.0
     
-    @State private var impactFeedback = UIImpactFeedbackGenerator(style: .light)
+    @State private var impactFeedback = UIImpactFeedbackGenerator(style: .medium)
     
     var swimmers: some View {
         ForEach(viewModel.swimmers) { swimmer in
@@ -51,24 +51,29 @@ struct ContentView: View {
     }
     
     var trash: some View {
-        Image("Trash")
-            .resizable()
-            .scaledToFit()
-            .frame(width: 50, height: 50)
-            .overlay(alignment: .bottomLeading) {
-                if viewModel.trashesRemovedCount > 0 {
-                    Text("\(viewModel.trashesRemovedCount)")
-                        .font(.caption2)
-                        .fontWeight(.bold)
-                        .padding(.horizontal, 4)
-                        .padding(.vertical, 2)
-                        .background(.white)
-                        .foregroundColor(.blue)
-                        .clipShape(Capsule())
+        Button {
+            SoundManager.shared.play(sound: WrongSound())
+            impactFeedback.impactOccurred()
+        } label: {
+            Image("Trash")
+                .resizable()
+                .scaledToFit()
+                .frame(width: 50, height: 50)
+                .overlay(alignment: .bottomLeading) {
+                    if viewModel.trashesRemovedCount > 0 {
+                        Text("\(viewModel.trashesRemovedCount)")
+                            .font(.caption2)
+                            .fontWeight(.bold)
+                            .padding(.horizontal, 4)
+                            .padding(.vertical, 2)
+                            .background(.white)
+                            .foregroundColor(.blue)
+                            .clipShape(Capsule())
+                    }
                 }
-            }
-            .scaleEffect(animateView ? 1 : 0)
-            .scaleEffect(trashScale)
+                .scaleEffect(animateView ? 1 : 0)
+                .scaleEffect(trashScale)
+        }
     }
     
     var aquarium: some View {
@@ -304,9 +309,14 @@ struct ContentView: View {
                 showingLevelInstructions = true
             }
         }
+        .onChange(of: showingInstructions) { _ in
+            playBackgroundSound()
+        }
     }
     
     func onAppear() {
+        playBackgroundSound()
+        
         level = viewModel.level
         
         withAnimation(.linear(duration: 8).repeatForever(autoreverses: false)) {
@@ -321,6 +331,15 @@ struct ContentView: View {
             startLevel2()
         } else if level >= 4 {
             startLevelWithTrash()
+        }
+    }
+    
+    func playBackgroundSound() {
+        if showingInstructions {
+            SoundManager.shared.play(sound: InspiringSound())
+        } else {
+            SoundManager.shared.stop(sound: InspiringSound())
+            SoundManager.shared.play(sound: BackgroundSound())
         }
     }
     

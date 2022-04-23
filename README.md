@@ -1,12 +1,10 @@
 # [Submitted] WWDC22 Swift Student Challenge
 
-https://user-images.githubusercontent.com/35247414/164762200-3dda2993-9f72-4106-a5bb-3dbcd6f7b402.mov
-
 #### Did you use any content you do not have ownership rights to?
 
 Yes, I don’t have ownership of the sounds effects, endangered animals list, and fish descriptions. All content is under the respective licensing terms and copyright obligations.
 
-1. Sounds Effects: I used sounds that are free for commercial and non-commercial projects. That sounds include background, buttons tap, wrong tap, and feeding effects. I want to thank the Mixkit and Chosic for the sounds;
+1. Sounds Effects: I used sounds that are royalty-free and can be used without attribution. That sounds include background, buttons tap, wrong tap, and feeding effect.
 2. List of endangered animals: The list was prepared by the National Biodiversity Commission (Conabio). Conabio is a permanent inter-ministerial commission of the Federal Brazil government;
 3. Fish descriptions: The descriptive texts of the fish were taken mostly from Wikipedia, but also from Austrolebias cinereus, (Amato, 1986) and New species of the genus Leporinus Agassiz.
 

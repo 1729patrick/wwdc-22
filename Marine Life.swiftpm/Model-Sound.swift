@@ -25,7 +25,18 @@ struct BackgroundSound: Sound {
     func getFileName() -> String { "background" }
     func getFileExtension() -> String { "m4a" }
     func getVolume() -> Float {
-        0.3
+        0.4
+    }
+    func isLoop() -> Bool {
+        true
+    }
+}
+
+struct InspiringSound: Sound {
+    func getFileName() -> String { "inspiring" }
+    func getFileExtension() -> String { "m4a" }
+    func getVolume() -> Float {
+        0.4
     }
     func isLoop() -> Bool {
         true
@@ -34,7 +45,7 @@ struct BackgroundSound: Sound {
 
 struct ButtonSound: Sound {
     func getFileName() -> String { "button" }
-    func getFileExtension() -> String { "wav" }
+    func getFileExtension() -> String { "m4a" }
     func getVolume() -> Float {
         0.1
     }
@@ -42,7 +53,7 @@ struct ButtonSound: Sound {
 
 struct SwimmerSound: Sound {
     func getFileName() -> String { "swimmer" }
-    func getFileExtension() -> String { "wav" }
+    func getFileExtension() -> String { "m4a" }
     func getVolume() -> Float {
         0.1
     }
@@ -50,7 +61,7 @@ struct SwimmerSound: Sound {
 
 struct WrongSound: Sound {
     func getFileName() -> String { "wrong" }
-    func getFileExtension() -> String { "wav" }
+    func getFileExtension() -> String { "m4a" }
     func getVolume() -> Float {
         0.1
     }
@@ -58,17 +69,25 @@ struct WrongSound: Sound {
 
 struct FeedSound: Sound {
     func getFileName() -> String { "feed" }
-    func getFileExtension() -> String { "wav" }
+    func getFileExtension() -> String { "m4a" }
     func getVolume() -> Float {
-        0.2
+        0.3
     }
 }
 
 struct OilSpillSound: Sound {
     func getFileName() -> String { "oilSpill" }
-    func getFileExtension() -> String { "wav" }
+    func getFileExtension() -> String { "m4a" }
     func getVolume() -> Float {
         0.2
     }
     func isLoop() -> Bool { true }
+}
+
+struct LevelSound: Sound {
+    func getFileName() -> String { "level" }
+    func getFileExtension() -> String { "m4a" }
+    func getVolume() -> Float {
+        0.2
+    }
 }

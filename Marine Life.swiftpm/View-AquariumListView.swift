@@ -16,7 +16,7 @@ struct AquariumListView: View {
     
     @State var currentSwimmerType: SwimmerType?
     @State var showingDetails: Bool = false
-    @State private var impactFeedback = UIImpactFeedbackGenerator(style: .light)
+    @State private var impactFeedback = UIImpactFeedbackGenerator(style: .medium)
     
     var timeToFeedAgain: Int
     var feed: () -> Void
