@@ -73,7 +73,7 @@ struct LevelInstructionView: View {
                 .scaleEffect(animateView ? 1 : 0)
             
             Text(description)
-                .font(.system(size: 22))
+                .font(.system(size: UIDevice.isIPad ? 32 : 22))
                 .fontWeight(.bold)
                 .shadow(radius: 1)
                 .lineSpacing(10)
@@ -110,7 +110,7 @@ struct LevelInstructionView: View {
             }
             .buttonStyle(ScaledButtonStyle())
             .scaleEffect(animateView ? 1 : 0)
-            .padding(.top, 40)
+            .padding(.top, UIDevice.isIPad ? 100 : 40)
             
             Spacer()
         }

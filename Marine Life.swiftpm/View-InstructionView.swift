@@ -78,7 +78,7 @@ struct InstructionView: View {
                 .opacity(page == pages.count - 1 ? 0 : 1)
                 .buttonStyle(ScaledButtonStyle())
                 .disabled(page == pages.count - 1)
-                .padding(.top, 40)
+                .padding(.top, UIDevice.isIPad ? 100 : 40)
                 
                 Button {
                     SoundManager.shared.play(sound: ButtonSound())
