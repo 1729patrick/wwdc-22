@@ -81,7 +81,7 @@ struct SwimmerView: View {
                     scale = 0.3
                 }
                 
-                withAnimation(.linear(duration: 0.1).delay(0.5)) {
+                withAnimation(.linear(duration: 0.1).delay(0.4)) {
                     scale = 0
                 }
             }
@@ -90,7 +90,7 @@ struct SwimmerView: View {
                     scale = 0.3
                 }
                 
-                withAnimation(.linear(duration: 0.1).delay(0.6)) {
+                withAnimation(.linear(duration: 0.1).delay(0.5)) {
                     scale = 0
                 }
             }

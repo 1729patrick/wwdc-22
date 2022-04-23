@@ -27,7 +27,7 @@ struct LevelInstructionView: View {
         case 5:
             return "You saved the lives of many fish by removing garbage from the ocean, fascinating! Many species are already in your aquarium, but some are still endangered in the ocean, now it's time to save them."
         case 6:
-            return "I hope this app has helped you to realize that the lives of marine animals are in our hands. Keep taking care of the fish, keep the ocean clean and fight oil spills. We can change the world!"
+            return "I hope this app has helped you to realize that the lives of marine animals are in our hands. Keep taking care of the fish, keep the ocean clean and fight oil spills."
         default:
             return ""
         }
